@@ -1,10 +1,10 @@
-import './App.css'
-
+import './LandingPage.css';
+import LandingPage from './LandingPage';
 function App() {
 
   return (
     <>
-
+    <LandingPage></LandingPage>
     </>
   )
 }
