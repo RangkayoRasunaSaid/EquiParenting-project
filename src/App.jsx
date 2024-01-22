@@ -1,10 +1,11 @@
 import './LandingPage.css';
-import LandingPage from './LandingPage';
+import HeroSection from './HeroSection';
+
 function App() {
 
   return (
     <>
-    <LandingPage></LandingPage>
+    <HeroSection></HeroSection>
     </>
   )
 }
