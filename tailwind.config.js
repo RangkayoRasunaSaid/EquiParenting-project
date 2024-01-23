@@ -8,6 +8,18 @@ export default {
         'light-main-color': '#776493',
         'dark-main-color': '#392c60',
       },
+      colors: {
+        primary: "#675893",
+        secondary: "#E8DEF7",
+        tertiery: "#7f508f",
+      }
+    },
+    container: {
+      center: true,
+      padding: {
+        default: "20px",
+        md: "40px",
+      }
     },
   },
   plugins: [
