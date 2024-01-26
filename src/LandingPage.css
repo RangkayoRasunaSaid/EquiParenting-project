@@ -2,7 +2,7 @@
 #root {
   margin: 0 auto;
   /* padding: 2rem; */
-  text-align: center;
+  /* text-align: center; */
   background-image: url(./assets/background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -16,6 +16,10 @@
   font-weight: 900;
   line-height: 1.2;
   color: #675893;
+}
+
+nav {
+  z-index: 10001 !important;
 }
 
 main {

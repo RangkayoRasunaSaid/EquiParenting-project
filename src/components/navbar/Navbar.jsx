@@ -1,46 +1,110 @@
+import { useState } from "react"
 import logo from "../../assets/logo.svg"
-import { PiCaretDownBold } from "react-icons/pi";
+import { FaXmark, FaBars } from "react-icons/fa6"
+import ResponsiveMenu from "./ResponsiveMenu"
+
 
 const Navbar = () => {
+  const navMenu = [
+    {link: "Beranda", path: "beranda"},
+    {link: "Parenting", path: "parenting"},
+    {link: "Mission", path: "mission"},
+    {link: "Ceritaku", path: "ceritaku"},
+  ]
+
+  // State to track the selected link
+  const [selectedLink, setSelectedLink] = useState(null)
+
+  const handleMenuClick = (link) => {
+    setSelectedLink(link)
+  }
+
+  // State to track the visibility of the navMenu
+  const [showMenu, setShowMenu] = useState(false)
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu)
+  }
+
   return (
-    <header className="bg-white shadow-md text-main-color">
-      <nav className="container flex items-center justify-between h-[74px] p-2">
-        {/* Logo section */}
-        <div className="py-2.5">
-          <img src={logo} alt="logo" className="w-32 h-auto" />
-        </div>
+    <>
+     <header className="bg-white text-main-color"> 
+        <nav className="bg-white md:px-8 p-4 max-w-screen-2xl mx-auto text-main-color cursor-pointer top-0 right-0 left-0">
+          <div className="container space-x-6 mx-auto flex justify-between items-center">
 
-        {/* Menu section */}
-        <div>
-          <ul className="flex items-center gap-10 text-lg cursor-pointer">
-            <li className="p-2 rounded-md hover:bg-secondary">Beranda</li>
-            <li className="group relative">
-              <a href="#" className="flex items-center gap-x-1 p-2 rounded-md hover:bg-secondary">
-                Parenting <span>
-                  <PiCaretDownBold className="transition-all duration-200 group-hover:rotate-180" />
-                </span>
+            {/* logo */}
+            <div className="relative] min-w-screen-md"> 
+              <a href="/">
+                <img src={logo} alt="logo" className="w-[120px] h-auto inline-block items-center"/>
               </a>
+            </div>
 
-              {/* Dropdown menu section */}
-              <div className="absolute -left-3 z-[99999] hidden w-[150px] text-center bg-white shadow-md rounded-b-lg group-hover:block">
-                <ul>
-                  <li className="p-2 rounded-md hover:bg-secondary">Artikel</li>
-                  <li className="p-2 rounded-md hover:bg-secondary">Video</li>
-                </ul>
+            {/* showing navMenu using map */}
+            <div className="flex items-center space-x-12">
+              <ul className="md:flex space-x-6 hidden">
+                {
+                  navMenu.map(({ link, path }) => 
+                    <a 
+                      key={link} 
+                      href={path} 
+                      onClick = {() => handleMenuClick(link)}
+                      className={`text-lg block py-1 px-4 rounded-2xl hover:bg-secondary hover:font-medium transition-none ${selectedLink === link ? 'bg-secondary font-medium transition-none' : ''}`}>
+                      {link}
+                    </a>
+                  )
+                }
+              </ul>
+
+              {/* login and register */}
+              <div className="space-x-2 hidden md:flex items-center text-md">
+                <button 
+                  className="py-1 px-4 border-2 rounded-2xl border-primary transition-all duration-300 hover:text-white hover:bg-tertiery hover:border-tertiery">
+                  Masuk
+                </button>
+                <button 
+                  className="py-1 px-4 border-2 rounded-2xl bg-primary border-primary text-white transition-all duration-300 hover:text-white hover:bg-tertiery hover:border-tertiery">
+                  Daftar
+                </button>
               </div>
-            </li>
+            </div>
 
-            <li className="p-2 rounded-md hover:bg-secondary">Mission</li>
-            <li className="p-2 rounded-md hover:bg-secondary">Ceritaku</li>
-          </ul>
-        </div>
 
-        <div className="flex items-center gap-2">
-          <button className="p-2 w-20 border-2 rounded-md border-primary text-main-color hover:bg-tertiery hover hover:border-tertiery hover:text-white">Masuk</button>
-          <button className="p-2 w-20 border-2 rounded-md border-primary bg-primary text-white hover:bg-tertiery hover hover:border-tertiery">Daftar</button>
-        </div>
-      </nav>
-    </header>
+            {/* mobile display */}
+            <div className="md:hidden">
+              {/* <button onClick={toggleMenu}>
+                {
+                  showMenu ? (
+                    <FaXmark className="w-6 h-6 text-main-color cursor-pointer transition-all"/>
+                  ) : (
+                    <FaBars className="w-6 h-6 text-main-color cursor-pointer transition-all"/>
+                  )
+                }
+              </button> */}
+              {
+                showMenu ? (
+                  <FaBars 
+                    onClick={toggleMenu}
+                    className="w-6 h-6 text-main-color cursor-pointer transition-all"/>
+                ) : (
+                  <FaXmark 
+                    onClick={toggleMenu}  
+                    className="w-6 h-6 text-main-color cursor-pointer transition-all"/>
+                )
+              }
+            </div>
+          </div>
+        </nav>
+
+        {/* <div className={`z-40 space-y-4 pt-24 pb-8 bg-white shadow-md rounded-md ${showMenu ? "block fixed top-[89px] right-0 left-[240px]" : "hidden"}`}>
+          {
+            navMenu.map(({ link, path }) => 
+              <a key={link} href={path} className="text-lg text-main-color block p-2 pl-8 rounded-md hover:bg-secondary hover:font-medium transition-none">{link}</a>)
+          }
+        </div> */}
+
+        <ResponsiveMenu showMenu={showMenu} toggleMenu={toggleMenu} />
+      </header>
+    </>
   )
 }
 
