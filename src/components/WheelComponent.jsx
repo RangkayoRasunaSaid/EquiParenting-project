@@ -8,7 +8,9 @@ export default function WheelComponent() {
     const wheel = new Wheel(container, props[0]);
 
     return () => {
-      document.querySelector('#wheel-wrapper').innerHTML = '';
+      if (container) {
+        container.innerHTML = '';
+      }
     };
   }, []);
 
