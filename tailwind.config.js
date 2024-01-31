@@ -8,6 +8,11 @@ export default {
         'light-main-color': '#776493',
         'dark-main-color': '#392c60',
       },
+      backgroundColor: {
+        'main-color': '#675893',
+        'light-main-color': '#776493',
+        'dark-main-color': '#392c60',
+      },
     },
   },
   plugins: [
