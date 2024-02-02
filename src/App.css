@@ -1,11 +1,16 @@
-/* #root {
-  max-width: 1280px;
+#root {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-image: url(./assets/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; /* Optional: Tengahkan gambar jika diperlukan */
+  height: auto; /* Atur tinggi elemen menjadi tinggi tampilan (viewport height) */
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
 }
 
-.logo {
+/* .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
@@ -31,12 +36,12 @@
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
+} */
 
-.card {
+/* .card {
   padding: 2em;
 }
 
 .read-the-docs {
   color: #888;
-} */
+} */ 

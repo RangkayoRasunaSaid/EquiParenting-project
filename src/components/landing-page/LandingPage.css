@@ -1,15 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-#root {
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  background-image: url(./assets/background.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center; /* Optional: Tengahkan gambar jika diperlukan */
-  height: 100vh; /* Atur tinggi elemen menjadi tinggi tampilan (viewport height) */
-  font-family: 'Poppins', Arial, Helvetica, sans-serif;
-}
+
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .featureTitle{
   margin-top: 0;
   margin-bottom: 0.5rem;
@@ -24,7 +14,6 @@ main {
   justify-content: center;
   align-items: center;
   padding: .5rem 0;
-  font-family: 'Poppins', sans-serif;
 }
 .card-hero {
     width: 95vw;
@@ -35,6 +24,7 @@ main {
     position: relative;
     background-size: fill;
     box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.2);
+    background-color: white!important ;
 }
 .img-hero {
   position: absolute;
@@ -46,7 +36,7 @@ main {
   opacity: 0.9;
   transition: opacity .2s ease-out;
   -webkit-clip-path: polygon(0% 0, 100% 0, 100% 100%, 0% 100%);
-  clip-path: polygon(40% 0, 100% 0, 100% 100%, 30% 100%);
+  clip-path: polygon(35% 0, 100% 0, 100% 100%, 30% 100%);
 }
 .title-hero {
   position: absolute;
@@ -98,4 +88,34 @@ main {
 &:hover .img-hero {
   transition: opacity .3s ease-in;
   opacity: 1;
+}
+
+.secondSection {
+  background-color: #e0cdfb
+}
+.normal-size-feature {
+  width: 100px;
+}
+.bigger-size-feature{
+ width: 12vw;
+}
+
+.card-mission {
+  width: 95vw;
+  height: 80vh;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  background-size: fill;
+  box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.2);
+  background-color: white!important ;
+}
+.mission-img{
+  width: 60vw;
+  height: auto;
+}
+.mission-explanation-img{
+  width: 100vw;
+  height: auto;
 }
