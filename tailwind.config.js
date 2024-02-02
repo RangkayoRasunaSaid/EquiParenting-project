@@ -4,9 +4,16 @@ export default {
   theme: {
     extend: {
       textColor: {
-        'main-color': '#675893',
-        'light-main-color': '#776493',
-        'dark-main-color': '#392c60',
+        "main-color": "#675893",
+        "light-main-color": "#776493",
+        "dark-main-color": "#392c60",
+      },
+      colors: {
+        ungu1: "#675893",
+        ungu2: "#E8DEF7",
+      },
+      fontSize: {
+        xxs: "0.65rem",
       },
       backgroundColor: {
         'main-color': '#675893',
@@ -15,6 +22,5 @@ export default {
       },
     },
   },
-  plugins: [
-  ],
+  plugins: [],
 };
