@@ -1,11 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+<<<<<<< HEAD:src/LandingPage.css
+#root {
+  margin: 0 auto;
+  /* padding: 2rem; */
+  /* text-align: center; */
+  background-image: url(./assets/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; /* Optional: Tengahkan gambar jika diperlukan */
+  height: 100vh; /* Atur tinggi elemen menjadi tinggi tampilan (viewport height) */
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+=======
 
+>>>>>>> dev:src/components/landing-page/LandingPage.css
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .featureTitle{
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-weight: 900;
   line-height: 1.2;
   color: #675893;
+}
+
+nav {
+  z-index: 10001 !important;
 }
 
 main {

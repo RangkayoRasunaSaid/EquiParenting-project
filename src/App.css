@@ -10,6 +10,10 @@
   font-family: 'Poppins', Arial, Helvetica, sans-serif;
 }
 
+nav {
+  z-index: 10001 !important;
+}
+
 /* .logo {
   height: 6em;
   padding: 1.5em;
