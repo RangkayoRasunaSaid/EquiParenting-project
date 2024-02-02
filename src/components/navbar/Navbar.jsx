@@ -28,7 +28,7 @@ const Navbar = () => {
 
   return (
     <>
-     <header className="bg-white text-main-color"> 
+     <header className="bg-white shadow-md text-main-color"> 
         <nav className="bg-white md:px-8 p-4 max-w-screen-2xl mx-auto text-main-color cursor-pointer top-0 right-0 left-0">
           <div className="container space-x-6 mx-auto flex justify-between items-center">
 
