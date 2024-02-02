@@ -1,18 +1,28 @@
-// import './LandingPage.css';
-// import LandingPage from './LandingPage';
-import Footer from './components/Footer/Footer';
-import Navbar from './components/navbar/Navbar';
-
+import "./App.css"
+import "./components/landing-page/LandingPage.css";
+import { Provider } from "react-redux"; 
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import store from './store/store';
+import LandingPage from "./components/landing-page/index";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Profile from "./pages/Profile";
 
 function App() {
-
   return (
-    <>
-    <Navbar />
-    {/* <LandingPage /> */}
-    <Footer />
-    </>
-  )
+    <Provider store={store}>
+      <>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </BrowserRouter>
+      </>
+    </Provider>
+  );
 }
 
-export default App
+export default App;
