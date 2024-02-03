@@ -22,8 +22,8 @@ export default {
       },
       colors: {
         "primary": "#675893",
-        "secondary": "#E8DEF7",
-        "tertiery": "#7f508f",
+        "secondaryt": "#E8DEF7",
+        "tertieryt": "#7f508f",
       },
       fontWeight: ['hover', 'focus', 'active', 'group-hover']
     },

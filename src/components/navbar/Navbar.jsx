@@ -49,7 +49,7 @@ const Navbar = () => {
                       key={link} 
                       to={path} 
                       onClick = {() => handleMenuClick(link)}
-                      className={`text-lg block py-1 px-4 rounded-2xl hover:bg-secondary hover:font-medium transition-none ${selectedLink === link ? 'bg-secondary font-medium transition-none' : ''}`}>
+                      className={`text-lg block py-1 px-4 rounded-2xl hover:bg-secondaryt hover:font-medium transition-none ${selectedLink === link ? 'bg-secondaryt font-medium transition-none' : ''}`}>
                       {link}
                     </Link>
                   )
@@ -60,12 +60,12 @@ const Navbar = () => {
               <div className="space-x-2 hidden md:flex items-center text-md">
                 <button 
                   style={{borderColor: 'rgba(103, 88, 147)'}}
-                  className="py-1 px-4 border-2 rounded-2xl transition-all duration-300 hover:text-white hover:bg-tertiery hover:border-tertiery">
+                  className="py-1 px-4 border-2 rounded-2xl transition-all duration-300 hover:text-white hover:bg-tertieryt hover:border-tertieryt">
                   Masuk
                 </button>
                 <button 
                   style={{backgroundColor: 'rgba(103, 88, 147)', borderColor: 'rgba(103, 88, 147)'}}
-                  className="py-1 px-4 border-2 rounded-2xl text-white transition-all duration-300 hover:text-white hover:bg-tertiery hover:border-tertiery">
+                  className="py-1 px-4 border-2 rounded-2xl text-white transition-all duration-300 hover:text-white hover:bg-tertieryt hover:border-tertieryt">
                   Daftar
                 </button>
               </div>
