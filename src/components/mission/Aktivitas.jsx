@@ -25,7 +25,7 @@ export default function Aktivitas(){
 
     return (
         <>
-            <h1 className="text-center fs-2 my-5 font-bold">Aktivitas</h1>
+            <h1 className="text-center text-3xl my-5 font-bold">Aktivitas</h1>
             <OwlCarousel className='owl-theme' {...options} >
                 <TaskItem
                     category="Dapur"
@@ -52,7 +52,7 @@ export default function Aktivitas(){
                 />
             </OwlCarousel>
             <div className="flex justify-center my-5">
-                <button data-bs-toggle="modal" data-bs-target="#exampleModal2" className="w-72 text-xl purpleBg rounded-5 shadow-md py-1 px-3 font-semibold flex items-center justify-center"><span className="text-6xl me-3">+</span> <span style={{color:"c3b8da"}}>Tambah Aktivitas</span></button>
+                <button data-bs-toggle="modal" data-bs-target="#exampleModal2" className="w-72 text-xl purpleBg rounded-full shadow-md py-1 px-3 font-semibold flex items-center justify-center"><span className="text-6xl me-3">+</span> <span style={{color:"c3b8da"}}>Tambah Aktivitas</span></button>
             </div>
             <Modal />
         </>

@@ -42,14 +42,15 @@ const Navbar = () => {
 
             {/* showing navMenu using map */}
             <div className="flex items-center space-x-12">
-              <ul className="md:flex space-x-6 hidden">
+              <ul className="md:flex space-x-6 hidden m-0 p-0">
                 {
                   navMenu.map(({ link, path }) => 
                     <Link 
+                      style={{color: 'rgba(103, 88, 147)'}}
                       key={link} 
                       to={path} 
                       onClick = {() => handleMenuClick(link)}
-                      className={`text-lg block py-1 px-4 rounded-2xl hover:bg-secondaryt hover:font-medium transition-none ${selectedLink === link ? 'bg-secondaryt font-medium transition-none' : ''}`}>
+                      className={`no-underline text-lg block py-1 px-4 rounded-2xl hover:bg-secondaryt hover:font-medium transition-none ${selectedLink === link ? 'bg-secondaryt font-medium transition-none' : ''}`}>
                       {link}
                     </Link>
                   )

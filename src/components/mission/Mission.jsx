@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DailyMission from './DailyMission';
 import PusatReward from './PusatReward';
+import '../../App.scss'
 
 export default function App() {
     const [showDailyMission, setShowDailyMission] = useState(false);
@@ -12,9 +13,9 @@ export default function App() {
     };
 
     return (
-        <div className="bg-gradient-to-r from-violet-100 m-sm-3 m-md-5 m-2 p-sm-3 p-md-5 p-2 rounded-5">
+        <div className="bg-gradient-to-r from-violet-100 m-sm-3 m-md-5 m-2 p-sm-3 p-md-5 p-2 rounded-[60px]">
             <Breadcrumbs />
-            <h1 className="text-center fs-1 mb-4 font-semibold">
+            <h1 className="text-center text-4xl mb-4 font-semibold">
                 Selamat datang di misi keluarga idaman!
             </h1>
             <Routes>

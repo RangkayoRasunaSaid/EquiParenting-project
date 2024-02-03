@@ -17,7 +17,7 @@ function Breadcrumbs() {
         {pathSegments.map((segment, index) => (
           <React.Fragment key={segment}>
             <li>
-              <Link to={`/${pathSegments.slice(0, index + 1).join('/')}`}>
+              <Link to={`/${pathSegments.slice(0, index + 1).join('/')}`} style={{color: '#a49eb5'}} className='no-underline'>
                 {titleCase(segment.replace('-', ' '))}
               </Link>
             </li>

@@ -2,8 +2,8 @@ export default function CircleProgress({ percent }) {
     return (
         <div className='flex justify-center my-3'>
             <div className="size-[140px] relative">
-                <div className="size-[140px] rounded-circle shadow-md p-[20px]">
-                    <div className="size-[100px] rounded-circle shadow-inner flex items-center justify-center">
+                <div className="size-[140px] rounded-full shadow-md p-[20px]">
+                    <div className="size-[100px] rounded-full shadow-inner flex items-center justify-center">
                         <div className="number font-semibold">{percent}%</div>
                     </div>
                 </div>
