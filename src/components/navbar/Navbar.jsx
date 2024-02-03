@@ -71,15 +71,6 @@ const Navbar = () => {
 
             {/* mobile display */}
             <div className="md:hidden">
-              {/* <button onClick={toggleMenu}>
-                {
-                  showMenu ? (
-                    <FaXmark className="w-6 h-6 text-main-color cursor-pointer transition-all"/>
-                  ) : (
-                    <FaBars className="w-6 h-6 text-main-color cursor-pointer transition-all"/>
-                  )
-                }
-              </button> */}
               {
                 showMenu ? (
                   <FaBars 
@@ -94,13 +85,6 @@ const Navbar = () => {
             </div>
           </div>
         </nav>
-
-        {/* <div className={`z-40 space-y-4 pt-24 pb-8 bg-white shadow-md rounded-md ${showMenu ? "block fixed top-[89px] right-0 left-[240px]" : "hidden"}`}>
-          {
-            navMenu.map(({ link, path }) => 
-              <a key={link} href={path} className="text-lg text-main-color block p-2 pl-8 rounded-md hover:bg-secondary hover:font-medium transition-none">{link}</a>)
-          }
-        </div> */}
 
         <ResponsiveMenu showMenu={showMenu} toggleMenu={toggleMenu} />
       </header>

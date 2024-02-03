@@ -1,4 +1,3 @@
-// import { AiOutlineArrowRight } from 'react-icons/ai';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -67,25 +66,6 @@ const heroSection = () => {
                   </button>
                 </div>
               </div>
-
-              {/* <div className="card-content">
-                <h2 className="title-hero text-4xl">EquiParenting</h2>
-                <h4 className="subtitle-hero text-black">Setara Mulai dari Rumah</h4>
-                <p className="text-hero text-xl font-medium text-light-main-color">
-                  <span className="text-2xl font-bold text-dark-main-color">&quot;</span>
-                  Ibu maupun Ayah memiliki peran yang sama penting dalam mendidik
-                  dan merawat anak-anak. Dibutuhkan komunikasi, kolaborasi, dan
-                  keterlibatan aktif dari kedua orang tua dalam proses pengasuhan
-                  anak, menciptakan lingkungan di mana anak-anak dapat tumbuh dan
-                  berkembang dengan dukungan yang setara dari kedua orang tua.
-                  <span className="text-2xl font-bold text-dark-main-color">&quot;</span>
-                </p>
-
-                <a href="#" className="button flex items-center" id="btn-hero">
-                  Mari Bergabung
-                  <span className="text-align-center"> <AiOutlineArrowRight></AiOutlineArrowRight></span>
-                </a>
-              </div> */}
             </div>
           </div>
         </div>
