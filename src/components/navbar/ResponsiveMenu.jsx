@@ -9,7 +9,7 @@ const navMenu = [
 
 // eslint-disable-next-line react/prop-types
 const ResponsiveMenu = ({ showMenu }) => {
-  console.log("showMenu", showMenu);
+  // console.log("showMenu", showMenu);
   return (
     <div 
       className={`${showMenu ? "-right-[100%]" : "right-0"} 

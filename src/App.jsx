@@ -1,5 +1,4 @@
 import "./App.css"
-import "./components/landing-page/LandingPage.css";
 import { Provider } from "react-redux"; 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import store from './store/store';
@@ -7,11 +6,14 @@ import LandingPage from "./components/landing-page/index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
+import Navbar from "./components/navbar/Navbar";
+import Footer from "./components/Footer/Footer"
 
 function App() {
   return (
     <Provider store={store}>
       <>
+        <Navbar />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -20,6 +22,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
           </Routes>
         </BrowserRouter>
+        <Footer />
       </>
     </Provider>
   );

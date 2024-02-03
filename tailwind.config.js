@@ -7,10 +7,15 @@ export default {
         "main-color": "#675893",
         "light-main-color": "#776493",
         "dark-main-color": "#392c60",
+        "black-color": "#4E4950",
       },
       colors: {
-        ungu1: "#675893",
-        ungu2: "#E8DEF7",
+        "ungu1": "#675893",
+        "ungu2": "#E8DEF7",
+        "primary": "#675893",
+        "secondary": "#E8DEF7",
+        "tertiery": "#7f508f",
+        "dark-main-color": "#392c60",
       },
       fontSize: {
         xxs: "0.65rem",
@@ -19,11 +24,7 @@ export default {
         'main-color': '#675893',
         'light-main-color': '#776493',
         'dark-main-color': '#392c60',
-      },
-      colors: {
-        "primary": "#675893",
-        "secondary": "#E8DEF7",
-        "tertiery": "#7f508f",
+        'lavender-shade': '#e0cdfb',
       },
       fontWeight: ['hover', 'focus', 'active', 'group-hover']
     },
