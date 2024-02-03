@@ -1,5 +1,7 @@
+import Breadcrumbs from '../Breadcrumbs.jsx';
 import SummaryCard from './SummaryCard.jsx';
 import WheelComponent from './WheelComponent.jsx';
+import { Link } from 'react-router-dom';
 
 export default function PusatReward({ onButtonClick }) {
     // window.onload = () => {
@@ -54,7 +56,7 @@ export default function PusatReward({ onButtonClick }) {
         //   }, []);
 
       return (
-        <div className="bg-white m-4 p-sm-3 p-md-4 p-2 rounded-5 flex flex-col justify-center">
+        <div className="bg-white p-sm-3 p-md-4 p-2 rounded-5 flex flex-col justify-center">
             <h1 className="text-center fs-2 font-bold">Pusat Reward</h1>
             <div className="bg-white m-4 rounded-5 shadow-md row pb-sm-3 pb-md-4 pb-2 ps-sm-3 ps-md-4 ps-2">
                 <div className="col-md-4">
@@ -71,7 +73,10 @@ export default function PusatReward({ onButtonClick }) {
                     <p className='text-sm font-semibold text-violet-400'>(Diperoleh pada: 6 Jan 2024) 19:31:00 WIB</p>
                 </div>
             </div>
-            <button onClick={onButtonClick} className="p-sm-3 p-md-4 mb-4 p-3 mx-5 purpleBg rounded-5 font-bold shadow-md">Lihat Aktivitas Daily Mission</button>
+            <Link to="/mission/daily-mission">
+                <button className="p-sm-3 p-md-4 mb-4 p-3 mx-5 purpleBg rounded-5 font-bold shadow-md" style={{width: '90%'}}>Lihat Aktivitas Daily Mission</button>
+            </Link>
+            {/* <button onClick={onButtonClick} className="p-sm-3 p-md-4 mb-4 p-3 mx-5 purpleBg rounded-5 font-bold shadow-md">Lihat Aktivitas Daily Mission</button> */}
             <div className="p-sm-3 p-md-4 p-3 px-sm-4 px-md-5 px-3 mb-4 mx-sm-1 mx-md-5 mx-1 bg-white shadow-md rounded-5">
                 <h1 className="text-center fs-2 font-bold mb-4">Ringkasan</h1>
                 <div className="row row-cols-1 row-cols-md-2 g-4 text-center">

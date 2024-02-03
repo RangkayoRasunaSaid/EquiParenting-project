@@ -13,19 +13,26 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Navbar from './components/navbar/Navbar';
+import Footer from './components/Footer/Footer';
+import DailyMission from './components/mission/DailyMission';
+import PusatReward from './components/mission/PusatReward';
 
 function App() {
   return (
-    <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/mission" element={<Mission />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-    </Router>
+    <>
+      <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/mission/*" element={<Mission />} />
+            {/* <Route path="/mission/daily-mission" element={<Mission />} /> */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+      </Router>
+      <Footer />
+    </>
   // )
   //   <>
   //   <Navbar />

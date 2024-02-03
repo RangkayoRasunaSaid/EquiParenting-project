@@ -16,7 +16,7 @@ const LandingPage = () => {
       <MissionSection />
       <CeritakuSection />
       {/* <CarouselArticle /> */}
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
