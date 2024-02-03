@@ -10,7 +10,7 @@ import Footer from '../Footer/Footer'
 const LandingPage = () => {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <HeroSection />
       <FeatureSection />
       <MissionSection />

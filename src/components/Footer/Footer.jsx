@@ -10,7 +10,7 @@ import { MdOutlineMail } from "react-icons/md"
 
 const Footer = () => {
   return (
-    <div className="bg-primary">
+    <div style={{backgroundColor: 'rgba(103, 88, 147)'}}>
       <section className="mx-auto max-w-[1320px] text-white">
         <div className=" grid py-4 md:grid-cols-3">
 

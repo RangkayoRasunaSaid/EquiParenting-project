@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from 'react-router-dom';
 import logo from "../../assets/logo.svg"
 import { FaXmark, FaBars } from "react-icons/fa6"
 import ResponsiveMenu from "./ResponsiveMenu"
@@ -6,10 +7,10 @@ import ResponsiveMenu from "./ResponsiveMenu"
 
 const Navbar = () => {
   const navMenu = [
-    {link: "Beranda", path: "beranda"},
-    {link: "Parenting", path: "parenting"},
-    {link: "Mission", path: "mission"},
-    {link: "Ceritaku", path: "ceritaku"},
+    {link: "Beranda", path: "/"},
+    {link: "Parenting", path: "/parenting"},
+    {link: "Mission", path: "/mission"},
+    {link: "Ceritaku", path: "/ceritaku"},
   ]
 
   // State to track the selected link
@@ -34,9 +35,9 @@ const Navbar = () => {
 
             {/* logo */}
             <div className="relative] min-w-screen-md"> 
-              <a href="/">
+              <Link to="/">
                 <img src={logo} alt="logo" className="w-[120px] h-auto inline-block items-center"/>
-              </a>
+              </Link>
             </div>
 
             {/* showing navMenu using map */}
@@ -44,13 +45,13 @@ const Navbar = () => {
               <ul className="md:flex space-x-6 hidden">
                 {
                   navMenu.map(({ link, path }) => 
-                    <a 
+                    <Link 
                       key={link} 
-                      href={path} 
+                      to={path} 
                       onClick = {() => handleMenuClick(link)}
                       className={`text-lg block py-1 px-4 rounded-2xl hover:bg-secondary hover:font-medium transition-none ${selectedLink === link ? 'bg-secondary font-medium transition-none' : ''}`}>
                       {link}
-                    </a>
+                    </Link>
                   )
                 }
               </ul>
@@ -58,11 +59,13 @@ const Navbar = () => {
               {/* login and register */}
               <div className="space-x-2 hidden md:flex items-center text-md">
                 <button 
-                  className="py-1 px-4 border-2 rounded-2xl border-primary transition-all duration-300 hover:text-white hover:bg-tertiery hover:border-tertiery">
+                  style={{borderColor: 'rgba(103, 88, 147)'}}
+                  className="py-1 px-4 border-2 rounded-2xl transition-all duration-300 hover:text-white hover:bg-tertiery hover:border-tertiery">
                   Masuk
                 </button>
                 <button 
-                  className="py-1 px-4 border-2 rounded-2xl bg-primary border-primary text-white transition-all duration-300 hover:text-white hover:bg-tertiery hover:border-tertiery">
+                  style={{backgroundColor: 'rgba(103, 88, 147)', borderColor: 'rgba(103, 88, 147)'}}
+                  className="py-1 px-4 border-2 rounded-2xl text-white transition-all duration-300 hover:text-white hover:bg-tertiery hover:border-tertiery">
                   Daftar
                 </button>
               </div>

@@ -1,5 +1,5 @@
 // props.js
-import {AlignText} from '../../node_modules/spin-wheel/src/constants.js';
+import {AlignText} from '../../../node_modules/spin-wheel/src/constants.js';
 export const props = [{
     name: 'Workout', radius: 0.97, itemLabelRadius: 0.93, itemLabelRadiusMax: 0.35,
     itemLabelRotation: 180, itemLabelAlign: AlignText.left, itemLabelColors: ['#fff'],
