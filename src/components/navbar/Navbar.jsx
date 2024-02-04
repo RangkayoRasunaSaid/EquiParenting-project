@@ -46,6 +46,7 @@ const Navbar = () => {
                 {
                   navMenu.map(({ link, path }) => 
                     <Link 
+                      style={{color: 'rgba(103, 88, 147)'}}
                       key={link} 
                       to={path} 
                       onClick = {() => handleMenuClick(link)}

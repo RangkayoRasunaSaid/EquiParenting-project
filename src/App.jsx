@@ -1,4 +1,3 @@
-import './App.scss'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Mission from './components/mission/Mission';
 import 'bootstrap-icons/font/bootstrap-icons.css';
