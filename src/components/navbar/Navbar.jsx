@@ -59,14 +59,22 @@ const Navbar = () => {
 
               {/* login and register */}
               <div className="space-x-[8px] hidden md:flex items-center text-base">
-                <button 
-                  className="py-[4px] px-[16px] border-2 rounded-2xl border-main-color transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
-                  Masuk
-                </button>
-                <button 
-                  className="py-[4px] px-[16px] border-2 rounded-2xl bg-main-color border-main-color text-white transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
-                  Daftar
-                </button>
+                <Link
+                    key='/login'
+                    to='/login'>
+                  <button
+                    className="py-[4px] px-[16px] border-2 rounded-2xl border-main-color transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
+                    Masuk
+                  </button>
+                </Link>
+                <Link
+                    key='/register'
+                    to='/register'>
+                  <button
+                    className="py-[4px] px-[16px] border-2 rounded-2xl bg-main-color border-main-color text-white transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
+                    Daftar
+                  </button>
+                </Link>
               </div>
             </div>
 

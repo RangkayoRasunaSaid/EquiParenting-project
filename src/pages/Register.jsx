@@ -31,7 +31,7 @@ const Register = () => {
 
   return (
     <div className="bg-[url('/src/assets/background2.jpg')] min-h-screen">
-      <NavbarAcc />
+      {/* <NavbarAcc /> */}
       <div className="text-center pt-10 text-ungu1">
         <h1 className="text-2xl lg:text-3xl font-bold">Daftar</h1>
         <h3 className="text-lg lg:text-xl font-medium my-4 lg:my-6">Yuk, Bergabung dengan kami!</h3>
