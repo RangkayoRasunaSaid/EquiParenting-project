@@ -9,7 +9,6 @@ const heroSection = () => {
     "https://janjimedia.com/wp-content/uploads/2023/03/Sayangi-Keluarga-Dengan-Asuransi-Jiwa-Terbaik-di-Indonesia.jpg",
     "https://s4.bukalapak.com/uploads/content_attachment/e76eb14df357f2fd78c4fcb5/original/Main_Image_%2844%29.jpg",
     "https://www.allianz.co.id/explore/cara-memilih-asuransi-kesehatan-untuk-keluarga-muda/_jcr_content/root/stage/stageimage.img.82.3360.jpeg/1688099780360/yukpahami-cara-memilih-asuransi-kesehatan-untuk-keluarga-muda.jpeg",
-    "https://axa-mandiri.co.id/documents/1415637/1443207/product-detail.jpg/9c1970f0-038d-a846-61dc-3c4c5d6bc790?t=1591863155890",
     "https://janethes.com/wp-content/uploads/2019/11/516.-Mindful-Parenting-Pola-Asuh-Anak-yang-Kekinian_Artboard-2.jpg",
     "https://asset.kompas.com/crops/Bl6AA95OokNIoy8xe1wH6xlsUf0=/0x7:740x500/750x500/data/photo/2020/12/23/5fe2a0d272f20.jpg",
     "https://static.vecteezy.com/system/resources/previews/018/974/113/non_2x/activities-together-during-the-holidays-parents-and-children-are-having-a-meal-together-during-the-holidays-boy-is-teasing-his-father-by-giving-him-bread-and-vegetables-free-photo.jpg",
@@ -25,19 +24,20 @@ const heroSection = () => {
     autoplay: true,
     autoplaySpeed: 3000,
   };
+
   return (
     <>
       <main>
         <div className="">
           <div className="flex flex-row-reverse">
-            <div className="relative w-full h-[54vh] md:h-[42vh] overflow-hidden">
+            <div className="hero-section relative overflow-hidden">
 
               {/* image slider */}
-              <Slider {...settings}>
+              <Slider {...settings} className="w-full">
                 {images.map((imageUrl, index) => (
-                  <div key={index} className="relative w-full h-[54vh] md:h-[42vh] opacity-80">
+                  <div key={index} className="w-full h-[54vh] md:h-[36vh]">
                     <img
-                      className="absolute object-cover"
+                      className="w-full object-cover h-[54vh] md:h-[28vh] md:opacity-80"
                       src={imageUrl}
                       alt={`Slide ${index + 1}`}
                     />
@@ -47,11 +47,11 @@ const heroSection = () => {
 
               {/* hero content */}
               <div className="absolute inset-0 flex items-end justify-center">
-                <div className="container bg-gradient-to-t via-white from-white bg-opacity-75 text-center px-4 md:px-12 py-6">
-                  <h2 className="text-2xl md:text-4xl font-black text-primary">- EquiParenting -</h2>
-                  <h4 className="text-3xl md:text-5xl text-tertiery font-black my-2 md:my-4">Setara Mulai dari Rumah</h4>
-                  <p className="my-4 text-sm md:text-xl font-medium text-black-color">
-                    <span className="text-sm md:text-xl font-medium text-black-color">&quot;</span>
+                <div className="bg-gradient-to-t via-white from-white bg-opacity-75 text-center md:px-12 py-6">
+                  <h2 className="md:py-2 text-2xl md:text-3xl font-black text-main-color">EquiParenting</h2>
+                  <h4 className="text-3xl md:text-5xl text-tertiery-color font-black my-2 md:my-4 px-2">Setara Mulai dari Rumah</h4>
+                  <p className="my-2 md:my-4 px-4 text-sm md:text-lg font-medium text-black-color">
+                    <span className="text-sm md:text-lg font-medium text-black-color">&quot;</span>
                     Komunikasi, kolaborasi, dan keterlibatan aktif antara Ibu dan Ayah 
                     sangat penting dalam proses pengasuhan anak untuk menciptakan 
                     lingkungan di mana anak-anak dapat tumbuh dan berkembang dengan 
@@ -59,7 +59,7 @@ const heroSection = () => {
                     <span className="text-sm md:text-xl font-medium text-black-color">&quot;</span>
                   </p>
                   <button>
-                    <a href="#" className="flex justify-center bg-primary rounded-3xl mt-2 px-4 py-2 text-sm md:text-lg text-white text-center font-medium hover:bg-tertiery">
+                    <a href="#" className="flex justify-center bg-main-color rounded-3xl mt-2 sm:my-0 px-4 py-2 text-sm md:text-lg text-white text-center font-medium hover:bg-tertiery">
                       Mari Bergabung 
                       {/* <span className="text-align-center"> <AiOutlineArrowRight /> </span> */}
                     </a>

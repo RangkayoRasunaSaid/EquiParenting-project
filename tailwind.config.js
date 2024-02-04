@@ -12,9 +12,9 @@ export default {
       colors: {
         "ungu1": "#675893",
         "ungu2": "#E8DEF7",
-        "primary": "#675893",
-        "secondary": "#E8DEF7",
-        "tertiery": "#7f508f",
+        "main-color": "#675893",
+        "secondary-color": "#E8DEF7",
+        "tertiery-color": "#7f508f",
         "dark-main-color": "#392c60",
       },
       fontSize: {

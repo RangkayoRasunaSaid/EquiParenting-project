@@ -1,4 +1,4 @@
-import NavbarAcc from "../components/NavbarAcc";
+import NavbarAcc from "../components/navbar/Navbar";
 
 const Profile = () => {
   //   const [data, setData] = useState({

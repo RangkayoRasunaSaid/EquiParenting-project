@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import NavbarAcc from "../components/NavbarAcc";
+import NavbarAcc from "../components/navbar/Navbar";
 import { useState } from "react";
 import axios from "axios";
 

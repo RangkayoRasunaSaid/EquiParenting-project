@@ -1,7 +1,7 @@
 const FeatureSection = () => {
   return (
     <>
-      <div className="container bg-lavender-shade mx-auto py-4 text-center">
+      <div className="bg-lavender-shade mx-auto py-4 text-center">
         <h3 className="mt-4 mb-2 px-4 text-2xl md:text-4xl font-bold text-main-color">Belajar & Berkembang</h3>
         <p className="text-md md:text-xl px-4 font-normal text-balck-color">
           Dapatkan tips parenting berdasarkan usia anak

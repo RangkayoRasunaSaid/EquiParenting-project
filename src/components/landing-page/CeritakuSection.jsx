@@ -1,7 +1,7 @@
 const CeritakuSection = () => {
   return (
     <>
-      <div className="grid grid-rows-1 grid-flow-col gap-2 container bg-gradient-to-r from-secondary py-4">
+      <div className="grid grid-rows-1 grid-flow-col gap-2 bg-gradient-to-r from-secondary-color py-4">
         <div className="flex flex-col md:flex-row-reverse mx-auto my-6">
           <div>
             <img
@@ -26,7 +26,7 @@ const CeritakuSection = () => {
             </h4>
 
             {/* button for explore ceritaku */}
-            <div className="mt-6 px-6 md:px-12 text-left">
+            <div className="mt-3 md:mt-6 px-6 md:px-12 text-left">
               <a
                 className="text-base md:text-xl font-semibold tracking-wide bg-main-color text-white rounded-3xl py-2 px-4 md:p-4 inline-block shadow-lg hover:bg-tertiery"
                 href="http://">Bagikan Ceritamu Sekarang!
