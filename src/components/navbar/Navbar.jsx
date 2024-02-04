@@ -1,11 +1,13 @@
 import { useState } from "react"
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import logo from "../../assets/logo.svg"
 import { FaXmark, FaBars } from "react-icons/fa6"
 import ResponsiveMenu from "./ResponsiveMenu"
 
 
 const Navbar = () => {
+  const location = useLocation().pathname;
+
   const navMenu = [
     {link: "Beranda", path: "/"},
     {link: "Parenting", path: "/parenting"},
@@ -14,11 +16,11 @@ const Navbar = () => {
   ]
 
   // State to track the selected link
-  const [selectedLink, setSelectedLink] = useState(null)
+  // const [selectedLink, setSelectedLink] = useState(null)
 
-  const handleMenuClick = (link) => {
-    setSelectedLink(link)
-  }
+  // const handleMenuClick = (link) => {
+  //   setSelectedLink(link)
+  // }
 
   // State to track the visibility of the navMenu
   const [showMenu, setShowMenu] = useState(false)
@@ -49,8 +51,8 @@ const Navbar = () => {
                       style={{color: 'rgba(103, 88, 147)'}}
                       key={link} 
                       to={path} 
-                      onClick = {() => handleMenuClick(link)}
-                      className={`text-lg block py-[4px] px-[16px] rounded-2xl hover:bg-secondary-color hover:font-medium transition-none ${selectedLink === link ? 'bg-secondary-color font-medium transition-none' : ''}`}>
+                      // onClick = {() => handleMenuClick(link)}
+                      className={`text-lg block py-[4px] px-[16px] rounded-2xl hover:bg-secondary-color hover:font-medium transition-none ${path === location ? 'bg-secondary-color font-medium transition-none' : ''}`}>
                       {link}
                     </Link>
                   )

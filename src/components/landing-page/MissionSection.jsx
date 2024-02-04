@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const MissionSection = () => {
   return (
     <>
@@ -78,10 +80,10 @@ const MissionSection = () => {
 
           {/* button for explore mission */}
           <div className="mt-3 md:mt-6 px-6 text-left">
-            <a
+            <Link
               className="text-base md:text-xl font-semibold tracking-wide bg-main-color text-white rounded-3xl py-2 px-4 md:p-4 inline-block shadow-lg hover:bg-tertiery"
-              href="http://">Jelajahi Mission Sekarang!
-            </a>
+              to="/mission">Jelajahi Mission Sekarang!
+            </Link>
           </div>
         </div>
       </div>
