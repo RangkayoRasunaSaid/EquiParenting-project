@@ -1,47 +1,50 @@
 const FeatureSection = () => {
-    return(
-        <>
-            <div className="secondSection container-fluid mx-auto my-6 py-6">
-                <div className="row justify-center text-center">
-                    <div className="col-12 md:col-8">
-                    <h3 className="text-3xl font-bold">Belajar & Berkembang</h3>
-                    <p className="text-lg">Dapatkan tips dan aktivitas berdasarkan usia anak</p>
-                    </div>
-                </div>
-                <div className="grid grid-rows-1 grid-flow-col gap-4">
-                        <div className="flex justify-center mx-auto mt-6 mb-2">
-                            <div>
-                                <img
-                                className="normal-size-feature mx-2"
-                                src="/src/assets/feature-pola-asuh.svg"
-                                alt="equiparenting memiliki concern tentang pola asuh"
-                                />
-                            </div>
-                            <div>
-                                <img
-                                className="bigger-size-feature"
-                                src="/src/assets/feature-emosi-self-awarenes.svg"
-                                alt="equiparenting memiliki concern tentang pola asuh"
-                                />
-                            </div>
-                            <div>
-                                <img
-                                className="normal-size-feature mx-2"
-                                src="/src/assets/feature-perilaku.svg"
-                                alt="equiparenting memiliki concern tentang pola asuh"
-                                />
-                            </div>
-                            <div>
-                                <img
-                                className="normal-size-feature mx-3"
-                                src="/src/assets/feature-sosial.svg"
-                                alt="equiparenting memiliki concern tentang pola asuh"
-                                />
-                            </div>
-                        </div>
-                </div>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div className="bg-lavender-shade mx-auto py-4 text-center">
+        <h3 className="mt-4 mb-2 px-4 text-2xl md:text-4xl font-bold text-main-color">Belajar & Berkembang</h3>
+        <p className="text-md md:text-xl px-4 font-normal text-balck-color">
+          Dapatkan tips parenting berdasarkan usia anak
+        </p>
+
+        {/* parenting features */}
+        <div className="flex md:flex-row flex-col items-center justify-center flex-wrap mt-8 mb-6 gap-4 text-main-color font-semibold text-lg md:text-xl">
+          <div className="flex flex-col items-center mb-2">
+            <img
+              className="size-2/4 md:size-3/5 mb-2"
+              src="/src/assets/pola-asuh.svg"
+              alt="equiparenting memiliki concern tentang pola asuh"
+            />
+            <p>Pola Asuh</p>
+          </div>
+          <div className="flex flex-col items-center mb-2">
+            <img
+              className="size-[44%] md:size-[47%] mb-2"
+              src="/src/assets/emosi-self-awarness.svg"
+              alt="equiparenting memiliki concern tentang pola asuh"
+            />
+            <p>Emosi & Self Awarness</p>
+          </div>
+          <div className="flex flex-col items-center mb-2">
+            <img
+              className="size-2/4 md:size-3/5 mb-2"
+              src="/src/assets/perilaku.svg"
+              alt="equiparenting memiliki concern tentang pola asuh"
+            />
+            <p>Perilaku</p>
+          </div>
+          <div className="flex flex-col items-center mb-2">
+            <img
+              className="size-2/4 md:size-3/5 mb-2"
+              src="/src/assets/sosial.svg"
+              alt="equiparenting memiliki concern tentang pola asuh"
+            />
+            <p>Sosial</p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
+
 export default FeatureSection;

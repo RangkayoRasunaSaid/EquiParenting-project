@@ -9,7 +9,7 @@ const navMenu = [
 
 // eslint-disable-next-line react/prop-types
 const ResponsiveMenu = ({ showMenu }) => {
-  console.log("showMenu", showMenu);
+  // console.log("showMenu", showMenu);
   return (
     <div 
       className={`${showMenu ? "-right-[100%]" : "right-0"} 
@@ -40,11 +40,11 @@ const ResponsiveMenu = ({ showMenu }) => {
           {/* login and register */}
           <div className="space-x-2 pt-4 px-8">
             <button
-              className="py-1 px-4 border-2 rounded-2xl border-primary text-md transition-all duration-300 hover:text-white hover:bg-tertiery hover:border-tertiery">
+              className="py-1 px-4 border-2 rounded-2xl border-main-color text-md transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
               Masuk
             </button>
             <button
-              className="py-1 px-4 border-2 rounded-2xl bg-primary border-primary text-white text-md transition-all duration-300 hover:text-white hover:bg-tertiery hover:border-tertiery">
+              className="py-1 px-4 border-2 rounded-2xl bg-main-color border-main-color text-white text-md transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
               Daftar
             </button>
           </div>

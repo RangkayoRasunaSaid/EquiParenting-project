@@ -29,20 +29,20 @@ const Navbar = () => {
 
   return (
     <>
-     <header className="bg-white shadow-md text-main-color"> 
-        <nav className="bg-white md:px-8 p-4 max-w-screen-2xl mx-auto text-main-color cursor-pointer top-0 right-0 left-0">
-          <div className="container space-x-6 mx-auto flex justify-between items-center">
+     <header className="bg-white text-main-color"> 
+        <nav className="shadow-lg bg-white md:px-[32px] p-[16px] max-w-screen-2xl mx-auto text-main-color cursor-pointer top-0 right-0 left-0">
+          <div className="container space-x-[24px] mx-auto flex justify-between items-center">
 
             {/* logo */}
-            <div className="relative] min-w-screen-md"> 
+            <div className="relative min-w-screen-md"> 
               <Link to="/">
                 <img src={logo} alt="logo" className="w-[120px] h-auto inline-block items-center"/>
               </Link>
             </div>
 
             {/* showing navMenu using map */}
-            <div className="flex items-center space-x-12">
-              <ul className="md:flex space-x-6 hidden m-0 p-0">
+            <div className="flex items-center space-x-[48px]">
+              <ul className="md:flex space-x-[24px] hidden">
                 {
                   navMenu.map(({ link, path }) => 
                     <Link 
@@ -50,7 +50,7 @@ const Navbar = () => {
                       key={link} 
                       to={path} 
                       onClick = {() => handleMenuClick(link)}
-                      className={`no-underline text-lg block py-1 px-4 rounded-2xl hover:bg-secondaryt hover:font-medium transition-none ${selectedLink === link ? 'bg-secondaryt font-medium transition-none' : ''}`}>
+                      className={`text-lg block py-[4px] px-[16px] rounded-2xl hover:bg-secondary-color hover:font-medium transition-none ${selectedLink === link ? 'bg-secondary-color font-medium transition-none' : ''}`}>
                       {link}
                     </Link>
                   )
@@ -58,15 +58,13 @@ const Navbar = () => {
               </ul>
 
               {/* login and register */}
-              <div className="space-x-2 hidden md:flex items-center text-md">
+              <div className="space-x-[8px] hidden md:flex items-center text-base">
                 <button 
-                  style={{borderColor: 'rgba(103, 88, 147)'}}
-                  className="py-1 px-4 border-2 rounded-2xl transition-all duration-300 hover:text-white hover:bg-tertieryt hover:border-tertieryt">
+                  className="py-[4px] px-[16px] border-2 rounded-2xl border-main-color transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
                   Masuk
                 </button>
                 <button 
-                  style={{backgroundColor: 'rgba(103, 88, 147)', borderColor: 'rgba(103, 88, 147)'}}
-                  className="py-1 px-4 border-2 rounded-2xl text-white transition-all duration-300 hover:text-white hover:bg-tertieryt hover:border-tertieryt">
+                  className="py-[4px] px-[16px] border-2 rounded-2xl bg-main-color border-main-color text-white transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
                   Daftar
                 </button>
               </div>
@@ -75,15 +73,6 @@ const Navbar = () => {
 
             {/* mobile display */}
             <div className="md:hidden">
-              {/* <button onClick={toggleMenu}>
-                {
-                  showMenu ? (
-                    <FaXmark className="w-6 h-6 text-main-color cursor-pointer transition-all"/>
-                  ) : (
-                    <FaBars className="w-6 h-6 text-main-color cursor-pointer transition-all"/>
-                  )
-                }
-              </button> */}
               {
                 showMenu ? (
                   <FaBars 
@@ -98,13 +87,6 @@ const Navbar = () => {
             </div>
           </div>
         </nav>
-
-        {/* <div className={`z-40 space-y-4 pt-24 pb-8 bg-white shadow-md rounded-md ${showMenu ? "block fixed top-[89px] right-0 left-[240px]" : "hidden"}`}>
-          {
-            navMenu.map(({ link, path }) => 
-              <a key={link} href={path} className="text-lg text-main-color block p-2 pl-8 rounded-md hover:bg-secondary hover:font-medium transition-none">{link}</a>)
-          }
-        </div> */}
 
         <ResponsiveMenu showMenu={showMenu} toggleMenu={toggleMenu} />
       </header>
