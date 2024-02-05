@@ -22,15 +22,24 @@ const Profile = () => {
       <div className="flex justify-center mx-auto pb-10">
         <div className="bg-ungu2 w-80 lg:w-max p-8 rounded-3xl text-ungu1 font-medium shadow-lg">
           <form>
-            <div>
-              <div></div>
+            <div className="flex items-center gap-4 lg:gap-8">
+              <div>
+                <img src="/src/assets/default.png" className="max-w-16 lg:max-w-24" />
+                <input type="file" id="file" style={{ display: "none" }} />
+                <label
+                  htmlFor="file"
+                  className="bg-white px-2 py-1 lg:px-3 lg:py-2 rounded-full cursor-pointer absolute transform translate-x-10 -translate-y-16 lg:translate-x-16 lg:-translate-y-24"
+                >
+                  ✎
+                </label>
+              </div>
               <div>
                 <label className="lg:text-lg">Username</label>
                 <br />
                 <input
-                  className="w-full my-2 lg:my-3 h-9 lg:h-12 rounded-full px-4 focus:outline-none focus:ring-4 focus:ring-ungu1"
+                  className="w-full lg:w-64 my-2 lg:my-3 h-9 lg:h-12 rounded-full px-4 focus:outline-none focus:ring-4 focus:ring-ungu1"
                   type="text"
-                  placeholder=""
+                  placeholder="Username"
                   required
                 />
               </div>
