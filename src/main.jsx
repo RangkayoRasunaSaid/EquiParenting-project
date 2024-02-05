@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './components/ActivityCard/MomActivity'
+import App from './components/landing-page/index'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -20,7 +20,7 @@ export default {
         'light-main-color': '#776493',
         'dark-main-color': '#392c60',
       },
-      colors: {
+      colorsOrigin: {
         "primary": "#675893",
         "secondary": "#E8DEF7",
         "tertiery": "#7f508f",
