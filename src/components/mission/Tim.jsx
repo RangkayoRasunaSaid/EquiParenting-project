@@ -1,82 +1,46 @@
-import Modal from "./ModalTim";
+import ProgressBar from "@ramonak/react-progress-bar";
+import ModalButton from "./ModalButton";
+import ModalTim from "./ModalTim";
 
 export default function Tim() {
-    const modalContent = (
-        <>
-            <div className="grid justify-items-center">
-                <div className="grid content-center size-52 text-center rounded-full mb-3 text-md font-bold p-4" style={{backgroundColor:"#d9d9d9", color:"#a49eb5"}}>
-                    <label role="button" for='file-input'>
-                        <p className="mb-4">Unggah<br />Foto</p>
-                        <h1 className="text-5xl" style={{color:"#675893"}}><i className="bi bi-upload"></i></h1>
-                    </label>
-                    <input id="file-input" type="file" style={{display:"none"}} />
-                </div>
+    const mdlBtn = (
+        <div role="button" className="p-3 rounded-[40px] border-0 shadow-md h-100 bg-main-color text-white flex flex-col justify-between">
+            <h5 className="text-2xl font-bold">Tambah Anggota</h5>
+            <h6 className="text-7xl font-bold">+</h6>
+            <div className="text-lg font-bold bg-transparent border-0">
+                Max Total 2 Tim
             </div>
-            <form className="fs-2 mb-2 font-bold">
-                <div class="row mb-0">
-                    <label for="inputName" class="col-sm-3 col-form-label">Nama:</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control border-0 fs-2 mb-1 font-bold" id="inputName" placeholder="Masukkan Nama" />
-                    </div>
-                </div>
-                <div class="row mt-0 mb-3 items-center">
-                    <label for="inputRole" class="col-sm-3 col-form-label">Peran:</label>
-                    <div class="col-sm-7">
-                        <select id="inputRole" className="ms-2 form-select fs-5 font-bold rounded-lg form-select-lg" style={{color:"#d9d9d9"}} aria-label="Small select example">
-                            <option className="font-bold" style={{color:"#675893"}} selected value="1">Silahkan Pilih</option>
-                            <option className="font-bold" style={{color:"#675893"}}>Bunda</option>
-                            <option className="font-bold" style={{color:"#675893"}} value="1">Ayah</option>
-                        </select>
-                    </div>
-                </div>
-                <div className="flex justify-center">
-                    <button className="purpleBg text-lg rounded-md shadow-md p-4 font-semibold">TAMBAHKAN</button>
-                </div>
-            </form>
-        </>
+        </div>
     )
     return (
         <div className="m-4 p-sm-3 p-md-4 p-2 ">
-            <h1 className="text-center fs-2 mb-2 font-bold">Tim</h1>
-            <div className="grid lg:grid-cols-3 gap-3 text-center text-inherent p-sm-4 p-md-5 p-2">
-                <div>
-                    <div data-bs-toggle="modal" data-bs-target="#exampleModal" role="button" className="p-3 rounded-[40px] border-0 shadow-md h-100 purpleBg flex flex-col justify-between">
-                        <h5 className="text-2xl font-bold">Tambah Anggota</h5>
-                        <h6 className="text-7xl font-bold">+</h6>
-                        <div className="text-lg font-bold bg-transparent border-0">
-                            Max Total 5 Tim
-                        </div>
+            <h1 className="text-center text-3xl mb-2 font-bold">Tim</h1>
+            <div className="grid md:grid-cols-3 gap-3 text-center p-sm-4 p-md-5 p-2">
+                <ModalButton btnContent={mdlBtn} mdlContent={(<ModalTim />)} />
+                <div className="p-3 rounded-[40px] border-0 shadow-md h-100">
+                    <div className="flex justify-center mb-2">
+                        <img className="rounded-full ring-2 ring-purple-500" style={{height:"90px", width:"90px"}} alt="..." src="https://pedulihatibangsa.id/wp-content/uploads/2023/01/Mama_hug_2-1024x1024.jpg" />
                     </div>
-                    <Modal />
-                </div>
-                <div>
-                    <div className="p-3 rounded-[40px] border-0 shadow-md h-100">
-                        <div className="flex justify-center mb-2">
-                            <img className="rounded-full ring-2 ring-purple-500" style={{height:"90px", width:"90px"}} alt="..." src="https://pedulihatibangsa.id/wp-content/uploads/2023/01/Mama_hug_2-1024x1024.jpg" />
+                    <h5 className="text-xl font-bold" style={{color:"#675893"}}>Bunda</h5>
+                    <p className="text-slate-300 font-bold text-sm my-2">Sarah</p>
+                    <div className="grid grid-cols-12 items-center">
+                        <div className="col-start-1 col-end-12 pe-2">
+                            <ProgressBar completed={93} height="10px" labelSize="10px" isLabelVisible={false} bgColor="rgba(103, 88, 147)" baseBgColor="#3b363d" />
                         </div>
-                        <h5 className="text-xl font-bold" style={{color:"#675893"}}>Bunda</h5>
-                        <p className="text-slate-300 font-bold text-sm my-2">Sarah</p>
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <div className="progress bg-slate-700" role="progressbar" style={{ height: "10px", width: "100%" }} aria-label="Example with label" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100">
-                                <div className="progress-bar" style={{ width: "93%", backgroundColor: 'rgba(103, 88, 147)' }}></div>
-                            </div>
-                            <span className="progress-label text-xs ml-2">93%</span>
-                            </div>
+                        <div className="text-xs text-right col-start-12">93%</div>
                     </div>
                 </div>
-                <div>
-                    <div className="p-3 rounded-[40px] border-0 shadow-md h-100 flex flex-col justify-center">
-                        <div className="flex justify-center mb-2">
-                            <img className="rounded-full ring-2 ring-purple-500" style={{height:"90px", width:"90px"}} alt="..." src="https://pedulihatibangsa.id/wp-content/uploads/2023/01/Mama_hug_2-1024x1024.jpg" />
+                <div className="p-3 rounded-[40px] border-0 shadow-md h-100 flex flex-col justify-center">
+                    <div className="flex justify-center mb-2">
+                        <img className="rounded-full ring-2 ring-purple-500" style={{height:"90px", width:"90px"}} alt="..." src="https://pedulihatibangsa.id/wp-content/uploads/2023/01/Mama_hug_2-1024x1024.jpg" />
+                    </div>
+                    <h5 className="text-xl font-bold" style={{color:"#675893"}}>Ayah</h5>
+                    <p className="text-slate-300 font-bold text-sm my-2">Adrian</p>
+                    <div className="grid grid-cols-12 items-center">
+                        <div className="col-start-1 col-end-12 pe-2">
+                            <ProgressBar completed={93} height="10px" labelSize="10px" isLabelVisible={false} bgColor="rgba(103, 88, 147)" baseBgColor="#3b363d" />
                         </div>
-                        <h5 className="text-xl font-bold" style={{color:"#675893"}}>Ayah</h5>
-                        <p className="text-slate-300 font-bold text-sm my-2">Adrian</p>
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <div className="progress bg-slate-700" role="progressbar" style={{ height: "10px", width: "100%" }} aria-label="Example with label" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100">
-                                <div className="progress-bar" style={{ width: "93%", backgroundColor: 'rgba(103, 88, 147)' }}></div>
-                            </div>
-                            <span className="progress-label text-xs ml-2">93%</span>
-                        </div>
+                        <div className="text-xs text-right col-start-12">93%</div>
                     </div>
                 </div>
             </div>

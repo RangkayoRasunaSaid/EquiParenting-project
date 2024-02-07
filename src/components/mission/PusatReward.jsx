@@ -55,7 +55,7 @@ export default function PusatReward({ }) {
         //   }, []);
 
       return (
-        <div className="bg-white p-sm-3 p-md-4 p-2 rounded-[60px] flex flex-col justify-center">
+        <div className="bg-white sm:p-5 md:p-10 p-3 rounded-[60px] flex flex-col justify-center">
             <h1 className="text-center text-3xl font-bold">Pusat Reward</h1>
             <div className="bg-white m-4 rounded-[60px] shadow-md flex-none lg:flex pb-sm-3 pb-md-4 pb-2 ps-sm-3 ps-md-4 ps-2">
                 <div className="lg:w-1/3">
@@ -73,9 +73,8 @@ export default function PusatReward({ }) {
                 </div>
             </div>
             <Link to="/mission/daily-mission">
-                <button className="p-sm-3 p-md-4 mb-4 p-3 mx-5 purpleBg rounded-[60px] font-bold shadow-md" style={{width: '90%'}}>Lihat Aktivitas Daily Mission</button>
+                <button className="p-sm-3 p-md-4 mb-4 p-3 mx-5 text-white bg-main-color rounded-[60px] font-bold shadow-md" style={{width: '95%'}}>Lihat Aktivitas Daily Mission</button>
             </Link>
-            {/* <button onClick={onButtonClick} className="p-sm-3 p-md-4 mb-4 p-3 mx-5 purpleBg rounded-5 font-bold shadow-md">Lihat Aktivitas Daily Mission</button> */}
             <div className="p-sm-3 p-md-4 p-3 px-sm-4 px-md-5 px-3 mb-4 mx-sm-1 mx-md-5 mx-1 bg-white shadow-md rounded-[60px]">
                 <h1 className="text-center text-3xl font-bold mb-4">Ringkasan</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">

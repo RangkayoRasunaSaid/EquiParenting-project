@@ -1,45 +1,33 @@
 import Breadcrumbs from '../Breadcrumbs.jsx';
-import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DailyMission from './DailyMission';
 import PusatReward from './PusatReward';
-import '../../App.scss'
+import MisiBunda from './MisiBunda.jsx';
+import MisiAyah from './MisiAyah.jsx';
+import { BaseModalBackground, ModalProvider } from 'styled-react-modal';
+import styled from 'styled-components';
+// import '../../App.scss'
+
+const FadingBackground = styled(BaseModalBackground)`
+    opacity: ${(props) => props.opacity};
+    transition: all 0.3s ease-in-out;
+`;
 
 export default function App() {
-    const [showDailyMission, setShowDailyMission] = useState(false);
-
-    const toggleComponent = () => {
-        setShowDailyMission(!showDailyMission);
-    };
-
     return (
-        <div className="bg-gradient-to-r from-violet-100 m-sm-3 m-md-5 m-2 p-sm-3 p-md-5 p-2 rounded-[60px]">
-            <Breadcrumbs />
-            <h1 className="text-center text-4xl mb-4 font-semibold">
-                Selamat datang di misi keluarga idaman!
-            </h1>
-            <Routes>
-                <Route path="/" element={<PusatReward />} />
-                <Route path="/daily-mission" element={<DailyMission />} />
-            </Routes>
-            {/* {showDailyMission && (
-                <div className="mb-3 font-bold text-lg" style={{color:"#a49eb5"}}>
-                    <span style={{color:"#a49eb5"}} onClick={() => setShowDailyMission(false)} className="cursor-pointer text-blue-500">
-                        Mission
-                    </span>
-                    {' > '}
-                    Daily Mission
-                </div>
-            )} */}
-
-            {/* Render the appropriate component based on the state */}
-            {/* {showDailyMission ? (
-                <DailyMission />
-            ) : (
-                <>
-                    <PusatReward onButtonClick={toggleComponent} />
-                </>
-            )} */}
-        </div>
+        <ModalProvider backgroundComponent={FadingBackground}>
+            <div className="text-main-color bg-gradient-to-r from-violet-100 my-10 sm:mx-5 md:mx-20 mx-3 sm:p-3 sm:p-10 md:p-20 p-5 rounded-[60px]">
+                <Breadcrumbs />
+                <h1 className="text-center text-4xl mb-10 font-semibold">
+                    Selamat datang di misi keluarga idaman!
+                </h1>
+                <Routes>
+                    <Route path="/" element={<PusatReward />} />
+                    <Route path="/daily-mission" element={<DailyMission />} />
+                    <Route path="/daily-mission/misi-bunda" element={<MisiBunda />} />
+                    <Route path="/daily-mission/misi-ayah" element={<MisiAyah />} />
+                </Routes>
+            </div>
+        </ModalProvider>
     );
 }
