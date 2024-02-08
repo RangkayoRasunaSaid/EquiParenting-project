@@ -9,6 +9,7 @@ export default function ModalButton({ btnContent, mdlContent, maxWidth='400px' }
     const StyledModal = Modal.styled`
         max-width: ${maxWidth};
         border-radius: 25px;
+        position: relative;
         background-color: white;
         opacity: ${(props) => props.opacity};
         transition : all 0.3s ease-in-out;
@@ -44,9 +45,7 @@ export default function ModalButton({ btnContent, mdlContent, maxWidth='400px' }
                 opacity={opacity}
                 backgroundProps={{ opacity }}
             >
-                <div className="grid justify-items-end sticky top-0 z-50">
-                    <button className="pe-5 pt-5" onClick={toggleModal}><BsXLg /></button>
-                </div>
+                <button className="absolute top-0 right-0 z-50 pe-5 pt-5" onClick={toggleModal}><BsXLg /></button>
                 {mdlContent}
             </StyledModal>
         </div>

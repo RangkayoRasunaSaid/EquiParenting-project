@@ -1,5 +1,7 @@
 import SummaryCard from './SummaryCard.jsx';
 import WheelComponent from './WheelComponent.jsx';
+import ModalButton from "./modals/ModalButton";
+import ModalSpin from "./modals/ModalSpin";
 import { Link } from 'react-router-dom';
 
 export default function PusatReward({ }) {
@@ -59,7 +61,13 @@ export default function PusatReward({ }) {
             <h1 className="text-center text-3xl font-bold">Pusat Reward</h1>
             <div className="bg-white m-4 rounded-[60px] shadow-md flex-none lg:flex pb-sm-3 pb-md-4 pb-2 ps-sm-3 ps-md-4 ps-2">
                 <div className="lg:w-1/3">
-                    <WheelComponent />
+                    <ModalButton btnContent={(
+                        <img role='button' className='rounded-circle' src="https://tr.rbxcdn.com/4010ec7c19018ebf46fde61a66b302f7/420/420/Image/Png" alt="spin-wheel" />
+                        )}
+                        mdlContent={(<ModalSpin />)}
+                        maxWidth='100vw'
+                    />
+                    {/* <WheelComponent /> */}
                 </div>
                 <div className="text-center lg:w-1/3 p-sm-3 p-md-4 p-2">
                     <h3 className='text-xl font-semibold'>Ayah</h3>
