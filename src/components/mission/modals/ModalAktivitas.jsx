@@ -1,7 +1,7 @@
 export default function Modal() {
     return (
         <div className="px-5" style={{color:"#675893"}}>
-            <h1 className="text-center text-3xl mb-4 font-bold">Task Baru</h1>
+            <h1 className="text-center text-3xl my-4 font-bold">Task Baru</h1>
             <form className="text-2xl mb-2 font-bold">
                 <div className="flex gap-4 mb-3">
                     <label for="inputTask">Judul Task:</label>

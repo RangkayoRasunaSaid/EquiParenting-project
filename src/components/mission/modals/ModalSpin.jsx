@@ -113,7 +113,7 @@ export default function ModalSpin() {
                 </div>
                 {chosenSector && (
                     <div className='md:col-span-1 col-span-4 flex justify-center'>
-                        <p className='w-44 flex flow-col items-center text-center font-semibold' id="chosen-sector">
+                        <p className='min-h-20 w-44 flex flow-col items-center text-center font-semibold' id="chosen-sector">
                             Chosen Reward: <br />{chosenSector}
                         </p>
                     </div>
