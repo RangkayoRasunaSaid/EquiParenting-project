@@ -1,5 +1,7 @@
+import MisiAnggota from "./MisiAnggota";
+
 export default function MisiAyah() {
     return (
-        <h1>Misi Harian Ayah</h1>
+        <MisiAnggota peran='Ayah' />
     )
 }

@@ -32,7 +32,7 @@ export default function Tim() {
                 </div>
                 <div className="p-3 rounded-[40px] border-0 shadow-md h-100 flex flex-col justify-center">
                     <div className="flex justify-center mb-2">
-                        <img className="rounded-full ring-2 ring-purple-500" style={{height:"90px", width:"90px"}} alt="..." src="https://pedulihatibangsa.id/wp-content/uploads/2023/01/Mama_hug_2-1024x1024.jpg" />
+                        <img className="rounded-full ring-2 ring-purple-500" style={{height:"90px", width:"90px"}} alt="..." src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRSTr5uG-dPgDdvqjbo5OLKtyB6EDFsaRo5fUuVpit58jsyjGK2" />
                     </div>
                     <h5 className="text-xl font-bold" style={{color:"#675893"}}>Ayah</h5>
                     <p className="text-slate-300 font-bold text-sm my-2">Adrian</p>

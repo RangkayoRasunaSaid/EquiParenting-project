@@ -45,18 +45,20 @@ const Navbar = () => {
             {/* showing navMenu using map */}
             <div className="flex items-center space-x-[48px]">
               <ul className="md:flex space-x-[24px] hidden">
-                {
-                  navMenu.map(({ link, path }) => 
+                {navMenu.map(({ link, path }) => {
+                  let isActive = false
+                  if (location !== '/') isActive = location.startsWith(path) && path !== "/"
+                  else if (location === '/') isActive = location === path
+                  return (
                     <Link 
-                      style={{color: 'rgba(103, 88, 147)'}}
                       key={link} 
                       to={path} 
-                      // onClick = {() => handleMenuClick(link)}
-                      className={`text-lg block py-[4px] px-[16px] rounded-2xl hover:bg-secondary-color hover:font-medium transition-none ${path === location ? 'bg-secondary-color font-medium transition-none' : ''}`}>
+                      className={`text-lg block py-[4px] px-[16px] rounded-2xl hover:bg-secondary-color hover:font-medium transition-none ${isActive ? 'bg-secondary-color font-medium transition-none' : ''}`}
+                      style={{ color: isActive ? 'rgba(103, 88, 147)' : '' }}>
                       {link}
                     </Link>
-                  )
-                }
+                  );
+                })}
               </ul>
 
               {/* login and register */}
