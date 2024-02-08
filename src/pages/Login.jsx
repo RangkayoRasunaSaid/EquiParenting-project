@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavbarAcc from "../components/NavbarAcc";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const Login = () => {
@@ -9,14 +9,39 @@ const Login = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("", data);
-      console.log(response.data);
+      const response = await axios.post("http://localhost:3000/login", data);
+      const { token } = response.data;
+
+      sessionStorage.setItem("token", token);
+
+      alert("Login Berhasil");
+
+      navigate("/");
     } catch (error) {
-      console.error("Proses Login Gagal:", error.message);
+      if (error.response) {
+        const status = error.response.status;
+        if (status === 404) {
+          alert("User tidak ditemukan");
+        } else if (status === 401) {
+          alert("Password yang dimasukkan salah");
+        }
+      } else {
+        console.error("Proses Login Gagal:", error.message);
+        alert("Login gagal, silakan coba lagi");
+      }
     }
   };
 

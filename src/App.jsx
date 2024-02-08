@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import DailyMission from "./pages/daily-mission";
+import Authenticated from "./components/Authenticated";
 
 function App() {
   return (
@@ -17,8 +18,22 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/mission/daily-mission" element={<DailyMission />} />
+            <Route
+              path="/profile"
+              element={
+                <Authenticated>
+                  <Profile />
+                </Authenticated>
+              }
+            />
+            <Route
+              path="/mission/daily-mission"
+              element={
+                <Authenticated>
+                  <DailyMission />
+                </Authenticated>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </>

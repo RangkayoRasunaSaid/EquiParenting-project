@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavbarAcc from "../components/NavbarAcc";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const Register = () => {
@@ -11,21 +11,57 @@ const Register = () => {
     confirmPassword: "",
   });
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    if (!data.username || !data.email || !data.password || !data.confirmPassword) {
+      alert("Harap lengkapi semua kolom!");
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(data.email)) {
+      alert("Harap masukkan alamat email yang valid!");
+      return;
+    }
+
+    if (data.password.length < 8) {
+      alert("Password harus memiliki minimal 8 karakter!");
+      return;
+    }
+
     if (data.password !== data.confirmPassword) {
       alert("Password dan Konfrimasi Password tidak sesuai");
       return;
     }
+
     try {
-      const response = await axios.post("", {
+      const response = await axios.post("http://localhost:3000/register", {
         username: data.username,
         email: data.email,
         password: data.password,
       });
-      console.log(response.data);
+
+      alert("Pendaftaran akun berhasil!");
+      window.location.href = "/login";
     } catch (error) {
-      console.error("Pendaftaran Akun Gagal:", error.message);
+      if (error.response) {
+        if (error.response.status === 400) {
+          alert("Email sudah terdaftar, silakan gunakan email lain.");
+        } else {
+          console.error("Pendaftaran Akun Gagal:", error.message);
+          alert("Pendaftaran akun anda gagal! Silakan coba lagi");
+        }
+      }
     }
   };
 
@@ -84,6 +120,8 @@ const Register = () => {
                   required
                 />
               </div>
+
+              {/* ceklis persetujuan user atas syarat dan kebijakan privasi */}
 
               {/* <div className="text-xxs my-2">
                 <label className="flex gap-3 items-start">
