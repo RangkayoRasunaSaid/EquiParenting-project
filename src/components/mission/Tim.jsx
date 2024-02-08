@@ -15,7 +15,7 @@ export default function Tim() {
     return (
         <div className="m-4 p-sm-3 p-md-4 p-2 ">
             <h1 className="text-center text-3xl mb-2 font-bold">Tim</h1>
-            <div className="grid md:grid-cols-3 gap-3 text-center p-sm-4 p-md-5 p-2">
+            <div className="grid justify-items-stretch md:grid-cols-3 gap-3 text-center p-sm-4 p-md-5 p-2">
                 <ModalButton btnContent={mdlBtn} mdlContent={(<ModalTim />)} />
                 <div className="p-3 rounded-[40px] border-0 shadow-md h-100">
                     <div className="flex justify-center mb-2">

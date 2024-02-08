@@ -33,7 +33,7 @@ export default function MisiAnggota({ peran }) {
                     <BsArrowLeftShort />
                 </Link>
                 <h1>Aktivitas {peran}</h1>
-                <ModalButton btnContent={(<BsFillQuestionCircleFill />)} mdlContent={(<ModalHelp />)} maxWidth="1000px" />
+                <ModalButton btnContent={(<BsFillQuestionCircleFill role="button" />)} mdlContent={(<ModalHelp />)} maxWidth="1000px" />
             </div>
             <div className=" mb-10">
                 <h1 className="text-2xl font-semibold text-center">Misi Harian</h1>

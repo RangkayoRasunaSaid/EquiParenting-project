@@ -8,12 +8,10 @@ export default function ModalButton({ btnContent, mdlContent, maxWidth='400px' }
 
     const StyledModal = Modal.styled`
         max-width: ${maxWidth};
-        max-height: 95vh;
         border-radius: 25px;
         background-color: white;
         opacity: ${(props) => props.opacity};
         transition : all 0.3s ease-in-out;
-        overflow-y: auto;
     `;
 
     function toggleModal(e) {
