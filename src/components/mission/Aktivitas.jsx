@@ -40,7 +40,7 @@ export default function Aktivitas(){
             <ModalButton btnContent={mdlBtn} mdlContent={(<ModalPeriode />)} />
             <h1 className='text-center font-bold text-lg mt-10 mb-3'>Periode 2 Januari 2024 - 9 Januari 2024</h1>
             
-            <div className="flex justify-center gap-10 text-center p-2">
+            <div className="flex justify-center sm:gap-10 gap-5 text-center p-2">
                 <div className="px-10 py-6 rounded-[20px] border-0 shadow-md h-100">
                     <Link to="/mission/daily-mission/misi-bunda">
                         <h5 className="text-xl font-bold" style={{color:"#675893"}}>Misi Bunda</h5>
