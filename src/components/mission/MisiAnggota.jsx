@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import OwlCarousel from 'react-owl-carousel'
 import 'owl.carousel/dist/assets/owl.carousel.css'
 import 'owl.carousel/dist/assets/owl.theme.default.css'
-import ModalButton from "./ModalButton";
-import ModalAktivitas from "./ModalAktivitas"
-import ModalHelp from "./ModalHelp";
+import ModalButton from "./modals/ModalButton";
+import ModalAktivitas from "./modals/ModalAktivitas"
+import ModalHelp from "./modals/ModalHelp";
 import TaskItem from "./TaskItem";
 
 export default function MisiAnggota({ peran }) {

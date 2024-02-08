@@ -1,6 +1,6 @@
 import ProgressBar from "@ramonak/react-progress-bar";
-import ModalButton from "./ModalButton";
-import ModalTim from "./ModalTim";
+import ModalButton from "./modals/ModalButton";
+import ModalTim from "./modals/ModalTim";
 
 export default function Tim() {
     const mdlBtn = (

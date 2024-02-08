@@ -2,10 +2,10 @@ import OwlCarousel from 'react-owl-carousel'
 import { Link } from 'react-router-dom'
 import 'owl.carousel/dist/assets/owl.carousel.css'
 import 'owl.carousel/dist/assets/owl.theme.default.css'
-import Modal from "./ModalAktivitas"
+import Modal from "./modals/ModalAktivitas"
 import TaskItem from './TaskItem'
-import ModalButton from './ModalButton'
-import ModalPeriode from './ModalPeriode'
+import ModalButton from './modals/ModalButton'
+import ModalPeriode from './modals/ModalPeriode'
 
 export default function Aktivitas(){
     const mdlBtn = (
