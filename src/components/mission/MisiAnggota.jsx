@@ -35,7 +35,7 @@ export default function MisiAnggota({ peran }) {
                 <h1>Aktivitas {peran}</h1>
                 <ModalButton btnContent={(<BsFillQuestionCircleFill role="button" />)} mdlContent={(<ModalHelp />)} maxWidth="1000px" />
             </div>
-            <div className=" mb-10">
+            {/* <div className=" mb-10">
                 <h1 className="text-2xl font-semibold text-center">Misi Harian</h1>
                 <OwlCarousel className='owl-theme' {...options} >
                     <TaskItem
@@ -59,7 +59,7 @@ export default function MisiAnggota({ peran }) {
                         approvedBy='Ayah'
                     />
                 </OwlCarousel>
-            </div>
+            </div> */}
             <div>
                 <h1 className="text-2xl font-semibold text-center">Yuk, Buat Misi Sendiri Untuk {peran}!</h1>
                 <OwlCarousel className='owl-theme' {...options} >

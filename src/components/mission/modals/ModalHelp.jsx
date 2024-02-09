@@ -1,7 +1,7 @@
 export default function ModalHelp() {
     return (
         <div>
-            <h1 className="sticky top-0 bg-white py-5 text-center text-2xl font-bold ungu1">Petunjuk Pembuatan Aktivitas</h1>
+            <h1 className="rounded-3xl sticky top-0 bg-white py-5 text-center text-2xl font-bold ungu1">Petunjuk Pembuatan Aktivitas</h1>
             <div style={{overflowY: 'scroll', maxHeight: '70vh'}}>
                 <img className="rounded-[90px]" src="https://raw.githubusercontent.com/RangkayoRasunaSaid/EquiParenting-project/diah/activity-card-main/src/assets/fitur-mission-mom.png" alt="" />
                 <div className="flex justify-center mt-5">

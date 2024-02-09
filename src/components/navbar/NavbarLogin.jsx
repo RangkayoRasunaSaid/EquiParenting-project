@@ -1,11 +1,23 @@
 import { useState } from "react"
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from "../../assets/logo.svg"
 import { FaXmark, FaBars } from "react-icons/fa6"
 import { FaUserCircle } from "react-icons/fa"
 import ResponsiveMenu from "./ResponsiveMenu"
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const handleLogout = () => {
+    // Clear authentication data
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("username");
+
+    // Redirect to the login page
+    navigate("/login");
+  };
+
   const location = useLocation().pathname
 
   const navMenu = [
@@ -70,14 +82,33 @@ const Navbar = () => {
                   </>
                 ) : (
                   // Display "Profile" button when authenticated
-                  <Link key="/profile" to="/profile">
-                    <div className="flex px-4 items-center justify-start gap-3 hover:">
-                      <FaUserCircle size={50} className="hover:lavender-shade transition-all" />
+                  <div className="relative">
+                    <div
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
+                      className="flex items-center px-4 gap-3 cursor-pointer"
+                    >
+                      <FaUserCircle size={30} className="hover:lavender-shade transition-all" />
                       <div>
                         <h1>{isAuthenticated.username}</h1>
                       </div>
                     </div>
-                  </Link>
+                    {dropdownOpen && (
+                      <div className="absolute bg-white shadow-md top-full right-0 mt-1">
+                        <ul>
+                          <li>
+                            <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">
+                              Profile
+                            </Link>
+                          </li>
+                          <li>
+                            <button onClick={handleLogout} className="block px-4 py-2 hover:bg-gray-100 w-full text-left">
+                              Logout
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                </div>
                 )}
               </div>
             </div>
