@@ -1,24 +1,42 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavbarAcc from "../components/navbar/Navbar";
 import { useState } from "react";
-import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { loginUser } from "../api";
+import { login } from "../store/userSlice";
 
 const Login = () => {
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
+  const handleLogin = async () => {
     try {
-      const response = await axios.post("", data);
-      console.log(response.data);
+      await loginUser({ email, password })
+      dispatch(login(email))
+      navigate('/')
     } catch (error) {
-      console.error("Proses Login Gagal:", error.message);
+      console.error('Login error:', error);
     }
-  };
+  }
+  
+// const Login = () => {
+//   const [data, setData] = useState({
+//     email: "",
+//     password: "",
+//   });
+
+//   const handleLogin = async (e) => {
+//     e.preventDefault();
+
+//     try {
+//       const response = await axios.post("", data);
+//       console.log(response.data);
+//     } catch (error) {
+//       console.error("Proses Login Gagal:", error.message);
+//     }
+//   };
 
   return (
     <div className="bg-[url('/src/assets/background2.jpg')] min-h-screen">
@@ -37,8 +55,8 @@ const Login = () => {
                 <input
                   className="w-full my-2 lg:my-3 h-9 lg:h-12 rounded-full px-4 focus:outline-none focus:ring-4 focus:ring-ungu1"
                   type="email"
-                  value={data.email}
-                  onChange={(e) => setData({ ...data, email: e.target.value })}
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -48,8 +66,8 @@ const Login = () => {
                 <input
                   className="w-full my-2 lg:my-3 h-9 lg:h-12 rounded-full px-4 focus:outline-none focus:ring-4 focus:ring-ungu1"
                   type="password"
-                  value={data.password}
-                  onChange={(e) => setData({ ...data, password: e.target.value })}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
                   required
                 />
               </div>
