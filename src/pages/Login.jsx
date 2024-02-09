@@ -18,8 +18,12 @@ const Login = () => {
     }
   }, [navigate]);
 
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    setIsLoggingIn(true);
 
     try {
       const response = await axios.post("http://localhost:3000/login", data);
@@ -42,6 +46,8 @@ const Login = () => {
         console.error("Proses Login Gagal:", error.message);
         alert("Login gagal, silakan coba lagi");
       }
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -89,7 +95,12 @@ const Login = () => {
               <div className="flex justify-center mt-4 lg:mt-8">
                 <button
                   type="submit"
-                  className="hover:bg-ungu1 bg-ungu1/50 text-white text-sm lg:text-base w-20 lg:w-28 p-2 rounded-full"
+                  disabled={isLoggingIn}
+                  className={
+                    isLoggingIn
+                      ? "bg-ungu1/50 bg-opacity-70 cursor-wait text-white text-sm lg:text-base w-20 lg:w-28 p-2 rounded-full"
+                      : "hover:bg-ungu1 bg-ungu1/50 text-white text-sm lg:text-base w-20 lg:w-28 p-2 rounded-full"
+                  }
                 >
                   Masuk
                 </button>

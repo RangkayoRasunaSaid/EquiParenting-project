@@ -20,8 +20,12 @@ const Register = () => {
     }
   }, [navigate]);
 
+  const [isRegistering, setIsRegistering] = useState(false);
+
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    setIsRegistering(true);
 
     if (!data.username || !data.email || !data.password || !data.confirmPassword) {
       alert("Harap lengkapi semua kolom!");
@@ -145,7 +149,12 @@ const Register = () => {
               <div className="flex justify-center my-5">
                 <button
                   type="submit"
-                  className="hover:bg-ungu1 bg-ungu1/50 text-white text-sm lg:text-base w-20 lg:w-28 p-2 rounded-full"
+                  disabled={isRegistering}
+                  className={
+                    isRegistering
+                      ? "bg-ungu1/50 bg-opacity-70 cursor-wait text-white text-sm lg:text-base w-20 lg:w-28 p-2 rounded-full"
+                      : "hover:bg-ungu1 bg-ungu1/50 text-white text-sm lg:text-base w-20 lg:w-28 p-2 rounded-full"
+                  }
                 >
                   Daftar
                 </button>

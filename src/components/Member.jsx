@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
-// Define MemberItem component before Member component
 const MemberItem = ({ member }) => {
   return (
     <div className="bg-white p-2 lg:p-8 lg:w-48 rounded-lg drop-shadow-lg flex flex-col items-center">
@@ -24,29 +22,20 @@ const MemberItem = ({ member }) => {
   );
 };
 
-// Define Member component
-const Member = () => {
-  const [members, setMembers] = useState([]);
+const Member = ({ members }) => {
+  const [membersData, setMembersData] = useState([]);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    axios
-      .get("http://localhost:3000/members", { headers: { Authorization: token } })
-      .then((response) => {
-        setMembers(response.data.members);
-      })
-      .catch((error) => {
-        console.error("Error fetching members:", error);
-      });
-  }, []);
+    setMembersData(members);
+  }, [members]);
 
-  if (members.length === 0) {
+  if (membersData.length === 0) {
     return null;
   }
 
   return (
     <div className="flex flex-wrap justify-center gap-3 lg:gap-12">
-      {members.map((member, index) => (
+      {membersData.map((member, index) => (
         <MemberItem key={index} member={member} />
       ))}
     </div>
