@@ -1,7 +1,7 @@
 export default function ModalPeriode() {
     return (
         <div className="px-5">
-            <h1 className="text-center font-bold text-lg mb-5">Atur Rentang Waktu Misi</h1>
+            <h1 className="text-center font-bold text-lg my-5">Atur Rentang Waktu Misi</h1>
             <h1 className="font-semibold text-sm">Petunjuk:</h1>
             <p className="text-sm mb-5">Atur rentang waktu kapan misi dimulai dan selesai untuk menentukan periode Anda atau member agar dapat melakukan pemutaran hadiah di Pusat Reward.</p>
             <form className="mb-2 font-semibold">

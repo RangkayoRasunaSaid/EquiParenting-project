@@ -1,7 +1,7 @@
 export default function ModalTim() {
     return (
         <div className="px-5">
-            <h1 className="text-center font-bold text-lg mb-5">Tim Baru</h1>
+            <h1 className="text-center font-bold text-lg my-5">Tim Baru</h1>
             <div className="grid justify-items-center">
                 <div className="grid content-center size-40 text-center rounded-full mb-3 text-md font-bold p-4" style={{backgroundColor:"#d9d9d9", color:"#a49eb5"}}>
                     <label role="button" for='file-input'>
