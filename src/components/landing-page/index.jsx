@@ -14,9 +14,9 @@ const LandingPage = () => {
   return (
     <>
       {/* <Navbar /> */}
-      {user.isLoggedIn && (
+      {/* {user.isAuthenticated && (
         <p>{user.username}</p>
-      )}
+      )} */}
       
       <HeroSection />
       <FeatureSection />

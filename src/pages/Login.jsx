@@ -1,46 +1,53 @@
 import { Link, useNavigate } from "react-router-dom";
-import NavbarAcc from "../components/navbar/Navbar";
-import { useState } from "react";
-import { useDispatch } from 'react-redux';
-import { loginUser } from "../api";
-import { login } from "../store/userSlice";
+import NavbarAcc from "../components/NavbarAcc";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
 
-  const handleLogin = async () => {
-    try {
-      await loginUser({ email, password })
-      dispatch(login(email))
-      navigate('/')
-    } catch (error) {
-      console.error('Login error:', error);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      navigate("/");
     }
-  }
-  
-// const Login = () => {
-//   const [data, setData] = useState({
-//     email: "",
-//     password: "",
-//   });
+  }, [navigate]);
 
-//   const handleLogin = async (e) => {
-//     e.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-//     try {
-//       const response = await axios.post("", data);
-//       console.log(response.data);
-//     } catch (error) {
-//       console.error("Proses Login Gagal:", error.message);
-//     }
-//   };
+    try {
+      const response = await axios.post("http://localhost:3000/login", data);
+      const { token } = response.data;
+
+      sessionStorage.setItem("token", token);
+
+      alert("Login Berhasil");
+
+      navigate("/");
+    } catch (error) {
+      if (error.response) {
+        const status = error.response.status;
+        if (status === 404) {
+          alert("User tidak ditemukan");
+        } else if (status === 401) {
+          alert("Password yang dimasukkan salah");
+        }
+      } else {
+        console.error("Proses Login Gagal:", error.message);
+        alert("Login gagal, silakan coba lagi");
+      }
+    }
+  };
 
   return (
     <div className="bg-[url('/src/assets/background2.jpg')] min-h-screen">
-      {/* <NavbarAcc /> */}
+      <NavbarAcc />
       <div className="text-center pt-10 text-ungu1">
         <h1 className="text-2xl lg:text-3xl font-bold">Masuk</h1>
         <h3 className="text-lg lg:text-xl font-medium my-4 lg:my-6">Yuk, Lanjutkan dengan akun kamu!</h3>
@@ -55,8 +62,8 @@ const Login = () => {
                 <input
                   className="w-full my-2 lg:my-3 h-9 lg:h-12 rounded-full px-4 focus:outline-none focus:ring-4 focus:ring-ungu1"
                   type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
+                  value={data.email}
+                  onChange={(e) => setData({ ...data, email: e.target.value })}
                   required
                 />
               </div>
@@ -66,8 +73,8 @@ const Login = () => {
                 <input
                   className="w-full my-2 lg:my-3 h-9 lg:h-12 rounded-full px-4 focus:outline-none focus:ring-4 focus:ring-ungu1"
                   type="password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  value={data.password}
+                  onChange={(e) => setData({ ...data, password: e.target.value })}
                   required
                 />
               </div>

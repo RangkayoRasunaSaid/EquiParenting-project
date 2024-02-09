@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import Mission from './components/mission/Mission';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import "./App.css"
 import LandingPage from "./components/landing-page/index";
+import store from "./store/store";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
@@ -15,6 +17,7 @@ function App() {
   // const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   return (
+    <Provider store={store}>
       <Router>
           {/* <Navbar /> */}
           <NavbarLogin />
@@ -27,6 +30,7 @@ function App() {
           </Routes>
           <Footer />
       </Router>
+    </Provider>
   )
 }
 

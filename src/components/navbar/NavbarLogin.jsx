@@ -21,10 +21,7 @@ const Navbar = () => {
     setShowMenu(!showMenu);
   }
 
-  const authenticatedUser = {
-    id: "",
-    username: "",
-  }
+  const isAuthenticated = sessionStorage.getItem("token");
 
   return (
     <>
@@ -56,7 +53,8 @@ const Navbar = () => {
               </ul>
 
               <div className="space-x-[8px] hidden md:flex items-center text-base">
-                {authenticatedUser ? (
+                {console.log(isAuthenticated)}
+                {!isAuthenticated ? (
                   // Display "Masuk" and "Daftar" buttons when not authenticated
                   <>
                     <Link key="/login" to="/login">
@@ -76,7 +74,7 @@ const Navbar = () => {
                     <div className="flex px-4 items-center justify-start gap-3 hover:">
                       <FaUserCircle size={50} className="hover:lavender-shade transition-all" />
                       <div>
-                        <h1>{authenticatedUser.username}</h1>
+                        <h1>{isAuthenticated.username}</h1>
                       </div>
                     </div>
                   </Link>
