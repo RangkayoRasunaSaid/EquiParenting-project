@@ -29,18 +29,22 @@ const Member = () => {
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    const authToken = sessionStorage.getItem("token");
     axios
-      .get("http://localhost:3000/members", { headers: { Authorization: token } })
+      .get("http://localhost:3000/members", {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        } })
       .then((response) => {
-        setMembers(response.data.members);
+        setMembers(response.data);
       })
       .catch((error) => {
         console.error("Error fetching members:", error);
       });
   }, []);
 
-  if (members.length === 0) {
+  if (!members || members.length === 0) {
     return null;
   }
 
