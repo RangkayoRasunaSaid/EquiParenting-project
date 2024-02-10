@@ -46,26 +46,14 @@ const CreateMember = ({ members, setMembers }) => {
 
     console.log(data);
 
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("member_role", data.member_role);
-    formData.append("avatar", data.avatar);
-
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
-
     axios
-      .post("http://localhost:3000/members", formData, {
+      .post("http://localhost:3000/members", data, {
         headers: {
           Authorization: token,
-          "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
-        console.log(formData);
         alert("Berhasil menambahkan member");
-        console.log(formData);
         window.location.reload();
         closeModal();
       })
@@ -110,14 +98,14 @@ const CreateMember = ({ members, setMembers }) => {
               <div className="mb-4">
                 <img
                   src={avatarPreview || "/src/assets/default.png"}
-                  className="max-w-16 lg:max-w-24 max-h-16 lg:max-h-24 min-w-16 lg:min-w-24 min-h-16 lg:min-h-24 rounded-full"
+                  className="max-w-16 lg:max-w-24 max-h-16 lg:max-h-24 min-w-16 lg:min-w-24 min-h-16 lg:min-h-24rounded-full"
                   alt="Avatar Preview"
                 />
                 <input
                   type="file"
                   id="avatar"
-                  name="avatar"
                   style={{ display: "none" }}
+                  disabled={isCreating}
                   onChange={(e) => {
                     const file = e.target.files[0];
                     if (file) {

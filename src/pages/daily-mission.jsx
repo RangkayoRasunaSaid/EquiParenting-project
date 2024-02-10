@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../components/navbar/Navbar";
+import Navbar from "../components/navbar/NavbarLogin";
 import Footer from "../components/Footer/Footer";
 import Member from "../components/member";
 import CreateMember from "../components/CreateMember";

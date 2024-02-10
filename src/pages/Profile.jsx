@@ -1,16 +1,92 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
 import NavbarAcc from "../components/NavbarAcc";
 
 const Profile = () => {
-  //   const [data, setData] = useState({
-  //     username: "",
-  //     email: "",
-  //     password: "",
-  //     confirmPassword: "",
-  //   });
+  const [userData, setUserData] = useState({ username: "", avatar: "" });
+  const [passwordData, setPasswordData] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  });
 
-  //   const handleRegister = async (e) => {
-  //     e.preventDefault();
-  //   };
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    axios
+      .get("http://localhost:3000/profile", { headers: { Authorization: token } })
+      .then((response) => {
+        setUserData(response.data);
+        console.log(userData);
+      })
+      .catch((error) => {
+        console.error("Error fetching user profile:", error);
+        alert("Pengambilan Data Gagal");
+        window.location.reload();
+      });
+  }, []);
+
+  const handleUsernameChange = (event) => {
+    setUserData({ ...userData, username: event.target.value });
+  };
+
+  // upload profile belum bisa
+  // const handleFileChange = (event) => {
+  // };
+
+  const handlePasswordChange = (event) => {
+    const { name, value } = event.target;
+    setPasswordData({ ...passwordData, [name]: value });
+  };
+
+  const handleProfileUpdate = (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    const token = sessionStorage.getItem("token");
+    axios
+      .post(
+        "http://localhost:3000/update-profile",
+        {
+          username: userData.username,
+          avatar: userData.avatar,
+        },
+        { headers: { Authorization: token } }
+      )
+      .then((response) => {
+        alert(response.data.message);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error updating profile:", error);
+        alert("Update Profile Gagal");
+      });
+    setIsLoading(false);
+  };
+
+  const handlePasswordUpdate = (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    const token = sessionStorage.getItem("token");
+    axios
+      .post(
+        "http://localhost:3000/update-password",
+        {
+          oldPassword: passwordData.oldPassword,
+          newPassword: passwordData.newPassword,
+          confirmNewPassword: passwordData.confirmNewPassword,
+        },
+        { headers: { Authorization: token } }
+      )
+      .then((response) => {
+        alert(response.data.message);
+      })
+      .catch((error) => {
+        console.error("Error updating password:", error);
+        alert("Update Password Gagal");
+      });
+    setIsLoading(false);
+  };
 
   return (
     <div className="bg-[url('/src/assets/background2.jpg')] bg-fixed">
@@ -21,11 +97,12 @@ const Profile = () => {
       </div>
       <div className="flex justify-center mx-auto pb-10">
         <div className="bg-ungu2 w-80 lg:w-max p-8 rounded-3xl text-ungu1 font-medium shadow-lg">
-          <form>
+          <form onSubmit={handleProfileUpdate}>
             <div className="flex items-center gap-4 lg:gap-8">
               <div>
-                <img src="/src/assets/default.png" className="max-w-16 lg:max-w-24" />
+                <img src={userData.avatar || "/src/assets/default.png"} className="max-w-16 lg:max-w-24" />
                 <input type="file" id="file" style={{ display: "none" }} />
+                {/* onChange={handleFileChange} */}
                 <label
                   htmlFor="file"
                   className="bg-white px-2 py-1 lg:px-3 lg:py-2 rounded-full cursor-pointer absolute transform translate-x-10 -translate-y-16 lg:translate-x-16 lg:-translate-y-24"
@@ -39,49 +116,65 @@ const Profile = () => {
                 <input
                   className="w-full lg:w-64 my-2 lg:my-3 h-9 lg:h-12 rounded-full px-4 focus:outline-none focus:ring-4 focus:ring-ungu1"
                   type="text"
-                  placeholder="Username"
-                  required
+                  placeholder={userData.username}
+                  onChange={handleUsernameChange}
                 />
               </div>
             </div>
             <div className="flex justify-center my-5">
               <button
                 type="submit"
-                className="hover:bg-ungu1 bg-ungu1/50 text-white text-sm lg:text-base w-48 p-2 rounded-full"
+                disabled={isLoading}
+                className={
+                  isLoading
+                    ? "bg-ungu1/50 cursor-wait text-white text-sm lg:text-base w-48 p-2 rounded-full"
+                    : "hover:bg-ungu1 bg-ungu1/50 text-white text-sm lg:text-base w-48 p-2 rounded-full"
+                }
               >
                 Simpan Perubahan
               </button>
             </div>
           </form>
 
-          <form>
+          <form onSubmit={handlePasswordUpdate}>
             <div>
               <div>
                 <input
+                  name="oldPassword"
                   className="w-full lg:w-96 my-2 h-9 lg:h-12 rounded-full px-4 focus:outline-none focus:ring-4 focus:ring-ungu1"
                   type="password"
                   placeholder="Masukkan Password Lama"
+                  onChange={handlePasswordChange}
                   required
                 />
                 <br />
                 <input
+                  name="newPassword"
                   className="w-full lg:w-96 my-2 h-9 lg:h-12 rounded-full px-4 focus:outline-none focus:ring-4 focus:ring-ungu1"
                   type="password"
                   placeholder="Masukkan Password Baru"
+                  onChange={handlePasswordChange}
                   required
                 />
                 <br />
                 <input
+                  name="confirmNewPassword"
                   className="w-full lg:w-96 my-2 h-9 lg:h-12 rounded-full px-4 focus:outline-none focus:ring-4 focus:ring-ungu1"
                   type="password"
                   placeholder="Konfirmasi Password Baru"
+                  onChange={handlePasswordChange}
                   required
                 />
               </div>
               <div className="flex justify-center my-5">
                 <button
                   type="submit"
-                  className="hover:bg-ungu1 bg-ungu1/50 text-white text-sm lg:text-base w-48 p-2 rounded-full"
+                  disabled={isLoading}
+                  className={
+                    isLoading
+                      ? "bg-ungu1/50 cursor-wait text-white text-sm lg:text-base w-48 p-2 rounded-full"
+                      : "hover:bg-ungu1 bg-ungu1/50 text-white text-sm lg:text-base w-48 p-2 rounded-full"
+                  }
                 >
                   Ubah Password
                 </button>
