@@ -1,21 +1,27 @@
-import OwlCarousel from 'react-owl-carousel'
 import { Link } from 'react-router-dom'
-import 'owl.carousel/dist/assets/owl.carousel.css'
-import 'owl.carousel/dist/assets/owl.theme.default.css'
-import Modal from "./modals/ModalAktivitas"
-import TaskItem from './TaskItem'
 import ModalButton from './modals/ModalButton'
 import ModalPeriode from './modals/ModalPeriode'
 
 export default function Aktivitas(){
+    // Function to check if current time is within the defined period
+    const startTime = localStorage.getItem('startTime')
+    const endTime = localStorage.getItem('endTime')
+
+    const isWithinPeriod = (endTime) => {
+        const now = Date.now();
+        return now >= now <= new Date(endTime).getTime();
+    };
+    
     const mdlBtn = (
-        <div className='flex justify-center'>
-            <button className="px-5 text-center justify-center text-white bg-main-color rounded-xl font-bold shadow-md flex items-center">
-                Atur Periode Mission
-                <span className='text-5xl ms-10'>+</span>
-            </button>
-        </div>
+        <button
+            className={`px-5 text-center justify-center text-white bg-main-color rounded-xl font-bold shadow-md flex items-center ${isWithinPeriod(localStorage.getItem('startTime'), localStorage.getItem('endTime')) ? 'disabled' : ''}`}
+            disabled={isWithinPeriod(endTime)}
+        >
+            Atur Periode Mission
+            <span className='text-5xl ms-10'>+</span>
+        </button>
     )
+
     const options = {
         stagePadding: 50,
         items: 3,
@@ -34,11 +40,18 @@ export default function Aktivitas(){
         }
     }
 
+    // Format the selected period for display
+    const formattedPeriod = startTime && endTime ? `${new Date(startTime).toLocaleDateString()} - ${new Date(endTime).toLocaleDateString()}` : '';
+
     return (
         <>
             <h1 className="text-center text-3xl my-5 font-bold">Aktivitas</h1>
-            <ModalButton btnContent={mdlBtn} mdlContent={(<ModalPeriode />)} />
-            <h1 className='text-center font-bold text-lg mt-10 mb-3'>Periode 2 Januari 2024 - 9 Januari 2024</h1>
+            <div className='flex justify-center'>
+                <ModalButton btnContent={mdlBtn} mdlContent={(<ModalPeriode />)} />
+            </div>
+            {formattedPeriod && (
+                <h1 className='text-center font-bold text-lg mt-10 mb-3'>Periode {formattedPeriod}</h1>
+            )}
             
             <div className="flex justify-center sm:gap-10 gap-5 text-center p-2">
                 <div className="px-10 py-6 rounded-[20px] border-0 shadow-md h-100">

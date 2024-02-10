@@ -20,15 +20,17 @@ function App() {
     <Provider store={store}>
       <Router>
           {/* <Navbar /> */}
+          <div className="bg-[url('/src/assets/background2.jpg')]">
           <NavbarLogin />
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/mission/*" element={<Mission />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/mission/*" element={<Mission />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
           <Footer />
+          </div>
       </Router>
     </Provider>
   )

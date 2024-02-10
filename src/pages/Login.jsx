@@ -23,6 +23,7 @@ const Login = () => {
 
     try {
       const response = await axios.post("http://localhost:3000/login", data);
+      console.log(data);
       const { token } = response.data;
 
       sessionStorage.setItem("token", token);

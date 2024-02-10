@@ -1,5 +1,6 @@
 import Breadcrumbs from '../Breadcrumbs.jsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import DailyMission from './Daymission.jsx';
 import DailyMission from './DailyMission';
 import PusatReward from './PusatReward';
 import MisiBunda from './MisiBunda.jsx';
@@ -16,7 +17,7 @@ const FadingBackground = styled(BaseModalBackground)`
 export default function App() {
     return (
         <ModalProvider backgroundComponent={FadingBackground}>
-            <div className="text-main-color bg-gradient-to-r from-violet-100 my-10 sm:mx-5 md:mx-20 mx-3 sm:p-3 sm:p-10 md:p-20 p-5 rounded-[60px]">
+            <div  className="min-h-screen text-main-color bg-gradient-to-r from-violet-100 my-10 sm:mx-5 md:mx-20 mx-3 sm:p-3 md:p-10 px-5 rounded-[60px]">
                 <Breadcrumbs />
                 <h1 className="text-center text-4xl mb-10 font-semibold">
                     Selamat datang di misi keluarga idaman!
