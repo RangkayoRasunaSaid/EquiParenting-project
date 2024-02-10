@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { FaCamera } from "react-icons/fa";
+import { Navigate } from "react-router-dom";
 
 export default function ModalCreateMember() {
     const [name, setName] = useState('');
@@ -16,6 +17,7 @@ export default function ModalCreateMember() {
         });
   
         console.log(response.data); // assuming the backend responds with a message
+        Navigate('/mission/daily-mission')
         // You can add further logic here, like showing a success message or redirecting the user
       } catch (error) {
         console.error('Error adding member:', error);
@@ -26,7 +28,7 @@ export default function ModalCreateMember() {
     return (
         <div className="p-5">
             <h2 className="text-2xl text-center text-ungu1 font-bold mb-4">Buat Tim Baru</h2>
-            <form onSubmit={handleSubmit} className="flex flex-col items-center">
+            <form className="flex flex-col items-center">
                 <div className="mb-4">
                     <img src="https://ih1.redbubble.net/image.1046392292.3346/st,medium,507x507-pad,600x600,f8f8f8.jpg" className="max-w-16 lg:max-w-24 rounded-full" />
                     <input type="file" id="avatar" style={{ display: "none" }} />
@@ -55,7 +57,7 @@ export default function ModalCreateMember() {
                         </select>
                     </div>
                     <div className="flex justify-center">
-                        <button type="submit" className="bg-main-color text-white text-base rounded-md shadow-md mt-5 py-2 px-4 font-semibold">Tambah Member</button>
+                        <button onClick={handleSubmit} className="bg-main-color text-white text-base rounded-md shadow-md mt-5 py-2 px-4 font-semibold">Tambah Member</button>
                     </div>
                 </div>
             </form>
