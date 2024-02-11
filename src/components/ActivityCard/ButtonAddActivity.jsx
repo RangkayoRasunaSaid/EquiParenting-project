@@ -1,17 +1,20 @@
 import { useState } from 'react';
 import { IoCloseCircle } from 'react-icons/io5';
 import { MdAdd } from "react-icons/md";
+import axios from 'axios';
 
 const ButtonAddActivity = () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [taskData, setTaskData] = useState({
-      title: '',
-      assignee: '',
-      category: '',
-      description: '',
-      points: '',
-      startTime: '',
-      endTime: '',
+      judulTask: '',
+      yangBertugas: '',
+      kategori: '',
+      deskripsi: '',
+      point: '',
+      waktuMulai: '',
+      waktuSelesai: '',
+      gambar: '',
+      disetujuiOleh: ''
     });
   
     const openModal = () => {
@@ -38,10 +41,20 @@ const ButtonAddActivity = () => {
       });
     };
   
-    const handleSubmit = () => {
-      // Lakukan sesuatu dengan data task, seperti menyimpan ke database
-      console.log('Task Data:', taskData);
-      closeModal();
+    const handleSubmit = async () => {
+      try {
+        // Kirim data ke API menggunakan axios
+        const response = await axios.post('https://6582da8502f747c8367a60e5.mockapi.io/schedule/aktivitas', taskData);
+        console.log('Response:', response.data);
+        // Alert pengguna jika data berhasil dikirim
+        alert('Aktivitas berhasil ditambahkan!');
+        // Setelah berhasil, tutup modal
+        closeModal();
+      } catch (error) {
+        console.error('Error:', error);
+        // Alert pengguna jika terjadi kesalahan
+        alert('Gagal menambahkan aktivitas. Silakan coba lagi.');
+      }
     };
   
     return (
@@ -66,47 +79,51 @@ const ButtonAddActivity = () => {
                 </div>
                 <form>
                     <div className="mb-4">
-                      <label htmlFor="title" className="block text-sm font-medium text-gray-600">
+                      <label htmlFor="judulTask" className="block text-sm font-medium text-gray-600">
                         Judul Task:
                       </label>
                       <input
                         type="text"
-                        id="title"
-                        name="title"
-                        value={taskData.title}
+                        id="judulTask"
+                        name="judulTask"
+                        value={taskData.judulTask|| ''}
                         onChange={handleInputChange}
                         className="mt-1 p-2 border rounded-md w-full"
+                        required
                       />
                     </div>
   
                     <div className="mb-4">
-                      <label htmlFor="assignee" className="block text-sm font-medium text-gray-600">
+                      <label htmlFor="yangBertugas" className="block text-sm font-medium text-gray-600">
                         Yang bertugas:
                       </label>
                       <select
-                        id="assignee"
-                        name="assignee"
-                        value={taskData.assignee}
+                        id="yangBertugas"
+                        name="yangBertugas"
+                        value={taskData.yangBertugas || ''}
                         onChange={handleInputChange}
                         className="mt-1 p-2 border rounded-md w-full"
+                        required
                       >
+                        <option value="" disabled selected>Silahkan Pilih</option>
                         <option value="ayah">Ayah</option>
                         <option value="bunda">Bunda</option>
-                        <option value="others">Others</option>
                       </select>
                     </div>
   
                     <div className="mb-4">
-                      <label htmlFor="category" className="block text-sm font-medium text-gray-600">
+                      <label htmlFor="kategori" className="block text-sm font-medium text-gray-600">
                         Kategori:
                       </label>
                       <select
-                        id="category"
-                        name="category"
-                        value={taskData.category}
+                        id="kategori"
+                        name="kategori"
+                        value={taskData.kategori || ''}
                         onChange={handleInputChange}
                         className="mt-1 p-2 border rounded-md w-full"
+                        required
                       >
+                        <option value=""disabled selected>Silahkan Pilih</option>
                         <option value="Baby">Baby</option>
                         <option value="Dapur">Dapur</option>
                         <option value="Laundry">Laundry</option>
@@ -121,29 +138,31 @@ const ButtonAddActivity = () => {
                     </div>
   
                     <div className="mb-4">
-                      <label htmlFor="description" className="block text-sm font-medium text-gray-600">
+                      <label htmlFor="deskripsi" className="block text-sm font-medium text-gray-600">
                         Deskripsi:
                       </label>
                       <textarea
-                        id="description"
-                        name="description"
-                        value={taskData.description}
+                        id="deskripsi"
+                        name="deskripsi"
+                        value={taskData.deskripsi || ''}
                         onChange={handleInputChange}
                         className="mt-1 p-2 border rounded-md w-full"
                       />
                     </div>
   
                     <div className="mb-4">
-                      <label htmlFor="points" className="block text-sm font-medium text-gray-600">
+                      <label htmlFor="point" className="block text-sm font-medium text-gray-600">
                         Poin:
                       </label>
                       <select
-                        id="points"
-                        name="points"
-                        value={taskData.points}
+                        id="point"
+                        name="point"
+                        value={taskData.point || ''}
                         onChange={handleInputChange}
                         className="mt-1 p-2 border rounded-md w-full"
+                        required
                       >
+                        <option value="" disabled selected>Silahkan Pilih</option>
                         <option value="5">Mudah: 5 Poin</option>
                         <option value="10">Sedang: 10 Poin</option>
                         <option value="15">Sulit: 15 Poin</option>
@@ -152,30 +171,32 @@ const ButtonAddActivity = () => {
                     </div>
   
                     <div className="mb-4">
-                      <label htmlFor="startTime" className="block text-sm font-medium text-gray-600">
+                      <label htmlFor="waktuMulai" className="block text-sm font-medium text-gray-600">
                         Waktu Mulai:
                       </label>
                       <input
                         type="datetime-local"
-                        id="startTime"
-                        name="startTime"
-                        value={taskData.startTime}
+                        id="waktuMulai"
+                        name="waktuMulai"
+                        value={taskData.waktuMulai || ''}
                         onChange={handleDateTimeChange}
                         className="mt-1 p-2 border rounded-md w-full"
+                        required
                       />
                     </div>
   
                     <div className="mb-4">
-                      <label htmlFor="endTime" className="block text-sm font-medium text-gray-600">
+                      <label htmlFor="waktuSelesai" className="block text-sm font-medium text-gray-600">
                         Waktu Selesai:
                       </label>
                       <input
                         type="datetime-local"
-                        id="endTime"
-                        name="endTime"
-                        value={taskData.endTime}
+                        id="waktuSelesai"
+                        name="waktuSelesai"
+                        value={taskData.waktuSelesai || ''}
                         onChange={handleDateTimeChange}
                         className="mt-1 p-2 border rounded-md w-full"
+                        required
                       />
                     </div>
   
