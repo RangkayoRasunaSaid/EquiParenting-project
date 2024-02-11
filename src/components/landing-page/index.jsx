@@ -1,19 +1,15 @@
-// components/LandingPage/index.jsx
-// import Navbar from '../navbar/Navbar'
 import HeroSection from './HeroSection';
 import FeatureSection from './FeatureSection';
 import MissionSection from './MissionSection';
-import CeritakuSection from './CeritakuSection';
+// import CeritakuSection from './CeritakuSection'; // next feature
 import { useSelector } from 'react-redux';
 // import { selectUser } from '../../redux/slices/userSlice';
-// import CarouselArticle from './CarouselArticle'
-// import Footer from '../Footer/Footer'
+// import CarouselArticle from './CarouselArticle' // next feature
 
 const LandingPage = () => {
   // const user = useSelector(selectUser)
   return (
     <>
-      {/* <Navbar /> */}
       {/* {user.isAuthenticated && (
         <p>{user.username}</p>
       )} */}
@@ -21,9 +17,10 @@ const LandingPage = () => {
       <HeroSection />
       <FeatureSection />
       <MissionSection />
-      <CeritakuSection />
+
+      {/* next feature */}
+      {/* <CeritakuSection /> */} 
       {/* <CarouselArticle /> */}
-      {/* <Footer /> */}
     </>
   );
 };

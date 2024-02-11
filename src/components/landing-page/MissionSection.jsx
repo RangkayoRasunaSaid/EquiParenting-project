@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const MissionSection = () => {
   return (
     <>
-      <div className="mx-auto my-4 py-2">
+      <div className="mx-auto my-6 py-2">
         <h1
           className="my-4 px-6 text-center font-black text-3xl md:text-5xl text-main-color">
           Our Special Service or Feature

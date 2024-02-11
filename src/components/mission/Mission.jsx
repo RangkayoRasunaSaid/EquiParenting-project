@@ -9,6 +9,7 @@ import { BaseModalBackground, ModalProvider } from 'styled-react-modal';
 import styled from 'styled-components';
 // import '../../App.scss'
 
+// Styled component for customizing modal background transition
 const FadingBackground = styled(BaseModalBackground)`
     opacity: ${(props) => props.opacity};
     transition: all 0.3s ease-in-out;
@@ -17,9 +18,9 @@ const FadingBackground = styled(BaseModalBackground)`
 export default function App() {
     return (
         <ModalProvider backgroundComponent={FadingBackground}>
-            <div  className="min-h-screen text-main-color bg-gradient-to-r from-violet-100 my-10 sm:mx-5 md:mx-20 mx-3 sm:p-3 md:p-10 px-5 rounded-[60px]">
+            <div  className="min-h-screen text-main-color bg-violet-100 my-10 sm:mx-5 md:mx-24 mx-3 sm:p-3 md:p-10 px-3 rounded-[40px]">
                 <Breadcrumbs />
-                <h1 className="text-center text-4xl mb-10 font-semibold">
+                <h1 className="text-center text-xl md:text-4xl pt-6 md:pt-2 mb-4 md:mb-8 font-semibold">
                     Selamat datang di misi keluarga idaman!
                 </h1>
                 <Routes>
