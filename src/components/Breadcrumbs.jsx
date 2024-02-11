@@ -18,7 +18,7 @@ function Breadcrumbs() {
           <React.Fragment key={segment}>
             <li>
               <Link to={`/${pathSegments.slice(0, index + 1).join('/')}`} style={{color: '#a49eb5'}} className='no-underline'>
-                {titleCase(segment.replace('-', ' '))}
+                {titleCase(segment.replace('-', ' ').replace(':', ''))}
               </Link>
             </li>
             {index < pathSegments.length - 1 && <span className='mx-2'>{'>'}</span>}
@@ -30,7 +30,7 @@ function Breadcrumbs() {
 }
 
 // Helper function to convert a string to title case
-function titleCase(str) {
+export function titleCase(str) {
   return str.replace(/\b\w/g, (match) => match.toUpperCase());
 }
 
