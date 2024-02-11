@@ -50,12 +50,6 @@ const CustomSelect = () => {
           >
             Bunda
           </div>
-          <div
-            onClick={() => handleApproverChange('others')}
-            className="cursor-pointer hover:bg-gray-200 p-2"
-          >
-            Lainnya
-          </div>
         </div>
       )}
     </div>
