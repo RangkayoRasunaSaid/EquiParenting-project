@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-
-const CustomSelect = () => {
+const CustomSelect = ({onSelect}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedApprover, setSelectedApprover] = useState('');
   const dropdownRef = useRef(null);
@@ -9,8 +9,8 @@ const CustomSelect = () => {
   const handleApproverChange = (approver) => {
     setSelectedApprover(approver);
     setIsOpen(false);
+    onSelect(approver); // Menambahkan ini
   };
-
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -54,6 +54,9 @@ const CustomSelect = () => {
       )}
     </div>
   );
+};
+CustomSelect.propTypes = {
+  onSelect: PropTypes.func.isRequired, // Menambahkan validasi props di sini
 };
 
 export default CustomSelect;
