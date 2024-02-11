@@ -1,8 +1,14 @@
+import axios from 'axios';
 import { useState } from 'react';
 
-export default function ModalPeriode() {
-    const [startTime, setStartTime] = useState('');
-    const [endTime, setEndTime] = useState('');
+export default function ModalPeriode({ memberId }) {
+    console.log(memberId);
+    const [data, setData] = useState({
+      member_id: memberId,
+      start_date: "",
+      end_date: "",
+      spinned_at: ''
+    });
 
     // Handle input changes for end time
     const handleEndTimeChange = (e) => {
@@ -12,37 +18,62 @@ export default function ModalPeriode() {
             alert("End date must be after today's date");
             return;
         }
-        if (endDate <= startTime) {
+        if (endDate <= data.startTime) {
             alert("End date must be after start date");
             return;
         }
-        setEndTime(endDate);
+        setData({ ...data, end_date: e.target.value });
     };
 
     // Handle input changes for start time
     const handleStartTimeChange = (e) => {
         const startDate = e.target.value;
+        console.log(data);
         // Check if start date is after today's date
         if (startDate < new Date().toISOString().slice(0, 16)) {
             alert("Start date must be after today's date");
             return;
         }
         // Check if start date is before end date
-        if (endTime < startDate && endTime) {
-            console.log('endTime', endTime);
-            console.log('startDate', startDate);
+        if (data.endTime < startDate && data.endTime) {
             alert("Start date must be before end date");
             return;
         }
-        setStartTime(startDate);
+        setData({ ...data, start_date: e.target.value });
     };
 
     // Handle form submission
     const handleSubmit = (e) => {
         // Save start time and end time to localStorage
-        localStorage.setItem('startTime', startTime);
-        localStorage.setItem('endTime', endTime);
-        // Optionally, you can also perform further actions such as closing the modal
+        e.preventDefault();
+        console.log(data.start_date);
+    
+        const token = sessionStorage.getItem("token");
+        if (!data.start_date || !data.end_date) {
+          alert("Harap isi semua kolom");
+          return;
+        }
+    
+        console.log(data);
+    
+        axios
+          .post("http://localhost:3000/reward", data, {
+            headers: {
+              Authorization: token,
+            },
+          })
+          .then((response) => {
+            alert("Berhasil menambahkan periode");
+            window.location.reload();
+            closeModal();
+          })
+          .catch((error) => {
+          //   alert("Penambahan member gagal");
+            console.error("Error adding date period:", error);
+          })
+          .finally(() => {
+            setIsCreating(false);
+          });
     };
 
     return (
@@ -54,13 +85,25 @@ export default function ModalPeriode() {
                 <div className="grid grid-cols-5 gap-4 items-center">
                     <label htmlFor="endTime" className="col-span-2">Waktu Mulai:</label>
                     <div className="col-span-3">
-                        <input type="datetime-local" name="endTime" id="endTime" value={startTime} onChange={handleStartTimeChange} />
+                        <input
+                            type="datetime-local"
+                            name="endTime"
+                            id="endTime"
+                            // value="2024-02-13T03:35"
+                            // value={data.start_date}
+                            onChange={handleStartTimeChange} />
                     </div>
                 </div>
                 <div className="grid grid-cols-5 gap-4 items-center">
                     <label htmlFor="startTime" className="col-span-2">Waktu Selesai:</label>
                     <div className="col-span-3">
-                        <input type="datetime-local" name="startTime" id="startTime" value={endTime} onChange={handleEndTimeChange} />
+                        <input
+                            type="datetime-local"
+                            name="startTime"
+                            id="startTime"
+                            // value="2024-02-14T03:35"
+                            // value={data.end_date}
+                            onChange={handleEndTimeChange} />
                     </div>
                 </div>
                 <div className="flex justify-center">

@@ -5,7 +5,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import "./App.css"
 import LandingPage from "./components/landing-page/index";
-import store from "./store/store";
+import store from "./redux/store.js";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
