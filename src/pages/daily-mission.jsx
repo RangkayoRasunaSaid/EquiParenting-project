@@ -14,7 +14,7 @@ const DailyMission = () => {
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     axios
-      .get("http://localhost:3000/members", { headers: { Authorization: token } })
+      .get("https://outrageous-gold-twill.cyclic.app/members", { headers: { Authorization: token } })
       .then((response) => {
         setMembers(response.data.members);
         setIsDataLoaded(true);

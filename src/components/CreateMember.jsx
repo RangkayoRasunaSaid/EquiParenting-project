@@ -47,7 +47,7 @@ const CreateMember = ({ members, setMembers }) => {
     console.log(data);
 
     axios
-      .post("http://localhost:3000/members", data, {
+      .post("https://outrageous-gold-twill.cyclic.app/members", data, {
         headers: {
           Authorization: token,
         },
@@ -72,8 +72,8 @@ const CreateMember = ({ members, setMembers }) => {
       <button
         className={
           roles.length > 0
-            ? "bg-ungu1 rounded-lg drop-shadow-lg py-3 lg:py-12 px-5 text-white"
-            : "bg-ungu1 bg-opacity-60 rounded-lg drop-shadow-lg py-3 lg:py-12 px-5 text-white cursor-not-allowed"
+            ? "bg-ungu1 rounded-lg drop-shadow-lg py-3 lg:py-12 px-3 w-20 h-28 lg:w-52 lg:h-64 text-white"
+            : "bg-ungu1 bg-opacity-60 rounded-lg drop-shadow-lg py-3 lg:py-12 px-3 w-20 h-28 lg:w-52 lg:h-64 text-white cursor-not-allowed"
         }
         onClick={roles.length > 0 ? openModal : null}
       >

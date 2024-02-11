@@ -26,7 +26,7 @@ const Login = () => {
     setIsLoggingIn(true);
 
     try {
-      const response = await axios.post("http://localhost:3000/login", data);
+      const response = await axios.post("https://outrageous-gold-twill.cyclic.app/login", data);
       const { token } = response.data;
 
       sessionStorage.setItem("token", token);

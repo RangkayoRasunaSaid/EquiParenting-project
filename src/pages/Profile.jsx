@@ -47,7 +47,7 @@ const Profile = () => {
     const token = sessionStorage.getItem("token");
     axios
       .put(
-        "http://localhost:3000/update-profile",
+        "https://outrageous-gold-twill.cyclic.app/update-profile",
         {
           username: userData.username,
           avatar: userData.avatar,
@@ -89,7 +89,9 @@ const Profile = () => {
     };
 
     axios
-      .put("http://localhost:3000/update-password", requestData, { headers: { Authorization: token } })
+      .put("https://outrageous-gold-twill.cyclic.app/update-password", requestData, {
+        headers: { Authorization: token },
+      })
       .then((response) => {
         alert(response.data.message);
         setPasswordData({

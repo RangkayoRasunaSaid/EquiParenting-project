@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const MemberItem = ({ member }) => {
   return (
-    <div className="bg-white p-2 lg:p-8 lg:w-48 rounded-lg drop-shadow-lg flex flex-col items-center">
+    <div className="bg-white p-2 lg:p-8 w-20 h-28 lg:w-48 lg:h-64 rounded-lg drop-shadow-lg flex flex-col items-center">
       {member.avatar ? (
         <img src={member.avatar} className="max-w-10 rounded-full lg:max-w-24" alt="Avatar" />
       ) : (
