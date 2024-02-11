@@ -1,8 +1,7 @@
-import "./App.css"
-import "./components/landing-page/LandingPage.css";
-import { Provider } from "react-redux"; 
+import "./App.css";
+import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import store from './store/store';
+import store from "./store/store";
 import LandingPage from "./components/landing-page/index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";

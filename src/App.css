@@ -1,13 +1,13 @@
 #root {
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  /* padding: 2rem; */
+  /* text-align: center; */
   background-image: url(./assets/background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center; /* Optional: Tengahkan gambar jika diperlukan */
   height: auto; /* Atur tinggi elemen menjadi tinggi tampilan (viewport height) */
-  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
 
 nav {
@@ -48,4 +48,4 @@ nav {
 
 .read-the-docs {
   color: #888;
-} */ 
+} */
