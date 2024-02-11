@@ -1,0 +1,10 @@
+<svg viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" x="10%" y="10%">
+    <!-- Black circle -->
+    <circle cx="250" cy="250" r="80" style="fill:black;"/>
+
+    <!-- Thicker and wider triangle pointing north outside of the circle -->
+    <polygon points="250,150 200,200 300,200" style="fill:black; stroke:black; stroke-width:6;"/>
+
+    <!-- Bold text 'Spin' in childlike font, centered vertically and horizontally -->
+    <text x="250" y="250" font-family="Comic Sans MS, cursive, sans-serif" font-size="46" font-weight="bold" fill="white" text-anchor="middle" alignment-baseline="middle">Spin</text>
+</svg>
