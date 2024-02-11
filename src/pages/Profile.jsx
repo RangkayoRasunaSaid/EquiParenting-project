@@ -10,6 +10,7 @@ const Profile = () => {
     confirmNewPassword: "",
   });
 
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const Profile = () => {
       .get("http://localhost:3000/profile", { headers: { Authorization: token } })
       .then((response) => {
         setUserData(response.data);
-        console.log(userData);
+        setIsDataLoaded(true);
       })
       .catch((error) => {
         console.error("Error fetching user profile:", error);
@@ -45,7 +46,7 @@ const Profile = () => {
     setIsLoading(true);
     const token = sessionStorage.getItem("token");
     axios
-      .post(
+      .put(
         "http://localhost:3000/update-profile",
         {
           username: userData.username,
@@ -54,7 +55,8 @@ const Profile = () => {
         { headers: { Authorization: token } }
       )
       .then((response) => {
-        alert(response.data.message);
+        console.log(response.data.message);
+        alert("Profile berhasil diubah");
         window.location.reload();
       })
       .catch((error) => {
@@ -68,28 +70,64 @@ const Profile = () => {
     event.preventDefault();
     setIsLoading(true);
     const token = sessionStorage.getItem("token");
+
+    if (passwordData.newPassword.length < 8) {
+      alert("Password harus memiliki minimal 8 karakter!");
+      setIsLoading(false);
+      return;
+    }
+
+    if (passwordData.newPassword !== passwordData.confirmNewPassword) {
+      alert("Password baru dan konfirmasi password baru tidak cocok");
+      setIsLoading(false);
+      return;
+    }
+
+    const requestData = {
+      oldPassword: passwordData.oldPassword,
+      newPassword: passwordData.newPassword,
+    };
+
     axios
-      .post(
-        "http://localhost:3000/update-password",
-        {
-          oldPassword: passwordData.oldPassword,
-          newPassword: passwordData.newPassword,
-          confirmNewPassword: passwordData.confirmNewPassword,
-        },
-        { headers: { Authorization: token } }
-      )
+      .put("http://localhost:3000/update-password", requestData, { headers: { Authorization: token } })
       .then((response) => {
         alert(response.data.message);
+        setPasswordData({
+          oldPassword: "",
+          newPassword: "",
+          confirmNewPassword: "",
+        });
       })
       .catch((error) => {
         console.error("Error updating password:", error);
         alert("Update Password Gagal");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-    setIsLoading(false);
   };
 
+  if (!isDataLoaded) {
+    return (
+      <>
+        <div className="bg-[url('/src/assets/background2.jpg')] min-h-screen">
+          <NavbarAcc />
+          <div className="w-full h-full flex items-center justify-center my-48">
+            <div className="animate-spin rounded-full h-32 w-32 border-8 border-dotted border-ungu1"></div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
-    <div className="bg-[url('/src/assets/background2.jpg')] bg-fixed">
+    <div
+      className={
+        isLoading
+          ? "bg-[url('/src/assets/background2.jpg')] min-h-screen cursor-wait"
+          : "bg-[url('/src/assets/background2.jpg')] min-h-screen"
+      }
+    >
       <NavbarAcc />
       <div className="text-center pt-10 text-ungu1">
         <h1 className="text-2xl lg:text-3xl font-bold">Akun Terhubung</h1>
@@ -98,11 +136,12 @@ const Profile = () => {
       <div className="flex justify-center mx-auto pb-10">
         <div className="bg-ungu2 w-80 lg:w-max p-8 rounded-3xl text-ungu1 font-medium shadow-lg">
           <form onSubmit={handleProfileUpdate}>
+            {/* Form components for profile update */}
             <div className="flex items-center gap-4 lg:gap-8">
               <div>
                 <img src={userData.avatar || "/src/assets/default.png"} className="max-w-16 lg:max-w-24" />
                 <input type="file" id="file" style={{ display: "none" }} />
-                {/* onChange={handleFileChange} */}
+                {/* onChange={handleFileChange} gambar belum bisa*/}
                 <label
                   htmlFor="file"
                   className="bg-white px-2 py-1 lg:px-3 lg:py-2 rounded-full cursor-pointer absolute transform translate-x-10 -translate-y-16 lg:translate-x-16 lg:-translate-y-24"
@@ -127,7 +166,7 @@ const Profile = () => {
                 disabled={isLoading}
                 className={
                   isLoading
-                    ? "bg-ungu1/50 cursor-wait text-white text-sm lg:text-base w-48 p-2 rounded-full"
+                    ? "bg-ungu1/50 bg-opacity-70 cursor-wait text-white text-sm lg:text-base w-48 p-2 rounded-full"
                     : "hover:bg-ungu1 bg-ungu1/50 text-white text-sm lg:text-base w-48 p-2 rounded-full"
                 }
               >
@@ -135,8 +174,10 @@ const Profile = () => {
               </button>
             </div>
           </form>
+          {/* End of Form for profile update */}
 
           <form onSubmit={handlePasswordUpdate}>
+            {/* Form components for password update */}
             <div>
               <div>
                 <input
@@ -172,7 +213,7 @@ const Profile = () => {
                   disabled={isLoading}
                   className={
                     isLoading
-                      ? "bg-ungu1/50 cursor-wait text-white text-sm lg:text-base w-48 p-2 rounded-full"
+                      ? "bg-ungu1/50 bg-opacity-70 cursor-wait text-white text-sm lg:text-base w-48 p-2 rounded-full"
                       : "hover:bg-ungu1 bg-ungu1/50 text-white text-sm lg:text-base w-48 p-2 rounded-full"
                   }
                 >
@@ -181,6 +222,7 @@ const Profile = () => {
               </div>
             </div>
           </form>
+          {/* End of Form for password update */}
         </div>
       </div>
     </div>
