@@ -68,7 +68,7 @@ export default function PusatReward({ members }) {
                             role='button'
                             className='rounded-circle'
                             // src="https://tr.rbxcdn.com/4010ec7c19018ebf46fde61a66b302f7/420/420/Image/Png"
-                            src='src/assets/spin.svg'
+                            src='/src/assets/spin.svg'
                             alt="spin-wheel"
                         />
                         )}
