@@ -1,6 +1,6 @@
-import HeroSection from './HeroSection';
-import FeatureSection from './FeatureSection';
-import MissionSection from './MissionSection';
+import HeroSection from '../components/landing-page/HeroSection';
+import FeatureSection from '../components/landing-page/FeatureSection';
+import MissionSection from '../components/landing-page/MissionSection';
 // import CeritakuSection from './CeritakuSection'; // next feature
 import { useSelector } from 'react-redux';
 // import { selectUser } from '../../redux/slices/userSlice';

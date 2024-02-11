@@ -1,3 +1,4 @@
+// next feature
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCarouselArticles, selectCarouselArticles } from '../../store/articleSlice';

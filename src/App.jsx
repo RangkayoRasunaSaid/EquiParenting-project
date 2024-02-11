@@ -4,7 +4,7 @@ import Mission from './components/mission/Mission';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import "./App.css"
-import LandingPage from "./components/landing-page/index";
+import LandingPage from "./pages/LandingPage.jsx";
 import store from "./redux/store.js";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
