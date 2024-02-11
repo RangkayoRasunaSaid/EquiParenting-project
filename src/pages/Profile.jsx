@@ -16,7 +16,7 @@ const Profile = () => {
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     axios
-      .get("http://localhost:3000/profile", { headers: { Authorization: token } })
+      .get("https://outrageous-gold-twill.cyclic.app/profile", { headers: { Authorization: token } })
       .then((response) => {
         setUserData(response.data);
         setIsDataLoaded(true);
