@@ -27,10 +27,12 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible }) =>
   else formattedDate = date.format('D MMM YYYY HH:mm [WIB]');
 
   let targetDate = moment(activity.date_stop_act);
+  let approvalDate = moment(activity.approval_date);
   let diffMilliseconds = targetDate.diff(moment());
   let diffHours = Math.floor(diffMilliseconds / (1000 * 60 * 60));
   let diffMinutes = Math.floor((diffMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
   let isLate = diffMilliseconds < 0;
+  let isLateApproval = activity.date_stop_act < activity.approval_date;
   diffHours = Math.abs(diffHours);
   diffMinutes = Math.abs(diffMinutes);
   let timeDifference = (isLate ? "Terlambat " : "") + diffHours + " Jam " + diffMinutes + " Menit";
@@ -47,17 +49,18 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible }) =>
     }
 
     axios
-      .put(`http://localhost:3000/activities/${activity.id}`, { approvedBy }, {
+      .put(`http://localhost:3000/activities/approve/${activity.id}`, { approval_by: approvedBy }, {
         headers: {
           Authorization: token,
         },
       })
       .then((response) => {
         alert("Berhasil menyetujui aktifitas");
-        <Navigate
-          to={`/daily-mission/:${member.member_role}`}
-          state={{ members,member }}
-        />
+        window.location.reload();
+        // <Navigate
+        //   to={`/daily-mission/:${member.member_role}`}
+        //   state={{ members, member }}
+        // />
       })
       .catch((error) => {
       //   alert("Penambahan member gagal");
@@ -95,25 +98,31 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible }) =>
           <p className="text-slate-300 text-xs font-semibold text-center my-3">
             {!activity.approval_date ? (
                 <span className='text-red-500'>{"Batas Waktu: " + timeDifference}</span>
-            ) : (<p>Diselesaikan Tepat Waktu</p>)}
-          </p>
-          <p className="text-left text-xs font-bold mb-2">Poin Yang Akan Diperoleh: {activity.point} Poin</p>
+            ) : (
+                isLateApproval ? (
+                    <span className='text-red-500'>Diselesaikan Terlambat</span>
+                ) : (
+                    <p>Diselesaikan Tepat Waktu</p>
+                )
+            )}
+        </p>
+          <p className="text-left text-xs font-bold mb-2">Poin yang {!activity.approval_by ? 'Akan' : ''} Diperoleh: {activity.point} Poin</p>
           <p className="text-left text-xs font-bold mb-2">Penanggung Jawab: {responsible}</p>
           <form onSubmit={handleSubmit}>
-            {activity.approvedBy ? (
-              <p className="text-left text-xs font-bold mb-2">Disetujui Oleh: {titleCase(activity.approvedBy)}</p>
+            {activity.approval_by ? (
+              <p className="text-left text-xs font-bold mb-2">Disetujui Oleh: {titleCase(activity.approval_by)}</p>
             ) : (
               <div className="flex items-center gap-3 text-xs font-bold mb-2">
                   <div>
-                      <label for="inputPassword6" className="col-form-label">Disetujui Oleh: </label>
+                      <label className="col-form-label">Disetujui Oleh: </label>
                   </div>
                   <div>
                       <select value={approvedBy} onChange={(e) => setApprovedBy(e.target.value)} className="form-select text-xs font-bold rounded-[30px] form-select-sm" style={{color:"#675893"}}>
-                        <option value="" disabled selected>Select One</option>
+                        <option value="" disabled>Select One</option>
                           {members.map(m => (
                             <option
                               key={m.id} className="text-xs font-bold"
-                              style={{color:"#675893"}} value={m.id}>
+                              style={{color:"#675893"}} value={m.member_role}>
                                 {titleCase(m.member_role)}
                             </option>
                           ))}

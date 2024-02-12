@@ -14,7 +14,6 @@ import axios from "axios";
 export default function MisiAnggota() {
     const { state } = useLocation()
     const {members, member} = state
-    console.log(members, member);
     const [data, setData] = useState([]);
     const [categories, setCategories] = useState([]);
     useEffect(() => {

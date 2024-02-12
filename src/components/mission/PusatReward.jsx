@@ -46,8 +46,8 @@ export default function PusatReward({ members }) {
                     <div className="p-sm-3 p-md-4 p-3 px-sm-4 px-md-5 px-3 mb-4 mx-sm-1 mx-md-5 mx-1 bg-white shadow-md rounded-[60px]">
                         <h1 className="text-center text-3xl font-bold mb-4">Ringkasan</h1>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
-                            <SummaryCard title='Ayah Idaman' value='60' fontSz='text-7xl' description='selesaikan banyak misi untuk menaikan score' firstRow={94} />
-                            <SummaryCard title='Bunda Idaman' value='60' fontSz='text-7xl' description='selesaikan banyak misi untuk menaikan score' firstRow={94} />
+                            <SummaryCard title='Ayah Idaman' value='60' fontSz='text-7xl' description='selesaikan banyak misi untuk menaikan score menjadi “Ayah Idaman”' firstRow={94} />
+                            <SummaryCard title='Bunda Idaman' value='60' fontSz='text-7xl' description='selesaikan banyak misi untuk menaikan score menjadi “Bunda Idaman”' firstRow={94} />
                             <SummaryCard title='Daily Mission' value='60' fontSz='text-7xl' description='Misi diselesaikan overdue (per 30 hari)' />
                             <SummaryCard title='Daily Mission' value='2' fontSz='text-7xl' description='Misi diselesaikan overdue (per 30 hari)' />
                             <SummaryCard title='Kategori' value='4' fontSz='text-7xl' description='Kategori yang telah dilaksanakan (per 30 hari)' />
