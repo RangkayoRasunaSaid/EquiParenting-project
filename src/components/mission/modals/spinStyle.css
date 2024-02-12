@@ -1,0 +1,75 @@
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+  } */
+  
+  #wheelOfFortune {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #canvas {
+    width: 600px;
+    height: 600px;
+  }
+  
+  #wheel {
+    display: block;
+  }
+  
+  #spin {
+    font: 1em / 0 sans-serif;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the element */
+    width: 100px; /* Set a fixed width */
+    height: 100px; /* Set a fixed height */
+    background: #fff;
+    color: #fff;
+    box-shadow: 0 0 0 8px currentColor, 0 0px 15px 5px rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    transition: 0.8s;
+  }
+  
+  #spin::after {
+    content: '';
+    position: absolute;
+    top: -17px;
+    border: 10px solid transparent;
+    border-bottom-color: currentColor;
+    border-top: none;
+  }
+  
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 768px) {
+  #canvas {
+    width: 80vw; /* 80% of viewport width */
+    height: 80vw; /* Maintain aspect ratio */
+  }
+  
+  #wheelOfFortune {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #spin {
+    width: 20vw; /* 20% of viewport width */
+    height: 20vw; /* Maintain aspect ratio */
+  }
+}
