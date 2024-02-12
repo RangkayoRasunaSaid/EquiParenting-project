@@ -16,6 +16,9 @@ export default {
         "secondary-color": "#E8DEF7",
         "tertiery-color": "#7f508f",
         "dark-main-color": "#392c60",
+        primary: "#675893",
+        secondary: "#E8DEF7",
+        tertiery: "#7f508f",
       },
       fontSize: {
         xxs: "0.65rem",
@@ -26,9 +29,9 @@ export default {
         'dark-main-color': '#392c60',
         'lavender-shade': '#e0cdfb',
       },
-      fontWeight: ['hover', 'focus', 'active', 'group-hover']
+      fontWeight: ["hover", "focus", "active", "group-hover"],
     },
-    
+
     // container: {
     //   center: true,
     //   padding: {

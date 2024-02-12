@@ -1,5 +1,5 @@
 import SummaryCard from './SummaryCard.jsx';
-import WheelComponent from './WheelComponent.jsx';
+// import WheelComponent from './WheelComponent.jsx';
 import WheelReward from './WheelReward.jsx';
 import ModalButton from "./modals/ModalButton";
 import ModalSpin from "./modals/ModalSpin";

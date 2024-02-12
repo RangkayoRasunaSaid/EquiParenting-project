@@ -1,0 +1,59 @@
+html{
+    margin: 0 auto;
+    /* text-align: center; */
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  }
+  body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  
+.activity-container {
+    width: 95vw;
+    height: 82vh;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* .small-device-card {
+  width: 50% !important;
+  height: 50% !important;
+} */
+.bg-card-lg {
+  height: 71vh;
+}
+.bg-card-md {
+  height: 61vh;
+}
+.bg-card-sm {
+  height: 71vh;
+}
+.kotak-lg {
+  width: 18vw;
+  height: auto;
+  min-height: 12vh;
+  max-height: 20vh;
+  background-color: #cccccc;
+  border: 2px solid #a8a8a8;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.kotak-md {
+  width: 40vw;
+  height: auto;
+  min-height: 12vh;
+  max-height: 20vh;
+  background-color: #cccccc;
+  border: 2px solid #a8a8a8;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.kotak-sm {
+  width: 50vw;
+  height: auto;
+  min-height: 10vh;
+  max-height: 14vh;
+  background-color: #cccccc;
+  border: 2px solid #a8a8a8;
+  border-radius: 10px;
+  overflow: hidden;
+}
