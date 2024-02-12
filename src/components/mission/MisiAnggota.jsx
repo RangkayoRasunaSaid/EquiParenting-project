@@ -1,5 +1,5 @@
 import { BsFillQuestionCircleFill, BsArrowLeftShort } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import OwlCarousel from 'react-owl-carousel'
 import 'owl.carousel/dist/assets/owl.carousel.css'
 import 'owl.carousel/dist/assets/owl.theme.default.css'
@@ -7,9 +7,39 @@ import ModalButton from "./modals/ModalButton";
 import ModalAktivitas from "./modals/ModalAktivitas"
 import ModalHelp from "./modals/ModalHelp";
 import TaskItem from "./TaskItem";
+import { titleCase } from "../Breadcrumbs";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function MisiAnggota({ peran }) {
+export default function MisiAnggota() {
+    const { state } = useLocation()
+    const {members, member} = state
+    console.log(members, member);
+    const [data, setData] = useState([]);
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const token = sessionStorage.getItem('token');
+            
+            const activitiesResponse = await axios.get(`http://localhost:3000/activities/${member.id}`);
+            // const activitiesResponse = await axios.get(`http://localhost:3000/activities/21`);
+            const activitiesData = activitiesResponse.data;
+            setData(activitiesData);
+
+            const categoriesResponse = await axios.get(`http://localhost:3000/categories`);
+            const categoriesData = categoriesResponse.data;
+            setCategories(categoriesData);
+          } catch (error) {
+            // console.error('Error fetching data:', error);
+            // alert('Failed fetching data');
+            // window.location.reload();
+          }
+        };
+      
+        fetchData();
+      }, []);  
+
     const options = {
         stagePadding: 40,
         items: 3,
@@ -33,8 +63,11 @@ export default function MisiAnggota({ peran }) {
                 <Link to="/mission/daily-mission">
                     <BsArrowLeftShort />
                 </Link>
-                <h1>Aktivitas {peran}</h1>
-                <ModalButton btnContent={(<BsFillQuestionCircleFill role="button" />)} mdlContent={(<ModalHelp />)} maxWidth="1000px" />
+                <h1>Aktivitas {titleCase(member.member_role)}</h1>
+                <ModalButton
+                    btnContent={(<BsFillQuestionCircleFill role="button" />)}
+                    mdlContent={(<ModalHelp role={member.member_role} />)} maxWidth="1000px"
+                />
             </div>
             {/* <div className=" mb-10">
                 <h1 className="text-2xl font-semibold text-center">Misi Harian</h1>
@@ -62,9 +95,18 @@ export default function MisiAnggota({ peran }) {
                 </OwlCarousel>
             </div> */}
             <div>
-                <h1 className="text-2xl font-semibold text-center">Yuk, Buat Misi Sendiri Untuk {peran}!</h1>
+                <h1 className="text-2xl font-semibold text-center">Yuk, Buat Misi Sendiri untuk {titleCase(member.member_role)}!</h1>
                 <OwlCarousel className='owl-theme' {...options} >
-                    <TaskItem
+                    {data.map(activity => (
+                        <TaskItem
+                            key={activity.id}
+                            members={members}
+                            member={member}
+                            activity={activity}
+                            responsible={titleCase(member.member_role)}
+                        />
+                    ))}
+                    {/* <TaskItem
                         category="Baby"
                         title="Membuat susu adek pagi"
                         timestamp="Hari ini, 2 Jan 2024 18:42 WIB"
@@ -75,7 +117,7 @@ export default function MisiAnggota({ peran }) {
                         approvedBy='Ayah'
                         deadline='2 Feb 2024 18:42 - 3 Feb 2024 02:00'
                         disabled={false}
-                    />
+                    /> */}
                 </OwlCarousel>
                 <div className="flex justify-center my-5">
                     <ModalButton btnContent={(
@@ -86,7 +128,7 @@ export default function MisiAnggota({ peran }) {
                                 <span className="text-6xl me-3">+</span>
                                 <span style={{color:"c3b8da"}}>Tambah Aktivitas</span>
                         </button>)}
-                        mdlContent={(<ModalAktivitas />)}
+                        mdlContent={(<ModalAktivitas members={members} member={member} categories={categories} />)}
                         maxWidth="800px"
                     />
                     
@@ -95,3 +137,4 @@ export default function MisiAnggota({ peran }) {
         </div>
     )
 }
+

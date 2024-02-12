@@ -5,6 +5,8 @@ import { FaXmark, FaBars } from "react-icons/fa6"
 import { FaUserCircle } from "react-icons/fa"
 import ResponsiveMenu from "./ResponsiveMenu"
 
+export const isAuthenticated = sessionStorage.getItem("token");
+
 const Navbar = () => {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -32,8 +34,6 @@ const Navbar = () => {
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   }
-
-  const isAuthenticated = sessionStorage.getItem("token");
 
   return (
     <>

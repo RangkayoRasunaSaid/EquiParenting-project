@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import ModalPeriode from "./modals/ModalPeriode";
 import ModalButton from "./modals/ModalButton";
+import { titleCase } from "../Breadcrumbs";
 
-export default function({ member }) {
+export default function MisiPeriode({ members, member }) {
     // Format the selected period for display
 
     // const isWithinPeriod = (endTime) => {
@@ -13,8 +14,13 @@ export default function({ member }) {
     const formattedPeriod = member.start_date && member.end_date ? `${new Date(member.start_date).toLocaleDateString()} - ${new Date(member.end_date).toLocaleDateString()}` : '';
     return (
         <div className={`px-10 py-6 rounded-[20px] border-0 shadow-md h-100 ${!formattedPeriod ? 'bg-slate-100' : ''}`}>
-            <Link to={formattedPeriod ? "/mission/daily-mission/misi-bunda" : '#'}>
-                <h5 className="text-xl font-bold" style={{ color: "#675893" }}>Misi {member.member_role.charAt(0).toUpperCase() + member.member_role.substr(1).toLowerCase()}</h5>
+            <Link
+                to={ formattedPeriod ? {
+                    pathname: `/mission/daily-mission/:${member.member_role}`
+                } : '#' }
+                state={{ members, member }}
+            >
+                <h5 className="text-xl font-bold" style={{ color: "#675893" }}>Misi {titleCase(member.member_role)}</h5>
                 <div className="flex justify-center mt-3">
                     <img className="rounded-full ring-2 ring-purple-500" style={{ height: "90px", width: "90px" }} alt="..." src={`/src/assets/${member.member_role}.svg`} />
                 </div>
