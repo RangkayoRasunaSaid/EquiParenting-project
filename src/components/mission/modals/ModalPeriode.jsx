@@ -4,10 +4,10 @@ import { useState } from 'react';
 export default function ModalPeriode({ memberId }) {
     console.log(memberId);
     const [data, setData] = useState({
-      member_id: memberId,
+      spinned_at: '',
       start_date: "",
       end_date: "",
-      spinned_at: ''
+      id_member: memberId
     });
 
     // Handle input changes for end time

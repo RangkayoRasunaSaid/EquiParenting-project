@@ -1,5 +1,5 @@
 import { BsFillQuestionCircleFill, BsArrowLeftShort } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import OwlCarousel from 'react-owl-carousel'
 import 'owl.carousel/dist/assets/owl.carousel.css'
 import 'owl.carousel/dist/assets/owl.theme.default.css'
@@ -7,9 +7,19 @@ import ModalButton from "./modals/ModalButton";
 import ModalAktivitas from "./modals/ModalAktivitas"
 import ModalHelp from "./modals/ModalHelp";
 import TaskItem from "./TaskItem";
-import axios from "axios";
+import { titleCase } from "../Breadcrumbs";
 
-export default function MisiAnggota({ peran }) {
+const withRouter = (Component) =>{
+    const Wrapper = (props) =>{
+        const history = useNavigate();
+        return <Component history={history} {...props}/>
+    } 
+    return Wrapper;
+}
+
+function MisiAnggota() {
+    const { state } = useLocation()
+    console.log(state);
     const options = {
         stagePadding: 40,
         items: 3,
@@ -33,8 +43,8 @@ export default function MisiAnggota({ peran }) {
                 <Link to="/mission/daily-mission">
                     <BsArrowLeftShort />
                 </Link>
-                <h1>Aktivitas {peran}</h1>
-                <ModalButton btnContent={(<BsFillQuestionCircleFill role="button" />)} mdlContent={(<ModalHelp />)} maxWidth="1000px" />
+                <h1>Aktivitas {titleCase(state.member_role)}</h1>
+                <ModalButton btnContent={(<BsFillQuestionCircleFill role="button" />)} mdlContent={(<ModalHelp role={state.member_role} />)} maxWidth="1000px" />
             </div>
             {/* <div className=" mb-10">
                 <h1 className="text-2xl font-semibold text-center">Misi Harian</h1>
@@ -62,7 +72,7 @@ export default function MisiAnggota({ peran }) {
                 </OwlCarousel>
             </div> */}
             <div>
-                <h1 className="text-2xl font-semibold text-center">Yuk, Buat Misi Sendiri Untuk {peran}!</h1>
+                <h1 className="text-2xl font-semibold text-center">Yuk, Buat Misi Sendiri untuk {titleCase(state.member_role)}!</h1>
                 <OwlCarousel className='owl-theme' {...options} >
                     <TaskItem
                         category="Baby"
@@ -95,3 +105,5 @@ export default function MisiAnggota({ peran }) {
         </div>
     )
 }
+
+export default MisiAnggota

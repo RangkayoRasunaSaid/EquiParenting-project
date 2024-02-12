@@ -2,6 +2,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import axios from "axios";
 import ModalPeriode from "./modals/ModalPeriode";
 import ModalButton from "./modals/ModalButton";
+import { titleCase } from "../Breadcrumbs";
 
 const MemberItem = ({ member, startDate, endDate, onDelete }) => {
     const isWithinPeriod = (endTime) => {
@@ -37,7 +38,7 @@ const MemberItem = ({ member, startDate, endDate, onDelete }) => {
             <div className="flex justify-center mb-2">
               <img src={member.avatar ? member.avatar : `/src/assets/${member.member_role}.svg`} className="rounded-full ring-2 ring-purple-500" style={{height:"90px", width:"90px"}} alt="..." />
             </div>
-            <h5 className="text-xl font-bold" style={{color:"#675893"}}>{member.member_role}</h5>
+            <h5 className="text-xl font-bold" style={{color:"#675893"}}>{titleCase(member.member_role)}</h5>
             <p className="text-slate-300 font-bold text-sm my-1">{member.name}</p>
             {!formattedPeriod ? (
                 <ModalButton btnContent={(
