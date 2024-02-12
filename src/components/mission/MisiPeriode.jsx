@@ -3,7 +3,7 @@ import ModalPeriode from "./modals/ModalPeriode";
 import ModalButton from "./modals/ModalButton";
 import { titleCase } from "../Breadcrumbs";
 
-export default function MisiPeriode({ member }) {
+export default function MisiPeriode({ members, member }) {
     // Format the selected period for display
 
     // const isWithinPeriod = (endTime) => {

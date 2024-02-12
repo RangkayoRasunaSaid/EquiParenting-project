@@ -8,18 +8,36 @@ import ModalAktivitas from "./modals/ModalAktivitas"
 import ModalHelp from "./modals/ModalHelp";
 import TaskItem from "./TaskItem";
 import { titleCase } from "../Breadcrumbs";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const withRouter = (Component) =>{
-    const Wrapper = (props) =>{
-        const history = useNavigate();
-        return <Component history={history} {...props}/>
-    } 
-    return Wrapper;
-}
-
-function MisiAnggota() {
+export default function MisiAnggota() {
     const { state } = useLocation()
-    console.log(state);
+    const [data, setData] = useState([]);
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const token = sessionStorage.getItem('token');
+            
+            const activitiesResponse = await axios.get(`http://localhost:3000/activities/${state.id}`);
+            // const activitiesResponse = await axios.get(`http://localhost:3000/activities/21`);
+            const activitiesData = activitiesResponse.data;
+            setData(activitiesData);
+
+            const categoriesResponse = await axios.get(`http://localhost:3000/categories`);
+            const categoriesData = categoriesResponse.data;
+            setCategories(categoriesData);
+          } catch (error) {
+            // console.error('Error fetching data:', error);
+            // alert('Failed fetching data');
+            // window.location.reload();
+          }
+        };
+      
+        fetchData();
+      }, []);  
+
     const options = {
         stagePadding: 40,
         items: 3,
@@ -44,7 +62,10 @@ function MisiAnggota() {
                     <BsArrowLeftShort />
                 </Link>
                 <h1>Aktivitas {titleCase(state.member_role)}</h1>
-                <ModalButton btnContent={(<BsFillQuestionCircleFill role="button" />)} mdlContent={(<ModalHelp role={state.member_role} />)} maxWidth="1000px" />
+                <ModalButton
+                    btnContent={(<BsFillQuestionCircleFill role="button" />)}
+                    mdlContent={(<ModalHelp role={state.member_role} />)} maxWidth="1000px"
+                />
             </div>
             {/* <div className=" mb-10">
                 <h1 className="text-2xl font-semibold text-center">Misi Harian</h1>
@@ -74,7 +95,21 @@ function MisiAnggota() {
             <div>
                 <h1 className="text-2xl font-semibold text-center">Yuk, Buat Misi Sendiri untuk {titleCase(state.member_role)}!</h1>
                 <OwlCarousel className='owl-theme' {...options} >
-                    <TaskItem
+                    {data.map(activity => (
+                        <TaskItem
+                            category={activity.category}
+                            title={activity.title}
+                            timestamp={activity.date_start_act}
+                            description={activity.description}
+                            completed={activity.approval_date}
+                            points={activity.point}
+                            responsible={titleCase(state.member_role)}
+                            approvedBy={titleCase(activity.approval_by)}
+                            deadline={activity.date_stop_act}
+                            disabled={false}
+                        />
+                    ))}
+                    {/* <TaskItem
                         category="Baby"
                         title="Membuat susu adek pagi"
                         timestamp="Hari ini, 2 Jan 2024 18:42 WIB"
@@ -85,7 +120,7 @@ function MisiAnggota() {
                         approvedBy='Ayah'
                         deadline='2 Feb 2024 18:42 - 3 Feb 2024 02:00'
                         disabled={false}
-                    />
+                    /> */}
                 </OwlCarousel>
                 <div className="flex justify-center my-5">
                     <ModalButton btnContent={(
@@ -96,7 +131,7 @@ function MisiAnggota() {
                                 <span className="text-6xl me-3">+</span>
                                 <span style={{color:"c3b8da"}}>Tambah Aktivitas</span>
                         </button>)}
-                        mdlContent={(<ModalAktivitas />)}
+                        mdlContent={(<ModalAktivitas member={state} categories={categories} />)}
                         maxWidth="800px"
                     />
                     
@@ -106,4 +141,3 @@ function MisiAnggota() {
     )
 }
 
-export default MisiAnggota
