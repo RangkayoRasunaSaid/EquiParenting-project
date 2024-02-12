@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import MisiAnggota from './MisiAnggota.jsx';
 // import '../../App.scss'
+// import ButtonLihatMisi from '../dashboard/ButtonLihatMisi.jsx';
 
 // Styled component for customizing modal background transition
 const FadingBackground = styled(BaseModalBackground)`
@@ -78,6 +79,7 @@ export default function App() {
                     <Route path="/daily-mission" element={<DailyMission members={members} setMembers={setMembers} />} />
                     <Route path="/daily-mission/:role" element={<MisiAnggota />} />
                 </Routes>
+                
             </div>
         </ModalProvider>
     );
