@@ -46,27 +46,27 @@ const Member = ({ members, setMembers, scores, setScores }) => {
   return (
     <>
       {members.map((member, index) => {
-      // Retrieve rewards for the current member
-      const memberRewards = rewardsByMember[member.id] || [];
-      let start_date = ''
-      let end_date = ''
-      
-      // Find the last reward for the member
-      const lastReward = memberRewards.length > 0 ? memberRewards[memberRewards.length - 1] : null;
-      if (lastReward) {
-        start_date = lastReward.start_date
-        end_date = lastReward.end_date
-      }
+        // Retrieve rewards for the current member
+        const memberRewards = rewardsByMember[member.id] || [];
+        let start_date = ''
+        let end_date = ''
         
-        return (
-          <MemberItem
-            key={index} 
-            member={member} 
-            startDate={start_date} 
-            endDate={end_date} 
-            onDelete={handleDeleteMember} 
-          />
-        );
+        // Find the last reward for the member
+        const lastReward = memberRewards.length > 0 ? memberRewards[memberRewards.length - 1] : null;
+        if (lastReward) {
+          start_date = lastReward.start_date
+          end_date = lastReward.end_date
+        }
+          
+          return (
+            <MemberItem
+              key={index} 
+              member={member} 
+              startDate={start_date} 
+              endDate={end_date} 
+              onDelete={handleDeleteMember} 
+            />
+          );
       })}
     </>
   );

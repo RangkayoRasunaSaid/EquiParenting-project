@@ -3,7 +3,7 @@ import ModalPeriode from "./modals/ModalPeriode";
 import ModalButton from "./modals/ModalButton";
 import { titleCase } from "../Breadcrumbs";
 
-export default function MisiPeriode({ member }) {
+export default function MisiPeriode({ members, member }) {
     // Format the selected period for display
 
     // const isWithinPeriod = (endTime) => {
@@ -18,7 +18,7 @@ export default function MisiPeriode({ member }) {
                 to={ formattedPeriod ? {
                     pathname: `/mission/daily-mission/:${member.member_role}`
                 } : '#' }
-                state={ member }
+                state={{ members, member }}
             >
                 <h5 className="text-xl font-bold" style={{ color: "#675893" }}>Misi {titleCase(member.member_role)}</h5>
                 <div className="flex justify-center mt-3">
