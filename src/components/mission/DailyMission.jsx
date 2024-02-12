@@ -24,11 +24,16 @@ export default function DailyMission({ members, setMembers }) {
     //   }, []);
 
     return (
+        <>
         <div className="bg-white mx-4 px-10 rounded-[60px] pb-5 flex flex-col justify-center">
             <Tim members={members} setMembers={setMembers} />
             {members.length > 0 &&
               <Aktivitas members={members} setMembers={setMembers} />
             }
         </div>
+        <div>
+            <h1>Container ke Card Activity</h1>
+        </div>
+        </>
     )
 }

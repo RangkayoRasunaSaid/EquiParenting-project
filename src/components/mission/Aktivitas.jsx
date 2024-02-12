@@ -38,7 +38,7 @@ export default function Aktivitas({ members, setMembers }){
             <h1 className="text-center text-3xl my-5 font-bold">Aktivitas</h1>
             <div className="flex justify-center sm:gap-10 gap-5 text-center p-2">
                 {members.map(member => (
-                    <MisiPeriode key={member.id} member={member} />
+                    <MisiPeriode key={member.id} members={members} member={member} />
                 ))}
             </div>
         </>
