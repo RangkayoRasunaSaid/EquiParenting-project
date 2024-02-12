@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { titleCase } from "../../Breadcrumbs";
 import { Navigate } from "react-router";
 
-export default function Modal({ member, categories }) {
+export default function Modal({ members, member, categories }) {
     const [data, setData] = useState({
       id_member: member.id,
       title: "",
@@ -35,7 +35,7 @@ export default function Modal({ member, categories }) {
           alert("Berhasil menambahkan member");
           <Navigate
             to={`/daily-mission/:${member.member_role}`}
-            state={ member }
+            state={{ members,member }}
           />
         })
         .catch((error) => {
@@ -71,6 +71,7 @@ export default function Modal({ member, categories }) {
                     <label for="inputCategory">Kategori:</label>
                     <div className="col-sm-8">
                         <select value={data.category} onChange={(e) => setData({ ...data, category: e.target.value })} id="inputCategory" className="ms-2 border-2 form-select text-lg font-bold rounded-lg">
+                            <option value="" disabled selected>Select One</option>
                             {categories.map((category, index) => (
                                 <option key={index} value={category} className="font-bold">{category}</option>
                             ))}

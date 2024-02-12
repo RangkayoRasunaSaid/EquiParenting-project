@@ -18,7 +18,7 @@ export default function MisiPeriode({ members, member }) {
                 to={ formattedPeriod ? {
                     pathname: `/mission/daily-mission/:${member.member_role}`
                 } : '#' }
-                state={ member }
+                state={{ members, member }}
             >
                 <h5 className="text-xl font-bold" style={{ color: "#675893" }}>Misi {titleCase(member.member_role)}</h5>
                 <div className="flex justify-center mt-3">

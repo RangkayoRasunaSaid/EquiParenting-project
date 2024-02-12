@@ -13,6 +13,8 @@ import axios from "axios";
 
 export default function MisiAnggota() {
     const { state } = useLocation()
+    const {members, member} = state
+    console.log(members, member);
     const [data, setData] = useState([]);
     const [categories, setCategories] = useState([]);
     useEffect(() => {
@@ -20,7 +22,7 @@ export default function MisiAnggota() {
           try {
             const token = sessionStorage.getItem('token');
             
-            const activitiesResponse = await axios.get(`http://localhost:3000/activities/${state.id}`);
+            const activitiesResponse = await axios.get(`http://localhost:3000/activities/${member.id}`);
             // const activitiesResponse = await axios.get(`http://localhost:3000/activities/21`);
             const activitiesData = activitiesResponse.data;
             setData(activitiesData);
@@ -61,10 +63,10 @@ export default function MisiAnggota() {
                 <Link to="/mission/daily-mission">
                     <BsArrowLeftShort />
                 </Link>
-                <h1>Aktivitas {titleCase(state.member_role)}</h1>
+                <h1>Aktivitas {titleCase(member.member_role)}</h1>
                 <ModalButton
                     btnContent={(<BsFillQuestionCircleFill role="button" />)}
-                    mdlContent={(<ModalHelp role={state.member_role} />)} maxWidth="1000px"
+                    mdlContent={(<ModalHelp role={member.member_role} />)} maxWidth="1000px"
                 />
             </div>
             {/* <div className=" mb-10">
@@ -93,20 +95,15 @@ export default function MisiAnggota() {
                 </OwlCarousel>
             </div> */}
             <div>
-                <h1 className="text-2xl font-semibold text-center">Yuk, Buat Misi Sendiri untuk {titleCase(state.member_role)}!</h1>
+                <h1 className="text-2xl font-semibold text-center">Yuk, Buat Misi Sendiri untuk {titleCase(member.member_role)}!</h1>
                 <OwlCarousel className='owl-theme' {...options} >
                     {data.map(activity => (
                         <TaskItem
-                            category={activity.category}
-                            title={activity.title}
-                            timestamp={activity.date_start_act}
-                            description={activity.description}
-                            completed={activity.approval_date}
-                            points={activity.point}
-                            responsible={titleCase(state.member_role)}
-                            approvedBy={titleCase(activity.approval_by)}
-                            deadline={activity.date_stop_act}
-                            disabled={false}
+                            key={activity.id}
+                            members={members}
+                            member={member}
+                            activity={activity}
+                            responsible={titleCase(member.member_role)}
                         />
                     ))}
                     {/* <TaskItem
@@ -131,7 +128,7 @@ export default function MisiAnggota() {
                                 <span className="text-6xl me-3">+</span>
                                 <span style={{color:"c3b8da"}}>Tambah Aktivitas</span>
                         </button>)}
-                        mdlContent={(<ModalAktivitas member={state} categories={categories} />)}
+                        mdlContent={(<ModalAktivitas members={members} member={member} categories={categories} />)}
                         maxWidth="800px"
                     />
                     
