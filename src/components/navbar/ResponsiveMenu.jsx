@@ -7,9 +7,9 @@ const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
 
   const navMenu = [
     { link: "Beranda", path: "/" },
-    { link: "Parenting", path: "parenting" },
+    // { link: "Parenting", path: "parenting" }, // next feature
     { link: "Mission", path: "mission" },
-    { link: "Ceritaku", path: "ceritaku" },
+    // { link: "Ceritaku", path: "ceritaku" }, // next feature
   ]
 
   const authenticatedUser = {

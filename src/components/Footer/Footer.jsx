@@ -7,19 +7,28 @@ import {
   FaMobileAlt,
 } from "react-icons/fa"
 import { MdOutlineMail } from "react-icons/md"
+import { Link } from 'react-router-dom'
+
 
 const Footer = () => {
+  const navMenu = [
+    { link: "Beranda", path: "/" },
+    // { link: "Parenting", path: "/parenting" }, // next feature
+    { link: "Mission", path: "/mission" },
+    // { link: "Ceritaku", path: "/ceritaku" }, // next feature
+  ]
+
   return (
-    <div style={{backgroundColor: 'rgba(103, 88, 147)'}}>
+    <div className="mt-16" style={{ backgroundColor: 'rgba(103, 88, 147)' }}>
       <section className="mx-auto max-w-[1320px] text-white">
         <div className="grid py-4 md:grid-cols-3">
 
           {/* logo and contact */}
           <div className="pl-8 md:pl-16 py-8">
             {/* <div> */}
-              <a href="/">
-                <img src={logo} alt="logo" className="w-[200px] h-auto" />
-              </a>
+            <a href="/">
+              <img src={logo} alt="logo" className="w-[200px] h-auto" />
+            </a>
             {/* </div> */}
             {/* <p className="">
               Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet
@@ -45,26 +54,25 @@ const Footer = () => {
             <div>
               <div className="pl-8 md:pl-16 py-8">
                 <h1 className="mb-3 text-justify text-xl font-bold sm:text-left sm:text-xl">
-                  Fitur
+                  Link
                 </h1>
                 <ul className="flex flex-col gap-3">
-                  <li className="cursor-pointer transition-all duration-300 hover:translate-x-[2px] hover:font-medium">
-                    Beranda
-                  </li>
-                  <li className="cursor-pointer transition-all duration-300 hover:translate-x-[2px] hover:font-medium">
-                    Parenting
-                  </li>
-                  <li className="cursor-pointer transition-all duration-300 hover:translate-x-[2px] hover:font-medium">
-                    Mission
-                  </li>
-                  <li className="cursor-pointer transition-all duration-300 hover:translate-x-[2px] hover:font-medium">
-                    Ceritaku
-                  </li>
+                  {navMenu.map(({ link, path }) => {
+                    return (
+                      <Link
+                        key={link}
+                        to={path}
+                        className="cursor-pointer transition-all duration-300 hover:translate-x-[2px] hover:font-medium">
+                        {link}
+                      </Link>
+                    )
+                  })}
                 </ul>
               </div>
             </div>
 
-            <div>
+            {/* topics filter (next feature) */}
+            {/* <div>
               <div className="pr-8 py-8 ">
                 <h1 className="mb-3 text-justify text-xl font-bold sm:text-left sm:text-xl">
                   Parenting
@@ -84,7 +92,7 @@ const Footer = () => {
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> */}
 
             {/* social media handle */}
             <div className="">
