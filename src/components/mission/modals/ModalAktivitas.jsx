@@ -87,8 +87,8 @@ export default function Modal({ members, member, categories }) {
                         className="w-full ring-2 ring-purple-500 text-base font-semibold"
                         rows='5' id="inputDescription"
                         onChange={(e) => setData({ ...data, description: e.target.value })}
-                        placeholder="Berikan keterangan atau detail task baru disini...">
-                        {data.description}
+                        placeholder="Berikan keterangan atau detail task baru disini..."
+                        value={data.description}>
                     </textarea>
                 </div>
                 <div className="flex gap-4 mb-3 items-center">

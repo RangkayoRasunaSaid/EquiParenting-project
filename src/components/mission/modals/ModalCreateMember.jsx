@@ -117,11 +117,9 @@ export default function ModalCreateMember({ members, setMembers }) {
                     disabled={isCreating}
                     onChange={(e) => setData({ ...data, member_role: e.target.value })}
                   >
-                    <option disabled selected>
-                      Silahkan dipilih
-                    </option>
+                    <option disabled>Silahkan dipilih</option>
                     {roles.map((role, index) => (
-                      <option key={index}>{role}</option>
+                      <option value={role} key={index}>{role}</option>
                     ))}
                   </select>
                 </div>
