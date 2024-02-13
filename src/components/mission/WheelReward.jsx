@@ -1,4 +1,5 @@
 import { titleCase } from "../Breadcrumbs"
+import PropTypes from 'prop-types';
 
 export default function WheelReward({ member }) {
     return (
@@ -9,3 +10,9 @@ export default function WheelReward({ member }) {
         </div>
     )
 }
+WheelReward.propTypes = {
+    member: PropTypes.shape({
+        member_role: PropTypes.string.isRequired,
+        // Include any other properties of member that you use or expect to use
+    }).isRequired,
+};

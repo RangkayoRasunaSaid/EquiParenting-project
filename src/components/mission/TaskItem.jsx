@@ -4,6 +4,7 @@ import moment from 'moment/moment';
 import { titleCase } from '../Breadcrumbs';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 function formatDate(stringDate) {
   let date = moment(stringDate);
@@ -49,7 +50,7 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible }) =>
     }
 
     axios
-      .put(`http://localhost:3000/activities/approve/${activity.id}`, { approval_by: approvedBy }, {
+      .put(`https://outrageous-gold-twill.cyclic.app/activities/approve/${activity.id}`, { approval_by: approvedBy }, {
         headers: {
           Authorization: token,
         },
@@ -150,5 +151,45 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible }) =>
     </div>
   );
 };
+TaskItem.propTypes = {
+  members: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+      ]).isRequired,
+      member_role: PropTypes.string.isRequired,
+      // Define other member properties here if needed
+  })).isRequired,
+  member: PropTypes.shape({
+      // Assuming 'member' has similar properties to those in 'members'
+      id: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+      ]).isRequired,
+      member_role: PropTypes.string.isRequired,
+      // Include other properties of 'member' that you use
+  }),
+  activity: PropTypes.shape({
+      id: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+      ]).isRequired,
+      title: PropTypes.string.isRequired,
+      date_start_act: PropTypes.string.isRequired,
+      date_stop_act: PropTypes.string.isRequired,
+      approval_date: PropTypes.string,
+      approval_by: PropTypes.string,
+      point: PropTypes.number.isRequired,
+      category: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      // Add other activity properties as needed
+  }).isRequired,
+  bySystem: PropTypes.bool,
+  responsible: PropTypes.string,
+};
 
+// Set default props for optional properties
+TaskItem.defaultProps = {
+  bySystem: false, // Assuming 'bySystem' is not required and defaults to false
+};
 export default TaskItem;

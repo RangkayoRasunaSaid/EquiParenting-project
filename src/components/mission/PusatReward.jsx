@@ -7,6 +7,7 @@ import ModalButton from "./modals/ModalButton";
 import ModalSpin from "./modals/ModalSpin";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 export default function PusatReward({ members }) {
     console.log(members);
@@ -27,7 +28,7 @@ export default function PusatReward({ members }) {
       const token = sessionStorage.getItem('token');
       const fetchMemberActivityStats = async () => {
         try {
-          const response = await axios.get('http://localhost:3000/stats', { headers: { Authorization: token } });
+          const response = await axios.get('https://outrageous-gold-twill.cyclic.app/stats', { headers: { Authorization: token } });
           setStats(response.data);
           console.log(stats[24]);
         } catch (error) {
@@ -95,3 +96,14 @@ export default function PusatReward({ members }) {
         </div>
     )
 }
+PusatReward.propTypes = {
+    members: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number
+        ]).isRequired,
+        member_role: PropTypes.string.isRequired,
+        percentage: PropTypes.number,
+        // Include any other properties that members might have and you use in this component
+    })).isRequired,
+};

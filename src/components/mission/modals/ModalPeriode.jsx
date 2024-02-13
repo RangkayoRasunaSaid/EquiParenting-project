@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 export default function ModalPeriode({ memberId }) {
     console.log(memberId);
@@ -57,7 +58,7 @@ export default function ModalPeriode({ memberId }) {
         console.log(data);
     
         axios
-          .post("http://localhost:3000/reward", data, {
+          .post("https://outrageous-gold-twill.cyclic.app/reward", data, {
             headers: {
               Authorization: token,
             },
@@ -113,3 +114,9 @@ export default function ModalPeriode({ memberId }) {
         </div>
     );
 }
+ModalPeriode.propTypes = {
+    memberId: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]).isRequired,
+};

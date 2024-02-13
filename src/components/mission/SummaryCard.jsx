@@ -1,5 +1,6 @@
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
+import PropTypes from 'prop-types';
 
 // SummaryCard component function
 export default function SummaryCard({ title, value, fontSz, description, firstRow }) {
@@ -48,3 +49,10 @@ export default function SummaryCard({ title, value, fontSz, description, firstRo
     </div>
   )
 }
+SummaryCard.propTypes = {
+  title: PropTypes.string.isRequired, // title is required and must be a string
+  value: PropTypes.string, // value is optional and must be a string if provided
+  fontSz: PropTypes.string, // fontSz is optional and must be a string if provided
+  description: PropTypes.string, // description is optional and must be a string if provided
+  firstRow: PropTypes.number, // firstRow is optional and must be a number if provided
+};

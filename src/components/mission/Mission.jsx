@@ -28,11 +28,11 @@ export default function App() {
             const token = sessionStorage.getItem('token');
             
             // Fetch members
-            const membersResponse = await axios.get('http://localhost:3000/members', { headers: { Authorization: token } });
+            const membersResponse = await axios.get('https://outrageous-gold-twill.cyclic.app/members', { headers: { Authorization: token } });
             const membersData = membersResponse.data.members;
       
             // Fetch rewards
-            const rewardsResponse = await axios.get('http://localhost:3000/rewards', { headers: { Authorization: token } });
+            const rewardsResponse = await axios.get('https://outrageous-gold-twill.cyclic.app/rewards', { headers: { Authorization: token } });
             const rewardsData = rewardsResponse.data;
       
             // Group rewards by member ID

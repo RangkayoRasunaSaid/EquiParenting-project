@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = 'http://localhost:3000'
+const API_URL = 'https://outrageous-gold-twill.cyclic.app'
 
 export const registerUser = async userData => {
     try {

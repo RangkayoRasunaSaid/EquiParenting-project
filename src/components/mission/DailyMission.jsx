@@ -3,6 +3,7 @@ import Aktivitas from "./Aktivitas";
 import Tim from "./Daymission";
 import axios from "axios";
 // import Tim from "./Tim";
+import PropTypes from 'prop-types';
 
 export default function DailyMission({ members, setMembers }) {
   
@@ -20,3 +21,7 @@ export default function DailyMission({ members, setMembers }) {
         </>
     )
 }
+DailyMission.propTypes = {
+    members: PropTypes.array.isRequired, // Assuming members is an array of objects
+    setMembers: PropTypes.func.isRequired, // Function for updating the members state
+};

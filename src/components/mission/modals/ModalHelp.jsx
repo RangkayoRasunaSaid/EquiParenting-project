@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export default function ModalHelp({ role }) {
     return (
         <div>
@@ -12,3 +14,6 @@ export default function ModalHelp({ role }) {
         </div>
     )
 }
+ModalHelp.propTypes = {
+    role: PropTypes.string.isRequired,
+};

@@ -6,7 +6,7 @@ export const createMember = (memberData) => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.CREATE_MEMBER_REQUEST });
     try {
-      await axios.post('http://localhost:3000/members', memberData);
+      await axios.post('https://outrageous-gold-twill.cyclic.app/members', memberData);
       dispatch({ type: actionTypes.CREATE_MEMBER_SUCCESS });
       // You can dispatch fetchMembers action here to update the state with the latest members list
     } catch (error) {
@@ -22,7 +22,7 @@ export const fetchMembers = () => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.FETCH_MEMBERS_REQUEST });
     try {
-      const response = await axios.get('http://localhost:3000/members');
+      const response = await axios.get('https://outrageous-gold-twill.cyclic.app/members');
       dispatch({
         type: actionTypes.FETCH_MEMBERS_SUCCESS,
         payload: response.data.members
@@ -40,7 +40,7 @@ export const deleteMember = (memberId) => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.DELETE_MEMBER_REQUEST });
     try {
-      await axios.delete(`http://localhost:3000/members/${memberId}`);
+      await axios.delete(`https://outrageous-gold-twill.cyclic.app/members/${memberId}`);
       dispatch({ type: actionTypes.DELETE_MEMBER_SUCCESS, payload: memberId });
     } catch (error) {
       dispatch({

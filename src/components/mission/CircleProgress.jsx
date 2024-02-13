@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export default function CircleProgress({ percent }) {
     return (
         <div className='flex justify-center my-3'>
@@ -20,3 +22,6 @@ export default function CircleProgress({ percent }) {
         </div>
     )
 }
+CircleProgress.propTypes = {
+    percent: PropTypes.number.isRequired,
+};
