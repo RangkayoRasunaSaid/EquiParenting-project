@@ -67,7 +67,7 @@ const Navbar = () => {
               </ul>
 
               <div className="space-x-[8px] hidden md:flex items-center text-base">
-                {!token ? (
+                {!sessionStorage.getItem("token") ? (
                   // Display "Masuk" and "Daftar" buttons when not authenticated
                   <>
                     <Link key="/login" to="/login">

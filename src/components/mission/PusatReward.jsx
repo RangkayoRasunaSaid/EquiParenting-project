@@ -1,12 +1,16 @@
+import { useEffect, useState } from 'react';
+import { titleCase } from '../Breadcrumbs.jsx';
 import SummaryCard from './SummaryCard.jsx';
 import WheelComponent from './WheelComponent.jsx';
 import WheelReward from './WheelReward.jsx';
 import ModalButton from "./modals/ModalButton";
 import ModalSpin from "./modals/ModalSpin";
 import { Link } from 'react-router-dom';
-import { isAuthenticated } from '../navbar/NavbarLogin.jsx';
+import axios from 'axios';
 
 export default function PusatReward({ members }) {
+    console.log(members);
+    const isAuthenticated = sessionStorage.getItem("token");
     const btnCtn = (
         <img
             role='button'
@@ -15,6 +19,25 @@ export default function PusatReward({ members }) {
             alt="spin-wheel"
         />
     )
+    const [stats, setStats] = useState([]);
+
+    const categoryCountsSum = (id) => Object.values(stats[id].categoryCounts).reduce((acc, curr) => acc + curr, 0);
+
+    useEffect(() => {
+      const token = sessionStorage.getItem('token');
+      const fetchMemberActivityStats = async () => {
+        try {
+          const response = await axios.get('http://localhost:3000/stats', { headers: { Authorization: token } });
+          setStats(response.data);
+          console.log(stats[24]);
+        } catch (error) {
+          console.error('Error fetching member activity stats:', error);
+        }
+      };
+  
+      fetchMemberActivityStats();
+    }, []);
+
       return (
         <div className="bg-white sm:p-5 md:p-10 p-3 rounded-[60px] flex flex-col justify-center">
             <h1 className="text-center text-3xl font-bold">Pusat Reward</h1>
@@ -45,13 +68,26 @@ export default function PusatReward({ members }) {
                     </Link>
                     <div className="p-sm-3 p-md-4 p-3 px-sm-4 px-md-5 px-3 mb-4 mx-sm-1 mx-md-5 mx-1 bg-white shadow-md rounded-[60px]">
                         <h1 className="text-center text-3xl font-bold mb-4">Ringkasan</h1>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
-                            <SummaryCard title='Ayah Idaman' value='60' fontSz='text-7xl' description='selesaikan banyak misi untuk menaikan score menjadi “Ayah Idaman”' firstRow={94} />
-                            <SummaryCard title='Bunda Idaman' value='60' fontSz='text-7xl' description='selesaikan banyak misi untuk menaikan score menjadi “Bunda Idaman”' firstRow={94} />
-                            <SummaryCard title='Daily Mission' value='60' fontSz='text-7xl' description='Misi diselesaikan overdue (per 30 hari)' />
-                            <SummaryCard title='Daily Mission' value='2' fontSz='text-7xl' description='Misi diselesaikan overdue (per 30 hari)' />
-                            <SummaryCard title='Kategori' value='4' fontSz='text-7xl' description='Kategori yang telah dilaksanakan (per 30 hari)' />
-                            <SummaryCard title='Kategori' value='Baby Care' fontSz='text-3xl' description='Paling banyak dilaksanakan (per 30 hari)' />
+                        <div className="flex gap-4 text-center">
+                            {members.map(m => (
+                                <div key={m.id}>
+                                    <SummaryCard title={`${titleCase(m.member_role)} Idaman`} fontSz='text-7xl'
+                                        description={`selesaikan banyak misi untuk menaikan score menjadi "${titleCase(m.member_role)} Idaman”`}
+                                        firstRow={m.percentage}
+                                    />
+                                    <SummaryCard title='Daily Mission'
+                                        value={stats[m.id] && stats[m.id].totalActivities !== undefined ? String(stats[m.id].totalActivities) : '0'}
+                                        fontSz='text-7xl'
+                                        description='Misi diselesaikan overdue (per 30 hari)' 
+                                    />
+                                    <SummaryCard
+                                        title='Kategori'
+                                        value={stats[m.id] && stats[m.id].categoryCounts !== undefined ? categoryCountsSum(m.id) : '0'} 
+                                        fontSz='text-7xl'
+                                        description='Kategori yang telah dilaksanakan (per 30 hari)'
+                                    />
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </>

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import MisiPeriode from './MisiPeriode';
 
-export default function Aktivitas({ members, setMembers }){
+export default function Aktivitas({ members }){
     // Function to check if current time is within the defined period
     // const [rewards, setRewards] = useState([]);
 
@@ -37,8 +37,8 @@ export default function Aktivitas({ members, setMembers }){
         <>
             <h1 className="text-center text-3xl my-5 font-bold">Aktivitas</h1>
             <div className="flex justify-center sm:gap-10 gap-5 text-center p-2">
-                {members.map(member => (
-                    <MisiPeriode key={member.id} members={members} member={member} />
+                {members.map(m =>(
+                    <MisiPeriode key={m.id} members={members} member={m} />
                 ))}
             </div>
         </>
