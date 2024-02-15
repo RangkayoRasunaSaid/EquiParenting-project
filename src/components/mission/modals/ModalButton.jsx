@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BsXLg } from "react-icons/bs";
 import Modal from "styled-react-modal";
+import PropTypes from 'prop-types';
 
 // Define StyledModal outside of ModalButton component
 const StyledModal = Modal.styled`
@@ -53,3 +54,12 @@ export default function ModalButton({ btnContent, mdlContent, maxWidth='400px' }
         </div>
     );
 }
+ModalButton.propTypes = {
+    btnContent: PropTypes.element.isRequired,
+    mdlContent: PropTypes.element.isRequired,
+    maxWidth: PropTypes.string, 
+};
+
+ModalButton.defaultProps = {
+    maxWidth: '400px', // Default value for maxWidth if not provided
+};

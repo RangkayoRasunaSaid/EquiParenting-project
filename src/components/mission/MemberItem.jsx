@@ -3,6 +3,7 @@ import axios from "axios";
 import ModalPeriode from "./modals/ModalPeriode";
 import ModalButton from "./modals/ModalButton";
 import { titleCase } from "../Breadcrumbs";
+import PropTypes from 'prop-types';
 
 const MemberItem = ({ member, startDate, endDate, onDelete }) => {
     const isWithinPeriod = (endTime) => {
@@ -58,5 +59,19 @@ const MemberItem = ({ member, startDate, endDate, onDelete }) => {
         </div>
     );
   };
-
+  MemberItem.propTypes = {
+    member: PropTypes.shape({
+        id: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number
+        ]).isRequired,
+        name: PropTypes.string.isRequired,
+        member_role: PropTypes.string.isRequired,
+        avatar: PropTypes.string,
+        percentage: PropTypes.number // Assuming 'percentage' is part of the 'member' object and used for the ProgressBar
+    }).isRequired,
+    startDate: PropTypes.string, // Assuming 'startDate' and 'endDate' are strings representing dates
+    endDate: PropTypes.string,
+    onDelete: PropTypes.func.isRequired, // Function to call when a member is deleted
+};
   export default MemberItem

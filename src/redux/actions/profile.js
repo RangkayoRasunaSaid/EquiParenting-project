@@ -6,7 +6,7 @@ export const fetchUserProfile = () => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.FETCH_USER_PROFILE_REQUEST });
     try {
-      const response = await axios.get('http://localhost:3000/profile');
+      const response = await axios.get('https://outrageous-gold-twill.cyclic.app/profile');
       dispatch({
         type: actionTypes.FETCH_USER_PROFILE_SUCCESS,
         payload: response.data
@@ -24,7 +24,7 @@ export const updateUserProfile = (userData) => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.UPDATE_USER_PROFILE_REQUEST });
     try {
-      const response = await axios.post('http://localhost:3000/update-profile', userData);
+      const response = await axios.post('https://outrageous-gold-twill.cyclic.app/update-profile', userData);
       dispatch({
         type: actionTypes.UPDATE_USER_PROFILE_SUCCESS,
         payload: response.data

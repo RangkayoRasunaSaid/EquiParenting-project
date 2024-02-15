@@ -21,12 +21,12 @@ export default function MisiAnggota() {
           try {
             const token = sessionStorage.getItem('token');
             
-            const activitiesResponse = await axios.get(`http://localhost:3000/activities/${member.id}`);
+            const activitiesResponse = await axios.get(`https://outrageous-gold-twill.cyclic.app/activities/${member.id}`);
             // const activitiesResponse = await axios.get(`http://localhost:3000/activities/21`);
             const activitiesData = activitiesResponse.data;
             setData(activitiesData);
 
-            const categoriesResponse = await axios.get(`http://localhost:3000/categories`);
+            const categoriesResponse = await axios.get(`https://outrageous-gold-twill.cyclic.app/categories`);
             const categoriesData = categoriesResponse.data;
             setCategories(categoriesData);
           } catch (error) {

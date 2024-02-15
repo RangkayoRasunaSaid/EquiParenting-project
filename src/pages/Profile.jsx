@@ -31,7 +31,7 @@ const Profile = () => {
     const getUserProfile = async () => {
       try {
         const token = sessionStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/profile', { headers: { Authorization: token } });
+        const response = await axios.get('https://outrageous-gold-twill.cyclic.app/profile', { headers: { Authorization: token } });
         setProfile(response.data);
 
       } catch (error) {

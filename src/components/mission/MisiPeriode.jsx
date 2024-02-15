@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import ModalPeriode from "./modals/ModalPeriode";
 import ModalButton from "./modals/ModalButton";
 import { titleCase } from "../Breadcrumbs";
+import PropTypes from 'prop-types';
 
 export default function MisiPeriode({ members, member }) {
     // Format the selected period for display
@@ -38,3 +39,26 @@ export default function MisiPeriode({ members, member }) {
         </div>
     )    
 }
+MisiPeriode.propTypes = {
+    members: PropTypes.arrayOf(PropTypes.shape({
+        // Assuming each member object has at least an id, and possibly other properties like member_role, start_date, end_date, etc.
+        id: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number
+        ]).isRequired,
+        member_role: PropTypes.string.isRequired,
+        start_date: PropTypes.string,
+        end_date: PropTypes.string,
+        // Add other member object properties here as needed
+    })).isRequired,
+    member: PropTypes.shape({
+        id: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number
+        ]).isRequired,
+        member_role: PropTypes.string.isRequired,
+        start_date: PropTypes.string,
+        end_date: PropTypes.string,
+        // Define other properties of the member object here as needed
+    }).isRequired,
+};

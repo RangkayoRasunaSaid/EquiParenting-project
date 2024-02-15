@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { FaCamera } from "react-icons/fa";
 import { Navigate } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 export default function ModalCreateMember({ members, setMembers }) {
     const [data, setData] = useState({
@@ -38,7 +39,7 @@ export default function ModalCreateMember({ members, setMembers }) {
       console.log(data);
   
       axios
-        .post("http://localhost:3000/members", data, {
+        .post("https://outrageous-gold-twill.cyclic.app/members", data, {
           headers: {
             Authorization: token,
           },
@@ -140,3 +141,7 @@ export default function ModalCreateMember({ members, setMembers }) {
         </div>
     )
 }
+ModalCreateMember.propTypes = {
+  members: PropTypes.array.isRequired,
+  setMembers: PropTypes.func.isRequired,
+};

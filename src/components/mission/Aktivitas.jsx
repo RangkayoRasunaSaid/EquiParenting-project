@@ -4,6 +4,7 @@ import ModalPeriode from './modals/ModalPeriode'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import MisiPeriode from './MisiPeriode';
+import PropTypes from 'prop-types';
 
 export default function Aktivitas({ members }){
     // Function to check if current time is within the defined period
@@ -44,3 +45,11 @@ export default function Aktivitas({ members }){
         </>
     )
 }
+Aktivitas.propTypes = {
+    members: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number
+        ]).isRequired,
+    })).isRequired,
+};

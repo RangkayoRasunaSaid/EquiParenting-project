@@ -3,6 +3,7 @@ import ModalButton from "./modals/ModalButton";
 import ModalCreateMember from "./modals/ModalCreateMember";
 import axios from "axios";
 import MemberItem from "./MemberItem";
+import PropTypes from 'prop-types';
 
 const DailyMission = ({ members, setMembers }) => {
   const mdlBtn = (
@@ -26,7 +27,7 @@ const DailyMission = ({ members, setMembers }) => {
     const fetchRewards = async () => {
       try {
         const token = sessionStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/rewards', { headers: { Authorization: token } });
+        const response = await axios.get('https://outrageous-gold-twill.cyclic.app/rewards', { headers: { Authorization: token } });
         const rewards = response.data;
 
         // Group rewards by member ID
@@ -80,5 +81,14 @@ const DailyMission = ({ members, setMembers }) => {
       </div>
   );
 };
-
+DailyMission.propTypes = {
+  members: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number
+      ]).isRequired,
+      name: PropTypes.string,
+  })).isRequired,
+  setMembers: PropTypes.func.isRequired,
+};
 export default DailyMission;

@@ -22,7 +22,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/login", data);
+      const response = await axios.post("https://outrageous-gold-twill.cyclic.app/login", data);
       console.log(data);
       const { token } = response.data;
 

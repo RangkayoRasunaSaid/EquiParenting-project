@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { titleCase } from "../../Breadcrumbs";
 import { Navigate } from "react-router";
+import PropTypes from 'prop-types';
 
 export default function Modal({ members, member, categories }) {
     const [data, setData] = useState({
@@ -26,7 +27,7 @@ export default function Modal({ members, member, categories }) {
       console.log(data);
   
       axios
-        .post("http://localhost:3000/activities", data, {
+        .post("https://outrageous-gold-twill.cyclic.app/activities", data, {
           headers: {
             Authorization: token,
           },
@@ -128,3 +129,15 @@ export default function Modal({ members, member, categories }) {
         </div>
     )
 }
+Modal.propTypes = {
+    members: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string,
+        member_role: PropTypes.string,
+    })).isRequired,
+    member: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        member_role: PropTypes.string,
+    }).isRequired,
+    categories: PropTypes.arrayOf(PropTypes.string),
+};
