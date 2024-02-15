@@ -5,18 +5,14 @@ import { FaXmark, FaBars } from "react-icons/fa6"
 import { FaUserCircle } from "react-icons/fa"
 import ResponsiveMenu from "./ResponsiveMenu"
 
-export const isAuthenticated = sessionStorage.getItem("token");
-
 const Navbar = () => {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [token, setToken] = useState(isAuthenticated)
 
   const handleLogout = () => {
     // Clear authentication data
     sessionStorage.removeItem("token");
     localStorage.removeItem("username");
-    setToken('')
 
     // Redirect to the login page
     navigate("/login");
@@ -36,6 +32,8 @@ const Navbar = () => {
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   }
+
+  const isAuthenticated = sessionStorage.getItem("token");
 
   return (
     <>
@@ -67,7 +65,8 @@ const Navbar = () => {
               </ul>
 
               <div className="space-x-[8px] hidden md:flex items-center text-base">
-                {!sessionStorage.getItem("token") ? (
+                {console.log(isAuthenticated)}
+                {!isAuthenticated ? (
                   // Display "Masuk" and "Daftar" buttons when not authenticated
                   <>
                     <Link key="/login" to="/login">
@@ -90,7 +89,7 @@ const Navbar = () => {
                     >
                       <FaUserCircle size={30} className="hover:lavender-shade transition-all" />
                       <div>
-                        <h1>{token.username}</h1>
+                        <h1>{isAuthenticated.username}</h1>
                       </div>
                     </div>
                     {dropdownOpen && (

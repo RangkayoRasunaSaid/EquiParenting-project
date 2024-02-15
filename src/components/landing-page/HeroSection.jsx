@@ -1,6 +1,7 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { Link } from 'react-router-dom';
 
 const heroSection = () => {
   const images = [
@@ -9,7 +10,7 @@ const heroSection = () => {
     "https://janjimedia.com/wp-content/uploads/2023/03/Sayangi-Keluarga-Dengan-Asuransi-Jiwa-Terbaik-di-Indonesia.jpg",
     "https://s4.bukalapak.com/uploads/content_attachment/e76eb14df357f2fd78c4fcb5/original/Main_Image_%2844%29.jpg",
     "https://www.allianz.co.id/explore/cara-memilih-asuransi-kesehatan-untuk-keluarga-muda/_jcr_content/root/stage/stageimage.img.82.3360.jpeg/1688099780360/yukpahami-cara-memilih-asuransi-kesehatan-untuk-keluarga-muda.jpeg",
-    "https://janethes.com/wp-content/uploads/2019/11/516.-Mindful-Parenting-Pola-Asuh-Anak-yang-Kekinian_Artboard-2.jpg",
+    // "https://janethes.com/wp-content/uploads/2019/11/516.-Mindful-Parenting-Pola-Asuh-Anak-yang-Kekinian_Artboard-2.jpg",
     "https://asset.kompas.com/crops/Bl6AA95OokNIoy8xe1wH6xlsUf0=/0x7:740x500/750x500/data/photo/2020/12/23/5fe2a0d272f20.jpg",
     "https://static.vecteezy.com/system/resources/previews/018/974/113/non_2x/activities-together-during-the-holidays-parents-and-children-are-having-a-meal-together-during-the-holidays-boy-is-teasing-his-father-by-giving-him-bread-and-vegetables-free-photo.jpg",
     "https://akcdn.detik.net.id/visual/2023/05/03/5-kebiasaan-ayah-di-rumah-yang-jadi-contoh-buruk-anak-bikin-sulit-dekat_169.jpeg?w=750&q=90"
@@ -33,11 +34,11 @@ const heroSection = () => {
             <div className="hero-section relative overflow-hidden">
 
               {/* image slider */}
-              <Slider {...settings} className="w-full">
+              <Slider {...settings} className="hero w-full">
                 {images.map((imageUrl, index) => (
-                  <div key={index} className="w-full h-[54vh] md:h-[36vh]">
+                  <div key={index} className="w-full h-[48vh]">
                     <img
-                      className="w-full object-cover h-[54vh] md:h-[28vh] md:opacity-80"
+                      className="hero w-full object-cover h-[54vh]  md:opacity-80"
                       src={imageUrl}
                       alt={`Slide ${index + 1}`}
                     />
@@ -59,10 +60,11 @@ const heroSection = () => {
                     <span className="text-sm md:text-xl font-medium text-black-color">&quot;</span>
                   </p>
                   <button>
-                    <a href="#" className="flex justify-center bg-main-color rounded-3xl mt-2 sm:my-0 px-4 py-2 text-sm md:text-lg text-white text-center font-medium hover:bg-tertiery">
+                  <Link
+                    className="flex justify-center bg-main-color rounded-3xl mt-2 sm:my-0 px-4 py-2 text-sm md:text-lg text-white text-center font-medium hover:bg-tertiery"
+                    to="/login">
                       Mari Bergabung 
-                      {/* <span className="text-align-center"> <AiOutlineArrowRight /> </span> */}
-                    </a>
+                  </Link>
                   </button>
                 </div>
               </div>
