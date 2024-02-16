@@ -23,7 +23,7 @@ export default function MisiPeriode({ members, member }) {
             >
                 <h5 className="text-xl font-bold" style={{ color: "#675893" }}>Misi {titleCase(member.member_role)}</h5>
                 <div className="flex justify-center mt-3">
-                    <img className="rounded-full ring-2 ring-purple-500" style={{ height: "90px", width: "90px" }} alt="..." src={`/src/assets/${member.member_role}.svg`} />
+                    <img className="rounded-full ring-2 ring-purple-500" style={{ height: "90px", width: "90px" }} alt="..." src={`../assets/${member.member_role}.svg`} />
                 </div>
                 {/* Render the formatted period if it exists */}
                 {formattedPeriod ? (

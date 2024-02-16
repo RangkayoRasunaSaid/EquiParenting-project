@@ -16,7 +16,7 @@ export default function PusatReward({ members }) {
         <img
             role='button'
             className='rounded-circle'
-            src='/src/assets/spin.svg'
+            src='../assets/spin.svg'
             alt="spin-wheel"
         />
     )

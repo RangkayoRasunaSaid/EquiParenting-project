@@ -115,7 +115,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="bg-[url('/src/assets/background2.jpg')] bg-fixed">
+    <div className="bg-[url('../assets/background2.jpg')] bg-fixed">
       {isLoading && <Loading />}
       <div className="text-center pt-10 text-ungu1">
         <h1 className="text-2xl lg:text-3xl font-bold">Akun Terhubung</h1>
