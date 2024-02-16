@@ -28,3 +28,8 @@
     height: 78vh;
   }
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+}

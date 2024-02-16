@@ -1,9 +1,13 @@
+import { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
+import Loading from '../../Loading'
 
-const heroSection = () => {
+const HeroSection = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   const images = [
     "https://www.allianz.co.id/explore/asuransi-apa-yang-tepat-untuk-anak/_jcr_content/root/stage/stageimage.img.82.3360.jpeg/1626950881771/asuransi-apa-yang-tepat-untuk-anak.jpeg",
     "https://www.payuung.com/static/images/prutect/banner.svg",
@@ -26,9 +30,40 @@ const heroSection = () => {
     autoplaySpeed: 3000,
   };
 
+  useEffect(() => {
+    // Fungsi untuk memuat satu gambar dan mengembalikan Promise
+    const loadImage = (imageUrl) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = imageUrl;
+        img.onload = resolve;
+        img.onerror = reject;
+      });
+    };
+    // Memuat semua gambar
+    const loadAllImages = async () => {
+      try {
+        await Promise.all(images.map(imageUrl => loadImage(imageUrl)));
+        setIsLoading(false); // Semua gambar telah dimuat
+      } catch (error) {
+        console.error("Error loading images", error);
+        // Handle error, mungkin tetap hilangkan loading dengan asumsi ada yang gagal
+        setIsLoading(false);
+      }
+    };
+
+    loadAllImages();
+  }, [images]);
+
+  if (isLoading) {
+    return <Loading className=""/>; //entah kenapa gak berefek styling nya kayaknya harus pake css biasa
+  }
+
   return (
+    
     <>
       <main>
+        
         <div className="">
           <div className="flex flex-row-reverse">
             <div className="hero-section relative overflow-hidden">
@@ -76,4 +111,4 @@ const heroSection = () => {
   );
 };
 
-export default heroSection;
+export default HeroSection;
