@@ -3,7 +3,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
-import Loading from '../../Loading'
+import Loading from '../../Loading';
+import '../../App.css';
 
 const HeroSection = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -53,7 +54,7 @@ const HeroSection = () => {
     };
 
     loadAllImages();
-  }, [images]);
+  }, []);
 
   if (isLoading) {
     return <Loading className=""/>; //entah kenapa gak berefek styling nya kayaknya harus pake css biasa
