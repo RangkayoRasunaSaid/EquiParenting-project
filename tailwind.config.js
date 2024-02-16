@@ -28,7 +28,7 @@ export default {
       },
       fontWeight: ['hover', 'focus', 'active', 'group-hover']
     },
-    
+
     // container: {
     //   center: true,
     //   padding: {
