@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import NavbarAcc from "../components/NavbarAcc";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Loading from "../Loading";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -9,6 +10,7 @@ const Login = () => {
     password: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +22,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await axios.post("https://outrageous-gold-twill.cyclic.app/login", data);
@@ -43,6 +46,8 @@ const Login = () => {
         console.error("Proses Login Gagal:", error.message);
         alert("Login gagal, silakan coba lagi");
       }
+    } finally {
+      setIsLoading(false); // Menyembunyikan loading
     }
   };
 
@@ -55,6 +60,7 @@ const Login = () => {
       </div>
       <div className="flex justify-center mx-auto pb-10">
         <div className="bg-ungu2 w-80 lg:w-max p-8 rounded-3xl text-ungu1 font-medium shadow-lg">
+        {isLoading && <Loading />}
           <form onSubmit={handleLogin}>
             <div>
               <div>

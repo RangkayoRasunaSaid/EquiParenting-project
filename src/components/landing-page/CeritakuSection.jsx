@@ -7,7 +7,7 @@ const CeritakuSection = () => {
             <div>
               <img
                 className="mx-auto mb-6 md:mr-4"
-                src="/src/assets/ceritaku-section-explanation-img.png"
+                src="../assets/ceritaku-section-explanation-img.png"
                 alt="mission-feature-explanation-figure"
               />
             </div>

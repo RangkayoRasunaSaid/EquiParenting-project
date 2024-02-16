@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import NavbarAcc from "../components/NavbarAcc";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Loading from "../Loading";
 
 const Register = () => {
   const [data, setData] = useState({
@@ -10,9 +11,10 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
-
+  
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (token) {
@@ -22,6 +24,7 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (!data.username || !data.email || !data.password || !data.confirmPassword) {
       alert("Harap lengkapi semua kolom!");
@@ -62,6 +65,8 @@ const Register = () => {
           alert("Pendaftaran akun anda gagal! Silakan coba lagi");
         }
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -74,6 +79,8 @@ const Register = () => {
       </div>
       <div className="flex justify-center mx-auto pb-10">
         <div className="bg-ungu2 w-80 lg:w-max p-8 rounded-3xl text-ungu1 font-medium shadow-lg">
+
+        {isLoading && <Loading />}
           <form onSubmit={handleRegister}>
             <div>
               <div>

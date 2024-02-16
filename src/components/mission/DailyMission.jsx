@@ -15,9 +15,6 @@ export default function DailyMission({ members, setMembers }) {
               <Aktivitas members={members} setMembers={setMembers} />
             }
         </div>
-        <div>
-            <h1>Container ke Card Activity</h1>
-        </div>
         </>
     )
 }

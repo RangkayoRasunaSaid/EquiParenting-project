@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserProfile } from '../redux/actions/profile';
+import Loading from '../Loading';
 
 const Profile = () => {
   // const dispatch = useDispatch();
@@ -26,6 +27,8 @@ const Profile = () => {
 
   // const [userData, setUserData] = useState({});
   // const [username, setUsername] = useState('');
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getUserProfile = async () => {
@@ -73,6 +76,8 @@ const Profile = () => {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
     try {
       const token = sessionStorage.getItem('token');
       const response = await axios.put('http://localhost:3000/update-profile', profile,{
@@ -86,6 +91,8 @@ const Profile = () => {
       }
     } catch (error) {
       console.error('Error updating profile:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -109,6 +116,7 @@ const Profile = () => {
 
   return (
     <div className="bg-[url('/src/assets/background2.jpg')] bg-fixed">
+      {isLoading && <Loading />}
       <div className="text-center pt-10 text-ungu1">
         <h1 className="text-2xl lg:text-3xl font-bold">Akun Terhubung</h1>
         <h3 className="text-lg lg:text-xl font-medium my-4 lg:my-6">Atur Profile Akunmu!</h3>
