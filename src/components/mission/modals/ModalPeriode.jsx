@@ -1,15 +1,17 @@
 import axios from 'axios';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Navigate } from 'react-router';
 
 export default function ModalPeriode({ memberId }) {
-    console.log(memberId);
     const [data, setData] = useState({
       spinned_at: '',
-      start_date: "",
+      start_date: new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":")),
       end_date: "",
       id_member: memberId
     });
+
+    let todayMinDate = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
 
     // Handle input changes for end time
     const handleEndTimeChange = (e) => {
@@ -29,7 +31,6 @@ export default function ModalPeriode({ memberId }) {
     // Handle input changes for start time
     const handleStartTimeChange = (e) => {
         const startDate = e.target.value;
-        console.log(data);
         // Check if start date is after today's date
         if (startDate < new Date().toISOString().slice(0, 16)) {
             alert("Start date must be after today's date");
@@ -55,26 +56,33 @@ export default function ModalPeriode({ memberId }) {
           return;
         }
     
-        console.log(data);
-    
         axios
-          .post("https://outrageous-gold-twill.cyclic.app/reward", data, {
+          .post("http://localhost:3000/reward", data, {
             headers: {
               Authorization: token,
             },
           })
           .then((response) => {
+            // After successfully adding reward dates, reset the member's score to 0
+            axios.put("http://localhost:3000/reset-score", { memberId: memberId }, {
+              headers: {
+                Authorization: token,
+              },
+            })
+            .then((resetResponse) => {
+              console.log("Score reset successfully.");
+              window.location.reload();
+            })
+            .catch((resetError) => {
+              console.error("Error resetting member's score:", resetError);
+            });
             alert("Berhasil menambahkan periode");
             window.location.reload();
-            closeModal();
           })
           .catch((error) => {
           //   alert("Penambahan member gagal");
             console.error("Error adding date period:", error);
           })
-          .finally(() => {
-            setIsCreating(false);
-          });
     };
 
     return (
@@ -91,7 +99,9 @@ export default function ModalPeriode({ memberId }) {
                             name="endTime"
                             id="endTime"
                             // value="2024-02-13T03:35"
-                            // value={data.start_date}
+                            value={
+                                new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"))
+                            }
                             onChange={handleStartTimeChange} />
                     </div>
                 </div>
@@ -103,7 +113,7 @@ export default function ModalPeriode({ memberId }) {
                             name="startTime"
                             id="startTime"
                             // value="2024-02-14T03:35"
-                            // value={data.end_date}
+                            value={data.end_date}
                             onChange={handleEndTimeChange} />
                     </div>
                 </div>

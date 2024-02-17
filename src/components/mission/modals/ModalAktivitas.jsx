@@ -27,17 +27,14 @@ export default function Modal({ members, member, categories }) {
       console.log(data);
   
       axios
-        .post("https://outrageous-gold-twill.cyclic.app/activities", data, {
+        .post("http://localhost:3000/activities", data, {
           headers: {
             Authorization: token,
           },
         })
         .then((response) => {
           alert("Berhasil menambahkan member");
-          <Navigate
-            to={`/daily-mission/:${member.member_role}`}
-            state={{ members,member }}
-          />
+          window.location.reload();
         })
         .catch((error) => {
         //   alert("Penambahan member gagal");

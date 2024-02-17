@@ -48,7 +48,7 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post("https://outrageous-gold-twill.cyclic.app/register", {
+      const response = await axios.post("http://localhost:3000/register", {
         username: data.username,
         email: data.email,
         password: data.password,

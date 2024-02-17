@@ -8,9 +8,10 @@ import ModalSpin from "./modals/ModalSpin";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import DailyMission from './Daymission.jsx';
+import MemberItem from './MemberItem.jsx';
 
 export default function PusatReward({ members }) {
-    console.log(members);
     const isAuthenticated = sessionStorage.getItem("token");
     const btnCtn = (
         <img
@@ -28,7 +29,7 @@ export default function PusatReward({ members }) {
       const token = sessionStorage.getItem('token');
       const fetchMemberActivityStats = async () => {
         try {
-          const response = await axios.get('https://outrageous-gold-twill.cyclic.app/stats', { headers: { Authorization: token } });
+          const response = await axios.get('http://localhost:3000/stats', { headers: { Authorization: token } });
           setStats(response.data);
           console.log(stats[24]);
         } catch (error) {
@@ -72,21 +73,30 @@ export default function PusatReward({ members }) {
                         <div className="flex gap-4 text-center">
                             {members.map(m => (
                                 <div key={m.id}>
-                                    <SummaryCard title={`${titleCase(m.member_role)} Idaman`} fontSz='text-7xl'
-                                        description={`selesaikan banyak misi untuk menaikan score menjadi "${titleCase(m.member_role)} Idaman”`}
-                                        firstRow={m.percentage}
-                                    />
-                                    <SummaryCard title='Daily Mission'
-                                        value={stats[m.id] && stats[m.id].totalActivities !== undefined ? String(stats[m.id].totalActivities) : '0'}
-                                        fontSz='text-7xl'
-                                        description='Misi diselesaikan overdue (per 30 hari)' 
-                                    />
-                                    <SummaryCard
-                                        title='Kategori'
-                                        value={stats[m.id] && stats[m.id].categoryCounts !== undefined ? categoryCountsSum(m.id) : '0'} 
-                                        fontSz='text-7xl'
-                                        description='Kategori yang telah dilaksanakan (per 30 hari)'
-                                    />
+                                    {m.Rewards.length > 0 ? (
+                                        <>
+                                            <SummaryCard title={`${titleCase(m.member_role)} Idaman`} fontSz='text-7xl'
+                                                description={`selesaikan banyak misi untuk menaikan score menjadi "${titleCase(m.member_role)} Idaman”`}
+                                                firstRow={m.percentage}
+                                            />
+                                            <SummaryCard title='Daily Mission'
+                                                value={stats[m.id] && stats[m.id].totalActivities !== undefined ? String(stats[m.id].totalActivities) : '0'}
+                                                fontSz='text-7xl'
+                                                description='Misi diselesaikan overdue (per 30 hari)' 
+                                            />
+                                            <SummaryCard
+                                                title='Kategori'
+                                                value={stats[m.id] && stats[m.id].categoryCounts !== undefined ? categoryCountsSum(m.id) : '0'} 
+                                                fontSz='text-7xl'
+                                                description='Kategori yang telah dilaksanakan (per 30 hari)'
+                                            />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <h1 className='font-semibold'>Atur periode untuk melihat ringkasan</h1>
+                                            <MemberItem member={m} />
+                                        </>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -96,14 +106,14 @@ export default function PusatReward({ members }) {
         </div>
     )
 }
-PusatReward.propTypes = {
-    members: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.number
-        ]).isRequired,
-        member_role: PropTypes.string.isRequired,
-        percentage: PropTypes.number,
-        // Include any other properties that members might have and you use in this component
-    })).isRequired,
-};
+// PusatReward.propTypes = {
+//     members: PropTypes.arrayOf(PropTypes.shape({
+//         id: PropTypes.oneOfType([
+//             PropTypes.string,
+//             PropTypes.number
+//         ]).isRequired,
+//         member_role: PropTypes.string.isRequired,
+//         percentage: PropTypes.number,
+//         // Include any other properties that members might have and you use in this component
+//     })).isRequired,
+// };

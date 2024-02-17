@@ -12,7 +12,7 @@ const FeatureSection = () => {
           <div className="flex flex-col items-center mb-2">
             <img
               className="size-2/4 md:size-3/5 mb-2"
-              src="../assets/pola-asuh.svg"
+              src="src/assets/pola-asuh.svg"
               alt="equiparenting memiliki concern tentang pola asuh"
             />
             <p>Pola Asuh</p>
@@ -20,7 +20,7 @@ const FeatureSection = () => {
           <div className="flex flex-col items-center mb-2">
             <img
               className="size-[44%] md:size-[47%] mb-2"
-              src="../assets/emosi-self-awarness.svg"
+              src="src/assets/emosi-self-awarness.svg"
               alt="equiparenting memiliki concern tentang pola asuh"
             />
             <p>Emosi & Self Awarness</p>
@@ -28,7 +28,7 @@ const FeatureSection = () => {
           <div className="flex flex-col items-center mb-2">
             <img
               className="size-2/4 md:size-3/5 mb-2"
-              src="../assets/perilaku.svg"
+              src="src/assets/perilaku.svg"
               alt="equiparenting memiliki concern tentang pola asuh"
             />
             <p>Perilaku</p>
@@ -36,7 +36,7 @@ const FeatureSection = () => {
           <div className="flex flex-col items-center mb-2">
             <img
               className="size-2/4 md:size-3/5 mb-2"
-              src="../assets/sosial.svg"
+              src="src/assets/sosial.svg"
               alt="equiparenting memiliki concern tentang pola asuh"
             />
             <p>Sosial</p>

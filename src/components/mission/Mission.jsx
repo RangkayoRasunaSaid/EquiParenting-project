@@ -28,33 +28,35 @@ export default function App() {
             const token = sessionStorage.getItem('token');
             
             // Fetch members
-            const membersResponse = await axios.get('https://outrageous-gold-twill.cyclic.app/members', { headers: { Authorization: token } });
+            const membersResponse = await axios.get('http://localhost:3000/members', { headers: { Authorization: token } });
             const membersData = membersResponse.data.members;
+            setMembers(membersData);
+            console.log(membersData);
       
             // Fetch rewards
-            const rewardsResponse = await axios.get('https://outrageous-gold-twill.cyclic.app/rewards', { headers: { Authorization: token } });
-            const rewardsData = rewardsResponse.data;
+            // const rewardsResponse = await axios.get('http://localhost:3000/rewards', { headers: { Authorization: token } });
+            // const rewardsData = rewardsResponse.data;
       
-            // Group rewards by member ID
-            const rewardsMappedByMember = rewardsData.reduce((acc, reward) => {
-              const memberId = reward.member_id;
-              if (!acc[memberId]) {
-                acc[memberId] = [];
-              }
-              acc[memberId].push(reward);
-              return acc;
-            }, {});
+            // // Group rewards by member ID
+            // const rewardsMappedByMember = rewardsData.reduce((acc, reward) => {
+            //   const memberId = reward.member_id;
+            //   if (!acc[memberId]) {
+            //     acc[memberId] = [];
+            //   }
+            //   acc[memberId].push(reward);
+            //   return acc;
+            // }, {});
       
-            // Calculate start_date and end_date for each member
-            const membersWithDates = membersData.map(member => {
-              const memberRewards = rewardsMappedByMember[member.id] || [];
-              const lastReward = memberRewards.length > 0 ? memberRewards[memberRewards.length - 1] : null;
-              const { start_date, end_date } = lastReward || {};
-              return { ...member, start_date, end_date };
-            });
-            setMembers(membersWithDates);
+            // // Calculate start_date and end_date for each member
+            // const membersWithDates = membersData.map(member => {
+            //   const memberRewards = rewardsMappedByMember[member.id] || [];
+            //   const lastReward = memberRewards.length > 0 ? memberRewards[memberRewards.length - 1] : null;
+            //   const { start_date, end_date } = lastReward || {};
+            //   return { ...member, start_date, end_date };
+            // });
+            // setMembers(membersWithDates);
             
-            setIsDataLoaded(true);
+            // setIsDataLoaded(true);
           } catch (error) {
             // console.error('Error fetching data:', error);
             // alert('Failed fetching data');

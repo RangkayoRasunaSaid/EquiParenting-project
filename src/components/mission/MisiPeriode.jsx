@@ -12,7 +12,12 @@ export default function MisiPeriode({ members, member }) {
     //     return now >= now <= new Date(endTime).getTime();
     // };
 
-    const formattedPeriod = member.start_date && member.end_date ? `${new Date(member.start_date).toLocaleDateString()} - ${new Date(member.end_date).toLocaleDateString()}` : '';
+    console.log(member);
+
+    const formattedPeriod = member.Rewards[0].start_date && member.Rewards[0].end_date ?
+            `${new Date(member.Rewards[0].start_date).toLocaleDateString()} - ${new Date(member.Rewards[0].end_date).toLocaleDateString()}`
+            : '';
+
     return (
         <div className={`px-10 py-6 rounded-[20px] border-0 shadow-md h-100 ${!formattedPeriod ? 'bg-slate-100' : ''}`}>
             <Link

@@ -36,13 +36,13 @@ const MemberItem = ({ member, startDate, endDate, onDelete }) => {
     
     return (
         <div className="text-center p-3 rounded-[40px] border-0 shadow-md h-100">
-          <button onClick={() => handleDelete(member.id)}>Delete</button>
+          {/* <button onClick={() => handleDelete(member.id)}>Delete</button> */}
             <div className="flex justify-center mb-2">
               <img src={member.avatar ? member.avatar : `/src/assets/${member.member_role}.svg`} className="rounded-full ring-2 ring-purple-500" style={{height:"90px", width:"90px"}} alt="..." />
             </div>
             <h5 className="text-xl font-bold" style={{color:"#675893"}}>{titleCase(member.member_role)}</h5>
             <p className="text-slate-300 font-bold text-sm my-1">{member.name}</p>
-            {!isWithinPeriod(endDate) ? (
+            {member.Rewards.length === 0 ? (
                 <ModalButton btnContent={(
                   <button className='text-center p-2 px-3 rounded-xl font-medium bg-main-color text-white'>
                     Atur Periode
