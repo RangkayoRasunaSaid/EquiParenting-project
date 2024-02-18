@@ -1,50 +1,55 @@
-import { Link } from 'react-router-dom'
-import ModalButton from './modals/ModalButton'
-import ModalPeriode from './modals/ModalPeriode'
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import MisiPeriode from './MisiPeriode';
 import PropTypes from 'prop-types';
+import ModalPeriode from './modals/ModalPeriode';
+import ModalButton from './modals/ModalButton';
 
 export default function Aktivitas({ members }){
-    // Function to check if current time is within the defined period
-    // const [rewards, setRewards] = useState([]);
+    // Filter out members without Rewards defined
+    const membersWithRewards = members.filter(member => member.Rewards[0]);
+    // if (membersWithRewards.length === 0) return null;
+    const memberIds = members.map(member => member.id);
 
-    // useEffect(() => {
-    //     const token = sessionStorage.getItem("token");
-    //     axios
-    //         .get("http://localhost:3000/rewards", { headers: { Authorization: token } })
-    //         .then((response) => {
-    //         if (Array.isArray(response.data) && response.data.length > 0) {
-    //             setRewards(response.data);
-    //             console.log(response.data);
-    //         } else if (Array.isArray(response.data) && response.data.length === 0) {
-    //             console.log("No rewards found");
-    //         } else {
-    //             console.log("Invalid data format for rewards");
-    //         }
-    //         })
-    //         .catch((error) => {
-    //         console.error("Error fetching rewards:", error);
-    //         alert("Pengambilan Data Gagal");
-    //         window.location.reload();
-    //         });
-    // }, []);
+    function formatDate(inputDate) {
+        const months = [
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        ];
+        const date = new Date(inputDate);
+        const day = date.getDate();
+        const monthIndex = date.getMonth();
+        const year = date.getFullYear();
+        return day + ' ' + months[monthIndex] + ' ' + year;
+    }
 
-    // const startTime = rewards.length > 0 ? rewards[0].start_date || '' : '';
-    // const endTime = rewards.length > 0 ? rewards[0].start_date || '' : '';
+    const formattedPeriod = members[0].Rewards[0]?.start_date && members[0].Rewards[0]?.end_date ?
+        `${formatDate(new Date(members[0].Rewards[0].start_date).toLocaleDateString())} - ${formatDate(new Date(members[0].Rewards[0].end_date).toLocaleDateString())}`
+        : '';      
 
     return (
         <>
             <h1 className="text-center text-3xl my-5 font-bold">Aktivitas</h1>
+            <div className="flex justify-center">
+                <ModalButton btnContent={(
+                    <button disabled={formattedPeriod} className="disabled:bg-slate-400 flex text-2xl gap-4 justify-center items-center px-5 text-white bg-main-color rounded-2xl font-bold md:text-xl shadow-md">
+                        <span>Atur Periode Mission</span>
+                        <span className='text-5xl'>+</span>
+                    </button>
+                )} mdlContent={(<ModalPeriode memberIds={memberIds} />)} />
+            </div>
+            {formattedPeriod && (
+                <h1 className='text-center my-10 text-xl font-bold'>
+                    Periode {formattedPeriod}
+                </h1>
+            )}
             <div className="flex justify-center sm:gap-10 gap-5 text-center p-2">
-                {members.map(m =>(
+                {membersWithRewards.map(m =>(
                     <MisiPeriode key={m.id} members={members} member={m} />
                 ))}
             </div>
         </>
     )
 }
+
 Aktivitas.propTypes = {
     members: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.oneOfType([

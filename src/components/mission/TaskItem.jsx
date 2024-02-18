@@ -50,7 +50,7 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible }) =>
     }
 
     axios
-      .put(`https://outrageous-gold-twill.cyclic.app/activities/approve/${activity.id}`, { approval_by: approvedBy }, {
+      .put(`http://localhost:3000/activities/approve/${activity.id}`, { approval_by: approvedBy }, {
         headers: {
           Authorization: token,
         },
@@ -58,10 +58,6 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible }) =>
       .then((response) => {
         alert("Berhasil menyetujui aktifitas");
         window.location.reload();
-        // <Navigate
-        //   to={`/daily-mission/:${member.member_role}`}
-        //   state={{ members, member }}
-        // />
       })
       .catch((error) => {
       //   alert("Penambahan member gagal");
@@ -98,15 +94,16 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible }) =>
           <p className="text-left text-xs font-medium mb-2">{activity.description}</p>
           <p className="text-slate-300 text-xs font-semibold text-center my-3">
             {!activity.approval_date ? (
-                <span className='text-red-500'>{"Batas Waktu: " + timeDifference}</span>
+              <span className='text-red-500'>{"Batas Waktu: " + timeDifference}</span>
             ) : (
-                isLateApproval ? (
-                    <span className='text-red-500'>Diselesaikan Terlambat</span>
-                ) : (
-                    <p>Diselesaikan Tepat Waktu</p>
-                )
+              isLateApproval ? (
+                <span className='text-red-500'>Diselesaikan Terlambat</span>
+              ) : (
+                <span>Diselesaikan Tepat Waktu</span> // <- Replaced <p> with <span>
+              )
             )}
-        </p>
+          </p>
+
           <p className="text-left text-xs font-bold mb-2">Poin yang {!activity.approval_by ? 'Akan' : ''} Diperoleh: {activity.point} Poin</p>
           <p className="text-left text-xs font-bold mb-2">Penanggung Jawab: {responsible}</p>
           <form onSubmit={handleSubmit}>

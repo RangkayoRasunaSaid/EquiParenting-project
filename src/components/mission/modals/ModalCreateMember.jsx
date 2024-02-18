@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { FaCamera } from "react-icons/fa";
-import { Navigate } from "react-router-dom";
-import PropTypes from 'prop-types';
+import { ToastContainer, toast } from "react-toastify";
 
 export default function ModalCreateMember({ members }) {
     const [data, setData] = useState({
@@ -11,16 +10,17 @@ export default function ModalCreateMember({ members }) {
       avatar: null,
     });
 
-    const [roles, setRoles] = useState(["ayah", "bunda"]);
+    // const [roles, setRoles] = useState(["ayah", "bunda"]);
+    const roles = ["ayah", "bunda", 'others'];
     const [avatarPreview, setAvatarPreview] = useState(null);
 
-    useEffect(() => {
-      setRoles((prevRoles) => {
-        const existingRoles = members.map((member) => member.member_role);
-        const filteredRoles = prevRoles.filter((role) => !existingRoles.includes(role));
-        return filteredRoles;
-      });
-    }, [members]);
+    // useEffect(() => {
+    //   setRoles((prevRoles) => {
+    //     const existingRoles = members.map((member) => member.member_role);
+    //     const filteredRoles = prevRoles.filter((role) => !existingRoles.includes(role));
+    //     return filteredRoles;
+    //   });
+    // }, [members]);
 
     const [isCreating, setIsCreating] = useState(false);
 
@@ -36,20 +36,39 @@ export default function ModalCreateMember({ members }) {
         return;
       }
   
-      console.log(data);
-  
       axios
         .post("http://localhost:3000/members", data, {
           headers: {
             Authorization: token,
           },
         })
-        .then((response) => {
-          alert("Berhasil menambahkan member");
+        .then(response => {
+          const { id } = response.data.member;
+          const existingStartDate = members.map((member) => member.Rewards[0]?.start_date);
+          const existingEndDate = members.map((member) => member.Rewards[0]?.end_date);
+
+          if (existingStartDate.length > 0 && existingEndDate.length > 0) {
+            // Create reward for the new member using the existing reward date
+            axios.post("http://localhost:3000/reward", {
+                spinned_at: '',
+                start_date: existingStartDate[0],
+                end_date: existingEndDate[0],
+                id_member: id
+              }, {
+                headers: { Authorization: token }
+            }).then((response) => {
+                console.log("Reward created successfully for member with ID:", id);
+            }).catch((error) => {
+                console.error("Error creating reward for member with ID:", id, error);
+            })
+          }
+
+          // alert("Berhasil menambahkan member");
+          toast("Berhasil menambahkan member")
           window.location.reload();
-          closeModal();
         })
         .catch((error) => {
+          toast("Penambahan member gagal")
         //   alert("Penambahan member gagal");
           console.error("Error adding member:", error);
         })

@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 import { titleCase } from '../Breadcrumbs.jsx';
 import SummaryCard from './SummaryCard.jsx';
-import WheelComponent from './WheelComponent.jsx';
 import WheelReward from './WheelReward.jsx';
 import ModalButton from "./modals/ModalButton";
 import ModalSpin from "./modals/ModalSpin";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import PropTypes from 'prop-types';
-import DailyMission from './Daymission.jsx';
 import MemberItem from './MemberItem.jsx';
 
 export default function PusatReward({ members }) {
@@ -22,23 +19,34 @@ export default function PusatReward({ members }) {
         />
     )
     const [stats, setStats] = useState([]);
-
-    const categoryCountsSum = (id) => Object.values(stats[id].categoryCounts).reduce((acc, curr) => acc + curr, 0);
-
+    
     useEffect(() => {
-      const token = sessionStorage.getItem('token');
-      const fetchMemberActivityStats = async () => {
-        try {
-          const response = await axios.get('http://localhost:3000/stats', { headers: { Authorization: token } });
-          setStats(response.data);
-          console.log(stats[24]);
-        } catch (error) {
-          console.error('Error fetching member activity stats:', error);
-        }
-      };
-  
-      fetchMemberActivityStats();
-    }, []);
+        const token = sessionStorage.getItem('token');
+
+        const fetchMemberActivityStats = async (member) => {
+            try {
+                const response = await axios.get(`http://localhost:3000/stats/${member.id}/${member.Rewards[0].start_date}/${member.Rewards[0].end_date}`, { headers: { Authorization: token } });
+                return { [member.id]: response.data }
+            } catch (error) {
+                console.error('Error fetching member activity stats:', error);
+                return { [member.id]: null }
+            }
+        };
+
+        const fetchStatsForAllMembers = async () => {
+            const statsPromises = members.map(member => fetchMemberActivityStats(member));
+            const stats = await Promise.all(statsPromises);
+            const statsObject = stats.reduce((acc, stat) => ({ ...acc, ...stat }), {})
+            setStats(statsObject)
+        };
+
+        fetchStatsForAllMembers();
+    }, [members]);
+
+    const calculateDifferenceInDays = (startDate, endDate) => {
+        const differenceInMilliseconds = new Date(endDate).getTime() - new Date(startDate).getTime();
+        return Math.round(differenceInMilliseconds / (1000 * 3600 * 24));
+    }    
 
       return (
         <div className="bg-white sm:p-5 md:p-10 p-3 rounded-[60px] flex flex-col justify-center">
@@ -48,7 +56,6 @@ export default function PusatReward({ members }) {
                     {isAuthenticated ? (
                         <ModalButton btnContent={(btnCtn)} mdlContent={(<ModalSpin />)} maxWidth='100vw' />
                     ) : (<Link to='/login'>{btnCtn}</Link>)}
-                    {/* <WheelComponent /> */}
                 </div>
                 {members.length === 0 ? (
                     <div className='flex flex-col justify-center items-center lg:mx-auto'>
@@ -63,46 +70,56 @@ export default function PusatReward({ members }) {
                     )
                 )}
             </div>
-            {members.length > 0 && (
+      
+            {/* link to daily mission */}
+            <Link to="/mission/daily-mission" >
+                <button className="p-sm-3 p-md-4 mb-4 p-4 mt-8 text-white bg-main-color rounded-[60px] font-bold text-[16px] md:text-xl shadow-md w-full">Lihat Aktivitas Daily Mission</button>
+            </Link>
+
+            {members.filter(member => member.Rewards[0]).length > 0 &&
                 <>
-                    <Link to="/mission/daily-mission">
-                        <button className="p-sm-3 p-md-4 mb-4 p-3 mx-5 text-white bg-main-color rounded-[60px] font-bold shadow-md" style={{width: '95%'}}>Lihat Aktivitas Daily Mission</button>
-                    </Link>
-                    <div className="p-sm-3 p-md-4 p-3 px-sm-4 px-md-5 px-3 mb-4 mx-sm-1 mx-md-5 mx-1 bg-white shadow-md rounded-[60px]">
-                        <h1 className="text-center text-3xl font-bold mb-4">Ringkasan</h1>
-                        <div className="flex gap-4 text-center">
-                            {members.map(m => (
-                                <div key={m.id}>
-                                    {m.Rewards.length > 0 ? (
-                                        <>
-                                            <SummaryCard title={`${titleCase(m.member_role)} Idaman`} fontSz='text-7xl'
-                                                description={`selesaikan banyak misi untuk menaikan score menjadi "${titleCase(m.member_role)} Idaman”`}
-                                                firstRow={m.percentage}
-                                            />
-                                            <SummaryCard title='Daily Mission'
-                                                value={stats[m.id] && stats[m.id].totalActivities !== undefined ? String(stats[m.id].totalActivities) : '0'}
-                                                fontSz='text-7xl'
-                                                description='Misi diselesaikan overdue (per 30 hari)' 
-                                            />
+                    <h1 className='mt-5 text-center text-3xl font-bold'>Ringkasan</h1>
+                    <div className="flex text-center">
+                        {members.map(m => (
+                            <div key={m.id}>
+                                {m.Rewards.length > 0 ? (
+                                    <>
+                                        <SummaryCard title={`${titleCase(m.member_role)} Idaman`} fontSz='text-7xl'
+                                            description={`selesaikan banyak misi untuk menaikkan score menjadi "${titleCase(m.member_role)} Idaman”`}
+                                            firstRow={stats[m.id]?.percentage}
+                                        />
+                                        <SummaryCard title='Daily Mission'
+                                            value={stats[m.id]?.approvedActivities || '0'}
+                                            fontSz='text-7xl'
+                                            description={`Misi diselesaikan (per ${calculateDifferenceInDays(m.Rewards[0].start_date, m.Rewards[0].end_date)} hari)`}
+                                        />
+                                        <SummaryCard
+                                            title='Kategori'
+                                            value={stats[m.id]?.categoryCounts?.length || '0'}
+                                            fontSz='text-7xl'
+                                            description={`Kategori yang telah dilaksanakan (per ${calculateDifferenceInDays(m.Rewards[0].start_date, m.Rewards[0].end_date)} hari)`}
+                                        />
+                                        {stats[m.id]?.maxApprovalCategory?.category &&
                                             <SummaryCard
                                                 title='Kategori'
-                                                value={stats[m.id] && stats[m.id].categoryCounts !== undefined ? categoryCountsSum(m.id) : '0'} 
-                                                fontSz='text-7xl'
-                                                description='Kategori yang telah dilaksanakan (per 30 hari)'
+                                                value={stats[m.id]?.maxApprovalCategory?.category || '0'}
+                                                fontSz='text-3xl'
+                                                description={`Paling banyak dilaksanakan (per ${calculateDifferenceInDays(m.Rewards[0].start_date, m.Rewards[0].end_date)} hari)`}
                                             />
-                                        </>
-                                    ) : (
-                                        <>
-                                            <h1 className='font-semibold'>Atur periode untuk melihat ringkasan</h1>
-                                            <MemberItem member={m} />
-                                        </>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                                        }
+                                    </>
+                                ) : (
+                                    <>
+                                        <h1 className='font-semibold'>Atur periode untuk melihat ringkasan</h1>
+                                        <MemberItem member={m} />
+                                    </>
+                                )}
+                            </div>
+                        ))}
                     </div>
                 </>
-            )}
+            }
+
         </div>
     )
 }

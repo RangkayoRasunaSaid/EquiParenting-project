@@ -31,7 +31,6 @@ export default function App() {
             const membersResponse = await axios.get('http://localhost:3000/members', { headers: { Authorization: token } });
             const membersData = membersResponse.data.members;
             setMembers(membersData);
-            console.log(membersData);
       
             // Fetch rewards
             // const rewardsResponse = await axios.get('http://localhost:3000/rewards', { headers: { Authorization: token } });

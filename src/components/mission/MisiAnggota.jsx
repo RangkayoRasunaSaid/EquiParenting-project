@@ -1,5 +1,5 @@
 import { BsFillQuestionCircleFill, BsArrowLeftShort } from "react-icons/bs";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import OwlCarousel from 'react-owl-carousel'
 import 'owl.carousel/dist/assets/owl.carousel.css'
 import 'owl.carousel/dist/assets/owl.theme.default.css'
@@ -16,16 +16,14 @@ export default function MisiAnggota() {
     const {members, member} = state
     const [data, setData] = useState([]);
     const [categories, setCategories] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
           try {
             const token = sessionStorage.getItem('token');
-            
             // const activitiesResponse = await axios.get(`https://outrageous-gold-twill.cyclic.app/activities/${member.id}`);
-            // const activitiesResponse = await axios.get(`http://localhost:3000/activities/${member.id}`);
-            // const activitiesData = activitiesResponse.data;
-            setData(member.activities);
-            console.log(member.activities);
+            const activitiesResponse = await axios.get(`http://localhost:3000/activities/${member.id}/${member.Rewards[0].start_date}/${member.Rewards[0].end_date}`);
+            setData(activitiesResponse.data);
 
             // const categoriesResponse = await axios.get(`https://outrageous-gold-twill.cyclic.app/categories`);
             const categoriesResponse = await axios.get(`http://localhost:3000/categories`);
@@ -37,25 +35,12 @@ export default function MisiAnggota() {
             // window.location.reload();
           }
         };
-      
         fetchData();
       }, []);  
 
     const options = {
-        stagePadding: 40,
-        items: 3,
-        margin:20,
-        nav:true,
-        responsive:{
-            0:{
-                items:1
-            },
-            600:{
-                items:2
-            },
-            1000:{
-                items:3
-            }
+        stagePadding: 40, items: 3, margin:20, nav:true,
+        responsive:{ 0:{ items:1 }, 600:{ items:2 }, 1000:{ items:3 }
         }
     }
     return (
@@ -70,31 +55,6 @@ export default function MisiAnggota() {
                     mdlContent={(<ModalHelp role={member.member_role} />)} maxWidth="1000px"
                 />
             </div>
-            {/* <div className=" mb-10">
-                <h1 className="text-2xl font-semibold text-center">Misi Harian</h1>
-                <OwlCarousel className='owl-theme' {...options} >
-                    <TaskItem
-                        category="Dapur"
-                        title="Memasak Makanan Malam"
-                        timestamp="Hari Ini, 2 Feb 2024 12:52 WIB"
-                        bySystem={true}
-                        description="bunda pulang dari kantor lebih cepet jadi bunda bisa masak makan malem. Nanti poin bunda bisa 20 yah :)"
-                        points= '20'
-                        responsible='Bunda'
-                        approvedBy='Ayah'
-                    />
-                    <TaskItem
-                        category="Baby"
-                        title="Ganti Popok Baby Shift Subuh"
-                        timestamp="Hari ini, 2 Jan 2024 20:43 WIB"
-                        bySystem={true}
-                        description="Bunda tidur lebih cepat yah jadi ayah yang ganti popok sama bikin susu dini hari karena jam 4 bunda masak + ganti popok di subuh"
-                        points= '10'
-                        responsible='Bunda'
-                        approvedBy='Ayah'
-                    />
-                </OwlCarousel>
-            </div> */}
             <div>
                 <h1 className="text-2xl font-semibold text-center">Yuk, Buat Misi Sendiri untuk {titleCase(member.member_role)}!</h1>
                 <OwlCarousel className='owl-theme' {...options} >
@@ -107,18 +67,6 @@ export default function MisiAnggota() {
                             responsible={titleCase(member.member_role)}
                         />
                     ))}
-                    {/* <TaskItem
-                        category="Baby"
-                        title="Membuat susu adek pagi"
-                        timestamp="Hari ini, 2 Jan 2024 18:42 WIB"
-                        description="Bunda lakuin shift pagi dini hari jam 2, nanti ayah jam 5 subuh ya"
-                        completed='Batas Waktu: 5 Jam 18 Menit Tersisa'
-                        points= '10'
-                        responsible='Bunda'
-                        approvedBy='Ayah'
-                        deadline='2 Feb 2024 18:42 - 3 Feb 2024 02:00'
-                        disabled={false}
-                    /> */}
                 </OwlCarousel>
                 <div className="flex justify-center my-5">
                     <ModalButton btnContent={(

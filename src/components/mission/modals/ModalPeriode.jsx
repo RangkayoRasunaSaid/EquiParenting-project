@@ -1,22 +1,16 @@
 import axios from 'axios';
 import { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Navigate } from 'react-router';
 
-export default function ModalPeriode({ memberId }) {
+export default function ModalPeriode({ memberIds }) {
     const [data, setData] = useState({
       spinned_at: '',
       start_date: new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":")),
       end_date: "",
-      id_member: memberId
+      id_member: null
     });
 
-    let todayMinDate = new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"));
-
-    // Handle input changes for end time
     const handleEndTimeChange = (e) => {
         const endDate = e.target.value;
-        // Check if end date is after start date
         if (endDate < new Date().toISOString().slice(0, 16)) {
             alert("End date must be after today's date");
             return;
@@ -28,15 +22,12 @@ export default function ModalPeriode({ memberId }) {
         setData({ ...data, end_date: e.target.value });
     };
 
-    // Handle input changes for start time
     const handleStartTimeChange = (e) => {
         const startDate = e.target.value;
-        // Check if start date is after today's date
         if (startDate < new Date().toISOString().slice(0, 16)) {
             alert("Start date must be after today's date");
             return;
         }
-        // Check if start date is before end date
         if (data.endTime < startDate && data.endTime) {
             alert("Start date must be before end date");
             return;
@@ -44,47 +35,45 @@ export default function ModalPeriode({ memberId }) {
         setData({ ...data, start_date: e.target.value });
     };
 
-    // Handle form submission
     const handleSubmit = (e) => {
-        // Save start time and end time to localStorage
-        e.preventDefault();
-        console.log(data.start_date);
-    
-        const token = sessionStorage.getItem("token");
-        if (!data.start_date || !data.end_date) {
+      e.preventDefault();
+      const token = sessionStorage.getItem("token");
+      if (!data.start_date || !data.end_date) {
           alert("Harap isi semua kolom");
           return;
-        }
-    
-        axios
-          .post("http://localhost:3000/reward", data, {
-            headers: {
-              Authorization: token,
-            },
-          })
-          .then((response) => {
-            // After successfully adding reward dates, reset the member's score to 0
-            axios.put("http://localhost:3000/reset-score", { memberId: memberId }, {
+      }
+      
+      memberIds.forEach(memberId => {
+          const requestData = {
+              spinned_at: '',
+              start_date: data.start_date,
+              end_date: data.end_date,
+              id_member: memberId
+          };
+  
+          axios.post("http://localhost:3000/reward", requestData, {
               headers: {
-                Authorization: token,
+                  Authorization: token,
               },
-            })
-            .then((resetResponse) => {
-              console.log("Score reset successfully.");
-              window.location.reload();
-            })
-            .catch((resetError) => {
-              console.error("Error resetting member's score:", resetError);
-            });
-            alert("Berhasil menambahkan periode");
-            window.location.reload();
-          })
-          .catch((error) => {
-          //   alert("Penambahan member gagal");
-            console.error("Error adding date period:", error);
-          })
-    };
-
+          }).then((response) => {
+              console.log("Reward created successfully for member with ID:", memberId);
+              // Reset the score for the current memberId
+              axios.put("http://localhost:3000/reset-score", { memberId: memberId }, {
+                  headers: {
+                      Authorization: token,
+                  },
+              }).then((resetResponse) => {
+                  console.log("Score reset successfully for member with ID:", memberId);
+                  window.location.reload();
+              }).catch((resetError) => {
+                  console.error("Error resetting member's score:", resetError);
+              });
+          }).catch((error) => {
+              console.error("Error creating reward for member with ID:", memberId, error);
+          });
+      });
+  };
+  
     return (
         <div className="px-5">
             <h1 className="text-center font-bold text-lg my-5">Atur Rentang Waktu Misi</h1>
@@ -124,9 +113,9 @@ export default function ModalPeriode({ memberId }) {
         </div>
     );
 }
-ModalPeriode.propTypes = {
-    memberId: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number
-    ]).isRequired,
-};
+// ModalPeriode.propTypes = {
+//     memberId: PropTypes.oneOfType([
+//         PropTypes.string,
+//         PropTypes.number
+//     ]).isRequired,
+// };

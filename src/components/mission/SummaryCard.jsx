@@ -35,7 +35,6 @@ export default function SummaryCard({ title, value, fontSz, description, firstRo
               {firstRow !== 100 && description}
             </div>
           </>
-          // <CircleProgress percent={firstRow} />
         ) : (
           <>
             <h5 className='text-[14px] md:text-3xl font-semibold'>{title}</h5>
@@ -49,10 +48,10 @@ export default function SummaryCard({ title, value, fontSz, description, firstRo
     </div>
   )
 }
-SummaryCard.propTypes = {
-  title: PropTypes.string.isRequired, // title is required and must be a string
-  value: PropTypes.string, // value is optional and must be a string if provided
-  fontSz: PropTypes.string, // fontSz is optional and must be a string if provided
-  description: PropTypes.string, // description is optional and must be a string if provided
-  firstRow: PropTypes.number, // firstRow is optional and must be a number if provided
-};
+// SummaryCard.propTypes = {
+//   title: PropTypes.string.isRequired, // title is required and must be a string
+//   value: PropTypes.string, // value is optional and must be a string if provided
+//   fontSz: PropTypes.string, // fontSz is optional and must be a string if provided
+//   description: PropTypes.string, // description is optional and must be a string if provided
+//   firstRow: PropTypes.number, // firstRow is optional and must be a number if provided
+// };

@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 // import Navbar from './components/navbar/Navbar';
 import NavbarLogin from "./components/navbar/NavbarLogin"
 import Footer from './components/Footer/Footer'
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   // const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -22,6 +23,7 @@ function App() {
           {/* <Navbar /> */}
           <div className="bg-[url('/src/assets/background2.jpg')]">
           <NavbarLogin />
+          <ToastContainer />
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/mission/*" element={<Mission />} />
