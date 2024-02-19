@@ -6,10 +6,5 @@ import ReactRefresh from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [
     ReactRefresh(),
-    new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'window.jQuery': 'jquery'
-    }),
   ],
 })
