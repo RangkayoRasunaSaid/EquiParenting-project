@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserProfile } from '../redux/actions/profile';
 import Loading from '../Loading';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
   // const dispatch = useDispatch();
@@ -39,6 +40,7 @@ const Profile = () => {
 
       } catch (error) {
         console.error('Error fetching profile:', error);
+        toast.error('Error fetching profile')
         // Handle error
       }
     };
@@ -77,6 +79,7 @@ const Profile = () => {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    const loadingToastId = toast.loading('Updating profile ...')
 
     try {
       const token = sessionStorage.getItem('token');
@@ -85,12 +88,32 @@ const Profile = () => {
       });
       if (response.ok) {
         console.log('Profile updated successfully');
-        getUserProfile(); // Refresh profile data
+        toast.update(loadingToastId, {
+          render:  "Profile updated successfully",
+          isLoading: false,
+          autoClose: 5000,
+          closeOnClick: true
+        });
+        fetchUserProfile(); // Refresh profile data
       } else {
-        console.error('Failed to update profile');
+        console.error(response);
+        toast.update(loadingToastId, {
+          render:  "Profile updated successfully",
+          isLoading: false,
+          autoClose: 5000,
+          closeOnClick: true
+        });
+        fetchUserProfile();
       }
     } catch (error) {
       console.error('Error updating profile:', error);
+      toast.update(loadingToastId, {
+        render:  "Error updating profile",
+        isLoading: error,
+        type: "success",
+        autoClose: 5000,
+        closeOnClick: true
+      });
     } finally {
       setIsLoading(false);
     }
@@ -98,6 +121,7 @@ const Profile = () => {
 
   const handleUpdatePassword = async (e) => {
     e.preventDefault();
+    const loadingToastId = toast.loading('Updating password ...')
     try {
       const token = sessionStorage.getItem('token');
       const response = await axios.put('http://localhost:3000/update-profile', password,{
@@ -105,18 +129,37 @@ const Profile = () => {
       });
       if (response.ok) {
         console.log('Password updated successfully');
+        toast.update(loadingToastId, {
+          render:  "Password updated successfully",
+          isLoading: false,
+          autoClose: 5000,
+          closeOnClick: true
+        });
         setPassword({ new: '', old: '' })
       } else {
         console.error('Failed to update password');
+        toast.update(loadingToastId, {
+          render:  "Password updated successfully",
+          isLoading: false,
+          autoClose: 5000,
+          closeOnClick: true
+        });
       }
     } catch (error) {
       console.error('Error updating password:', error);
+      toast.update(loadingToastId, {
+        render:  "Error updating password",
+        isLoading: error,
+        type: "success",
+        autoClose: 5000,
+        closeOnClick: true
+      });
     }
   };
 
   return (
     <div className="bg-[url('/src/assets/background2.jpg')] bg-fixed">
-      {isLoading && <Loading />}
+      {/* {isLoading && <Loading />} */}
       <div className="text-center pt-10 text-ungu1">
         <h1 className="text-2xl lg:text-3xl font-bold">Akun Terhubung</h1>
         <h3 className="text-lg lg:text-xl font-medium my-4 lg:my-6">Atur Profile Akunmu!</h3>

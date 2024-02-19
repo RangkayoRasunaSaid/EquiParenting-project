@@ -5,7 +5,7 @@ import axios from "axios";
 import MemberItem from "./MemberItem";
 import PropTypes from 'prop-types';
 
-const DailyMission = ({ members }) => {
+const DailyMission = ({ members, setMembers }) => {
   const mdlBtn = (
     <div role="button" className="text-center py-4 md:px-5 rounded-[40px] border-0 shadow-md h-100 bg-main-color text-white flex flex-col justify-between">
         <h5 className="text-2xl font-bold">Tambah Anggota</h5>
@@ -20,7 +20,11 @@ const DailyMission = ({ members }) => {
     <div className="m-4 p-sm-3 p-md-4 p-2 ">
         <h1 className="text-center text-3xl mb-2 font-bold">Tim</h1>
         <div className="grid justify-items-stretch md:grid-cols-3 gap-3 text-center p-sm-4 p-md-5 p-2">
-          <ModalButton btnContent={mdlBtn} mdlContent={(<ModalCreateMember members={members} />)} />
+          <ModalButton btnContent={mdlBtn} mdlContent={
+            (<ModalCreateMember
+              members={members}
+              setMemberData={setMembers}
+            />)} />
           {members.map((member, index) => {              
               return (
                 <MemberItem

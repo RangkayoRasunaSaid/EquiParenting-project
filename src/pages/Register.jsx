@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-import NavbarAcc from "../components/NavbarAcc";
 import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 import axios from "axios";
 import Loading from "../Loading";
 
@@ -27,25 +27,31 @@ const Register = () => {
     setIsLoading(true);
 
     if (!data.username || !data.email || !data.password || !data.confirmPassword) {
-      alert("Harap lengkapi semua kolom!");
+      // alert("Harap lengkapi semua kolom!");
+      toast.warning("Harap lengkapi semua kolom!");
       return;
     }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(data.email)) {
-      alert("Harap masukkan alamat email yang valid!");
+      // alert("Harap masukkan alamat email yang valid!");
+      toast.warning("Harap masukkan alamat email yang valid!");
       return;
     }
 
     if (data.password.length < 8) {
-      alert("Password harus memiliki minimal 8 karakter!");
+      // alert("Password harus memiliki minimal 8 karakter!");
+      toast.warning("Password harus memiliki minimal 8 karakter!");
       return;
     }
 
     if (data.password !== data.confirmPassword) {
-      alert("Password dan Konfrimasi Password tidak sesuai");
+      // alert("Password dan Konfrimasi Password tidak sesuai");
+      toast.warning("Password dan Konfrimasi Password tidak sesuai");
       return;
     }
+
+    const loadingToastId = toast.loading('Signing up...')
 
     try {
       const response = await axios.post("http://localhost:3000/register", {
@@ -54,25 +60,47 @@ const Register = () => {
         password: data.password,
       });
 
-      alert("Pendaftaran akun berhasil!");
+      // alert("Pendaftaran akun berhasil!");
+      toast.update(loadingToastId, {
+        render:  "Pendaftaran akun berhasil!",
+        type: "success",
+        isLoading: false,
+        autoClose: 5000,
+        closeOnClick: true
+      });
+
       window.location.href = "/login";
     } catch (error) {
       if (error.response) {
         if (error.response.status === 400) {
-          alert("Email sudah terdaftar, silakan gunakan email lain.");
+          // alert("Email sudah terdaftar, silakan gunakan email lain.");
+          toast.update(loadingToastId, {
+            render:  "Email sudah terdaftar, silakan gunakan email lain.",
+            type: "error",
+            isLoading: false,
+            autoClose: 5000,
+            closeOnClick: true
+          });
         } else {
           console.error("Pendaftaran Akun Gagal:", error.message);
-          alert("Pendaftaran akun anda gagal! Silakan coba lagi");
+          // alert("Pendaftaran akun anda gagal! Silakan coba lagi");
+          toast.update(loadingToastId, {
+            render:  "Pendaftaran akun anda gagal! Silakan coba lagi",
+            type: "error",
+            isLoading: false,
+            autoClose: 5000,
+            closeOnClick: true
+          });
         }
       }
     } finally {
-      setIsLoading(false);
+      // toast.dismiss(loadingToastId)
+      // setIsLoading(false); // Menyembunyikan loading
     }
   };
 
   return (
     <div className="bg-[url('/src/assets/background2.jpg')] min-h-screen">
-      {/* <NavbarAcc /> */}
       <div className="text-center pt-10 text-ungu1">
         <h1 className="text-2xl lg:text-3xl font-bold">Daftar</h1>
         <h3 className="text-lg lg:text-xl font-medium my-4 lg:my-6">Yuk, Bergabung dengan kami!</h3>
@@ -80,7 +108,7 @@ const Register = () => {
       <div className="flex justify-center mx-auto pb-10">
         <div className="bg-ungu2 w-80 lg:w-max p-8 rounded-3xl text-ungu1 font-medium shadow-lg">
 
-        {isLoading && <Loading />}
+        {/* {isLoading && <Loading />} */}
           <form onSubmit={handleRegister}>
             <div>
               <div>
@@ -91,7 +119,6 @@ const Register = () => {
                   type="text"
                   value={data.username}
                   onChange={(e) => setData({ ...data, username: e.target.value })}
-                  required
                 />
               </div>
               <div>
@@ -102,7 +129,6 @@ const Register = () => {
                   type="email"
                   value={data.email}
                   onChange={(e) => setData({ ...data, email: e.target.value })}
-                  required
                 />
               </div>
               <div>
@@ -113,7 +139,6 @@ const Register = () => {
                   type="password"
                   value={data.password}
                   onChange={(e) => setData({ ...data, password: e.target.value })}
-                  required
                 />
               </div>
               <div>
@@ -124,7 +149,6 @@ const Register = () => {
                   type="password"
                   value={data.confirmPassword}
                   onChange={(e) => setData({ ...data, confirmPassword: e.target.value })}
-                  required
                 />
               </div>
 

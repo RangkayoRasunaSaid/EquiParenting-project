@@ -4,6 +4,7 @@ import logo from "../../assets/logo.svg"
 import { FaXmark, FaBars } from "react-icons/fa6"
 import { FaUserCircle } from "react-icons/fa"
 import ResponsiveMenu from "./ResponsiveMenu"
+import { toast } from "react-toastify"
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Navbar = () => {
     // Clear authentication data
     sessionStorage.removeItem("token");
     localStorage.removeItem("username");
+    toast.info("Anda telah logout");
 
     // Redirect to the login page
     navigate("/login");

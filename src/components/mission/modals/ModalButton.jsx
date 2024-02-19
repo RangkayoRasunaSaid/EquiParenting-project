@@ -35,6 +35,10 @@ export default function ModalButton({ btnContent, mdlContent, maxWidth='400px' }
         });
     }
 
+    const modifiedMdlContent = React.cloneElement(mdlContent, {
+        toggleModal: toggleModal
+    });
+
     return (
         <div>
             {React.cloneElement(btnContent, { onClick: toggleModal })}
@@ -49,11 +53,14 @@ export default function ModalButton({ btnContent, mdlContent, maxWidth='400px' }
                 backgroundProps={{ opacity }}
             >
                 <button className="absolute top-0 right-0 z-50 pe-5 pt-5" onClick={toggleModal}><BsXLg /></button>
-                {mdlContent}
+                {modifiedMdlContent}
             </StyledModal>
         </div>
     );
 }
+
+// export { toggleModal }
+
 ModalButton.propTypes = {
     btnContent: PropTypes.element.isRequired,
     mdlContent: PropTypes.element.isRequired,

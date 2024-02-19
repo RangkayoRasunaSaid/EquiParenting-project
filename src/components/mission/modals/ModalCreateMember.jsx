@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { FaCamera } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 
-export default function ModalCreateMember({ members }) {
+export default function ModalCreateMember({ members, setMemberData, toggleModal }) {
     const [data, setData] = useState({
       name: "",
       member_role: "",
@@ -12,7 +12,7 @@ export default function ModalCreateMember({ members }) {
 
     // const [roles, setRoles] = useState(["ayah", "bunda"]);
     const roles = ["ayah", "bunda", 'others'];
-    const [avatarPreview, setAvatarPreview] = useState(null);
+    // const [avatarPreview, setAvatarPreview] = useState(null);
 
     // useEffect(() => {
     //   setRoles((prevRoles) => {
@@ -31,10 +31,13 @@ export default function ModalCreateMember({ members }) {
   
       const token = sessionStorage.getItem("token");
       if (!data.name || !data.member_role) {
-        alert("Harap isi semua kolom");
+        toast.warning("Harap isi semua kolom!");
+        // alert("Harap isi semua kolom");
         setIsCreating(false);
         return;
       }
+
+      const loadingToastId = toast.loading('Adding a member ...')
   
       axios
         .post("http://localhost:3000/members", data, {
@@ -43,7 +46,9 @@ export default function ModalCreateMember({ members }) {
           },
         })
         .then(response => {
-          const { id } = response.data.member;
+          const { id, name, member_role } = response.data.member; // Destructure necessary data
+          const Score = {score: 0}
+
           const existingStartDate = members.map((member) => member.Rewards[0]?.start_date);
           const existingEndDate = members.map((member) => member.Rewards[0]?.end_date);
 
@@ -58,17 +63,31 @@ export default function ModalCreateMember({ members }) {
                 headers: { Authorization: token }
             }).then((response) => {
                 console.log("Reward created successfully for member with ID:", id);
+                const Rewards = [response.data.reward]
+                const updatedMemberData = [...members, { Rewards, Score, id, name, member_role }];
+                setMemberData(updatedMemberData);
             }).catch((error) => {
                 console.error("Error creating reward for member with ID:", id, error);
             })
           }
 
           // alert("Berhasil menambahkan member");
-          toast("Berhasil menambahkan member")
-          window.location.reload();
+          toggleModal()
+          toast.update(loadingToastId, {
+            render:  "Berhasil menambahkan member",
+            isLoading: false,
+            autoClose: 5000,
+            closeOnClick: true
+          });
         })
         .catch((error) => {
-          toast("Penambahan member gagal")
+          toast.update(loadingToastId, {
+            render:  "Penambahan member gagal",
+            type: "error",
+            isLoading: false,
+            autoClose: 5000,
+            closeOnClick: true
+          });
         //   alert("Penambahan member gagal");
           console.error("Error adding member:", error);
         })
@@ -126,7 +145,6 @@ export default function ModalCreateMember({ members }) {
                     disabled={isCreating}
                     onChange={(e) => setData({ ...data, name: e.target.value })}
                     className={isCreating ? "w-40 focus:outline-none cursor-wait" : "w-40 focus:outline-none"}
-                    required
                   />
                 </div>
 

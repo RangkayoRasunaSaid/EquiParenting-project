@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-import NavbarAcc from "../components/NavbarAcc";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast, Flip } from 'react-toastify';
 import axios from "axios";
 import Loading from "../Loading";
 
@@ -10,7 +10,7 @@ const Login = () => {
     password: "",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +22,8 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    // setIsLoading(true);
+    const loadingToastId = toast.loading('Logging in...', {transition: Flip})
 
     try {
       const response = await axios.post("http://localhost:3000/login", data);
@@ -31,36 +32,65 @@ const Login = () => {
 
       sessionStorage.setItem("token", token);
 
-      alert("Login Berhasil");
+      // alert("Login Berhasil");
+      toast.update(loadingToastId, {
+        render:  "Login Berhasil",
+        type: "success",
+        isLoading: false,
+        autoClose: 5000,
+        transition: Flip,
+        closeOnClick: true
+      });
 
       navigate("/");
     } catch (error) {
       if (error.response) {
         const status = error.response.status;
         if (status === 404) {
-          alert("User tidak ditemukan");
+          // alert("User tidak ditemukan");
+          toast.update(loadingToastId, {
+            render:  "User tidak ditemukan",
+            type: "error",
+            isLoading: false,
+            closeOnClick: true,
+            autoClose: 5000
+          });
         } else if (status === 401) {
-          alert("Password yang dimasukkan salah");
+          // alert("Password yang dimasukkan salah");
+          toast.update(loadingToastId, {
+            render:  "Password yang dimasukkan salah",
+            type: "error",
+            isLoading: false,
+            autoClose: 5000,
+            closeOnClick: true
+           });
         }
       } else {
         console.error("Proses Login Gagal:", error.message);
-        alert("Login gagal, silakan coba lagi");
+        // alert("Login gagal, silakan coba lagi");
+        toast.update(loadingToastId, {
+          render:  "Login gagal, silakan coba lagi",
+          type: "error",
+          isLoading: false,
+          autoClose: 5000,
+          closeOnClick: true
+        });
       }
     } finally {
-      setIsLoading(false); // Menyembunyikan loading
+      // toast.dismiss(loadingToastId)
+      // setIsLoading(false); // Menyembunyikan loading
     }
   };
 
   return (
     <div className="bg-[url('/src/assets/background2.jpg')] min-h-screen">
-      {/* <NavbarAcc /> */}
       <div className="text-center pt-10 text-ungu1">
         <h1 className="text-2xl lg:text-3xl font-bold">Masuk</h1>
         <h3 className="text-lg lg:text-xl font-medium my-4 lg:my-6">Yuk, Lanjutkan dengan akun kamu!</h3>
       </div>
       <div className="flex justify-center mx-auto pb-10">
         <div className="bg-ungu2 w-80 lg:w-max p-8 rounded-3xl text-ungu1 font-medium shadow-lg">
-        {isLoading && <Loading />}
+        {/* {isLoading && <Loading />} */}
           <form onSubmit={handleLogin}>
             <div>
               <div>

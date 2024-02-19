@@ -3,13 +3,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import DailyMission from './Daymission.jsx';
 import DailyMission from './DailyMission';
 import PusatReward from './PusatReward';
-import MisiBunda from './MisiBunda.jsx';
-import MisiAyah from './MisiAyah.jsx';
 import { BaseModalBackground, ModalProvider } from 'styled-react-modal';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import MisiAnggota from './MisiAnggota.jsx';
+import { toast } from 'react-toastify';
 // import '../../App.scss'
 // import ButtonLihatMisi from '../dashboard/ButtonLihatMisi.jsx';
 
@@ -58,13 +57,13 @@ export default function App() {
             // setIsDataLoaded(true);
           } catch (error) {
             // console.error('Error fetching data:', error);
-            // alert('Failed fetching data');
+            toast.error('Failed fetching data');
             // window.location.reload();
           }
         };
       
         fetchData();
-      }, []);    
+      }, [members]);    
 
     return (
         <ModalProvider backgroundComponent={FadingBackground}>

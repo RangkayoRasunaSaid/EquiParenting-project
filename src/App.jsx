@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Mission from './components/mission/Mission';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "./App.css"
 import LandingPage from "./components/landing-page/index";
@@ -12,7 +13,7 @@ import Profile from "./pages/Profile";
 // import Navbar from './components/navbar/Navbar';
 import NavbarLogin from "./components/navbar/NavbarLogin"
 import Footer from './components/Footer/Footer'
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, Flip } from 'react-toastify';
 
 function App() {
   // const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -22,8 +23,11 @@ function App() {
       <Router>
           {/* <Navbar /> */}
           <div className="bg-[url('/src/assets/background2.jpg')]">
+          <ToastContainer
+            closeOnClick
+            position="top-center"
+          />
           <NavbarLogin />
-          <ToastContainer />
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/mission/*" element={<Mission />} />

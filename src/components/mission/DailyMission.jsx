@@ -4,7 +4,7 @@ import Tim from "./Daymission";
 // import Tim from "./Tim";
 import { useNavigate } from "react-router-dom";
 
-export default function DailyMission({ members }) {
+export default function DailyMission({ members, setMembers }) {
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export default function DailyMission({ members }) {
     return (
         <>
             <div className="bg-white mx-4 px-10 rounded-[60px] pb-5 flex flex-col justify-center">
-                <Tim members={members} />
+                <Tim members={members} setMembers={setMembers} />
                 {members.length > 0 &&
                     <Aktivitas members={members} />
                 }

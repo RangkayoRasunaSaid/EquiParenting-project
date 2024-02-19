@@ -5,7 +5,7 @@ import ModalButton from './modals/ModalButton';
 
 export default function Aktivitas({ members }){
     // Filter out members without Rewards defined
-    const membersWithRewards = members.filter(member => member.Rewards[0]);
+    const membersWithRewards = members.filter(member => member?.Rewards[0]);
     // if (membersWithRewards.length === 0) return null;
     const memberIds = members.map(member => member.id);
 

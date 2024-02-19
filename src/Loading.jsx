@@ -3,7 +3,7 @@ import loadingImage from '../src/assets/loading.webp';
 
 const Loading = () => (
   <div className="loading">
-    <img src={loadingImage} alt="Loading..." />
+    <img className='rounded-full size-24' src={loadingImage} alt="Loading..." />
   </div>
 );
 
