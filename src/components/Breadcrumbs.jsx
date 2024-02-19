@@ -16,7 +16,7 @@ function Breadcrumbs() {
         {pathSegments.map((segment, index) => (
           <React.Fragment key={segment}>
             {index === pathSegments.length - 1 ? (
-              <li style={{ color: '#a49eb5' }}>{titleCase(segment.replace('-', ' ').replace(':', ''))}</li>
+              <li style={{ color: '#a49eb5' }} className='cursor-pointer'>{titleCase(segment.replace('-', ' ').replace(':', ''))}</li>
             ) : (
               <>
                 <li>

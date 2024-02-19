@@ -10,14 +10,14 @@ export default function MisiPeriode({ members, member }) {
         : '';
 
     return (
-        <div className={`px-10 py-6 rounded-[20px] border-0 shadow-md h-100`}>
+        <div className={`px-10 py-6 rounded-[20px] border-0 shadow-md h-100 item`}>
             <Link
                 to={`/mission/daily-mission/:${member.member_role}`}
                 state={{ members, member }}
             >
                 <h5 className="text-xl font-bold" style={{ color: "#675893" }}>Misi {titleCase(member.member_role)}</h5>
                 <div className="flex justify-center mt-3">
-                    <img className={`rounded-full ${member.avatar && 'ring-2 ring-purple-500'}`} style={{ height: "90px", width: "90px" }} alt="..." src={`/src/assets/${member.member_role}.svg`} />
+                    <img className={`rounded-full ${member.avatar || member.member_role === 'others' && 'ring-2 ring-purple-500'}`} style={{ height: "90px", width: "90px" }} alt="..." src={`/src/assets/${member.member_role === 'others' ? 'others.png' : member.member_role+'.svg'}`} />
                 </div>
             </Link>
         </div>

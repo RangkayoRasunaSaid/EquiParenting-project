@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { FaCamera } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import { titleCase } from "../../Breadcrumbs";
 
 export default function ModalCreateMember({ members, setMemberData, toggleModal }) {
     const [data, setData] = useState({
@@ -155,9 +156,9 @@ export default function ModalCreateMember({ members, setMemberData, toggleModal 
                     disabled={isCreating}
                     onChange={(e) => setData({ ...data, member_role: e.target.value })}
                   >
-                    <option disabled>Silahkan dipilih</option>
+                    <option value="" disabled selected>Silahkan pilih</option>
                     {roles.map((role, index) => (
-                      <option value={role} key={index}>{role}</option>
+                      <option value={role} key={index}>{titleCase(role)}</option>
                     ))}
                   </select>
                 </div>

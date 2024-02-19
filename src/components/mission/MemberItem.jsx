@@ -35,7 +35,6 @@ const MemberItem = ({ member }) => {
               {
                 headers: { Authorization: token }
               });
-            console.log(response.data);
             setPercent(response.data.percentage)
         } catch (error) {
             console.error('Error fetching member activity stats:', error);
@@ -49,7 +48,7 @@ const MemberItem = ({ member }) => {
         <div className="text-center p-3 rounded-[40px] border-0 shadow-md h-100">
           {/* <button onClick={() => handleDelete(member.id)}>Delete</button> */}
             <div className="flex justify-center mb-2">
-              <img src={member.avatar ? member.avatar : `/src/assets/${member.member_role}.svg`} className={`rounded-full ${member.avatar && 'ring-2 ring-purple-500'}`} style={{height:"90px", width:"90px"}} alt="..." />
+              <img src={member.avatar ? member.avatar : `/src/assets/${member.member_role === 'others' ? 'others.png' : member.member_role+'.svg'}`} className={`rounded-full ${member.avatar || member.member_role === 'others' && 'ring-2 ring-purple-500'}`} style={{height:"90px", width:"90px"}} alt="..." />
             </div>
             <h5 className="text-xl font-bold" style={{color:"#675893"}}>{titleCase(member.member_role)}</h5>
             <p className="text-slate-300 font-bold text-sm my-1">{titleCase(member.name)}</p>

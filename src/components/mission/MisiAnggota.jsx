@@ -10,6 +10,7 @@ import TaskItem from "./TaskItem";
 import { titleCase } from "../Breadcrumbs";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function MisiAnggota() {
     const { state } = useLocation()
@@ -22,14 +23,16 @@ export default function MisiAnggota() {
           try {
             const token = sessionStorage.getItem('token');
             // const activitiesResponse = await axios.get(`https://outrageous-gold-twill.cyclic.app/activities/${member.id}`);
-            const activitiesResponse = await axios.get(`http://localhost:3000/activities/${member.id}/${member.Rewards[0].start_date}/${member.Rewards[0].end_date}`);
+            const activitiesResponse = await axios.get(
+                `http://localhost:3000/activities/${member.id}/${member.Rewards[0].start_date}/${member.Rewards[0].end_date}`
+                );
             setData(activitiesResponse.data);
 
             // const categoriesResponse = await axios.get(`https://outrageous-gold-twill.cyclic.app/categories`);
             const categoriesResponse = await axios.get(`http://localhost:3000/categories`);
-            const categoriesData = categoriesResponse.data;
-            setCategories(categoriesData);
+            setCategories(categoriesResponse.data);
           } catch (error) {
+            toast.error('Error fetching activities data')
             // console.error('Error fetching data:', error);
             // alert('Failed fetching data');
             // window.location.reload();

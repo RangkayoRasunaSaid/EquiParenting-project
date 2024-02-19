@@ -1,4 +1,7 @@
 import MisiPeriode from './MisiPeriode';
+import OwlCarousel from 'react-owl-carousel'
+import 'owl.carousel/dist/assets/owl.carousel.css'
+import 'owl.carousel/dist/assets/owl.theme.default.css'
 import PropTypes from 'prop-types';
 import ModalPeriode from './modals/ModalPeriode';
 import ModalButton from './modals/ModalButton';
@@ -8,6 +11,12 @@ export default function Aktivitas({ members }){
     const membersWithRewards = members.filter(member => member?.Rewards[0]);
     // if (membersWithRewards.length === 0) return null;
     const memberIds = members.map(member => member.id);
+
+    const options = {
+        stagePadding: 40, items: 5, margin:20, nav:true,
+        responsive:{ 0:{ items:1 }, 600:{ items:2 }, 1000:{ items:5 }
+        }
+    }
 
     function formatDate(inputDate) {
         const months = [
@@ -41,11 +50,16 @@ export default function Aktivitas({ members }){
                     Periode {formattedPeriod}
                 </h1>
             )}
-            <div className="flex justify-center sm:gap-10 gap-5 text-center p-2">
+            <OwlCarousel className='owl-theme' {...options} >
                 {membersWithRewards.map(m =>(
                     <MisiPeriode key={m.id} members={members} member={m} />
                 ))}
-            </div>
+            </OwlCarousel>
+            {/* <div className="flex justify-center sm:gap-10 gap-5 text-center p-2">
+                {membersWithRewards.map(m =>(
+                    <MisiPeriode key={m.id} members={members} member={m} />
+                ))}
+            </div> */}
         </>
     )
 }

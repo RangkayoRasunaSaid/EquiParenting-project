@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from "../../assets/logo.svg"
 import { FaXmark, FaBars } from "react-icons/fa6"
@@ -9,6 +9,29 @@ import { toast } from "react-toastify"
 const Navbar = () => {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null); // Ref for dropdown element
+
+  useEffect(() => {
+    // Function to close dropdown when clicking outside
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+
+    // Attach event listener to document body when dropdown is open
+    if (dropdownOpen) {
+      document.addEventListener('click', handleClickOutside);
+    } else {
+      // Remove event listener when dropdown is closed
+      document.removeEventListener('click', handleClickOutside);
+    }
+
+    // Cleanup function to remove event listener
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [dropdownOpen]);
 
   const handleLogout = () => {
     // Clear authentication data
@@ -83,7 +106,7 @@ const Navbar = () => {
                   </>
                 ) : (
                   // Display "Profile" button when authenticated
-                  <div className="relative">
+                  <div className="relative" ref={dropdownRef}>
                     <div
                       onClick={() => setDropdownOpen(!dropdownOpen)}
                       className="flex items-center px-4 gap-3 cursor-pointer"

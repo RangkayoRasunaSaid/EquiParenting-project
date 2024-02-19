@@ -67,7 +67,7 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible }) =>
   
   return (
     <div className='item'>
-      <div className="item relative rounded-[60px] border-0 mt-3 shadow-md" style={{ zIndex: '1' }}>
+      <div className="relative rounded-[60px] border-0 mt-3 shadow-md" style={{ zIndex: '1' }}>
         <div className="absolute rounded-md text-xs font-semibold px-5 py-1 shadow-md -top-2 left-1/2 transform -translate-x-1/2 text-white text-center" style={{ backgroundColor: "#a693de" }}>{activity.category}</div>
         <div className="px-4 py-3">
           <h5 className="text-center text-base font-bold my-2" style={{ color: "#675893" }}>{activity.title}</h5>
