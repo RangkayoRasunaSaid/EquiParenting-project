@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import ModalPeriode from "./modals/ModalPeriode";
-import ModalButton from "./modals/ModalButton";
 import { titleCase } from "../Breadcrumbs";
 import PropTypes from 'prop-types';
 

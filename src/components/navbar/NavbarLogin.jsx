@@ -118,7 +118,7 @@ const Navbar = () => {
                     </div>
                     {dropdownOpen && (
                       <div className="absolute bg-white shadow-md top-full right-0 mt-1">
-                        <ul>
+                        <ul onClick={() => setDropdownOpen(!dropdownOpen)}>
                           <li>
                             <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">
                               Profile

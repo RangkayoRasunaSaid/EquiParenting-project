@@ -12,34 +12,27 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export default function MisiAnggota() {
+export default function MisiAnggota({ categories }) {
     const { state } = useLocation()
     const {members, member} = state
     const [data, setData] = useState([]);
-    const [categories, setCategories] = useState([]);
+    const [updateData, setUpdateData] = useState(0)
 
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const token = sessionStorage.getItem('token');
             // const activitiesResponse = await axios.get(`https://outrageous-gold-twill.cyclic.app/activities/${member.id}`);
-            const activitiesResponse = await axios.get(
-                `http://localhost:3000/activities/${member.id}/${member.Rewards[0].start_date}/${member.Rewards[0].end_date}`
-                );
+            const activitiesResponse = await axios.get(`
+                http://localhost:3000/activities/${member.id}/${member.Rewards[0].start_date}/${member.Rewards[0].end_date}
+            `);
             setData(activitiesResponse.data);
-
-            // const categoriesResponse = await axios.get(`https://outrageous-gold-twill.cyclic.app/categories`);
-            const categoriesResponse = await axios.get(`http://localhost:3000/categories`);
-            setCategories(categoriesResponse.data);
           } catch (error) {
+            console.error('Error fetching data:', error);
             toast.error('Error fetching activities data')
-            // console.error('Error fetching data:', error);
-            // alert('Failed fetching data');
-            // window.location.reload();
           }
         };
         fetchData();
-      }, []);  
+      }, [updateData]);  
 
     const options = {
         stagePadding: 40, items: 3, margin:20, nav:true,
@@ -59,8 +52,8 @@ export default function MisiAnggota() {
                 />
             </div>
             <div>
-                <h1 className="text-2xl font-semibold text-center">Yuk, Buat Misi Sendiri untuk {titleCase(member.member_role)}!</h1>
-                <OwlCarousel className='owl-theme' {...options} >
+                <h1 className="text-2xl font-semibold text-center mb-5">Yuk, Buat Misi Sendiri untuk {titleCase(member.member_role)}!</h1>
+                <OwlCarousel className='owl-theme' {...options} key={`carousel_${Date.now()}`} >
                     {data.map(activity => (
                         <TaskItem
                             key={activity.id}
@@ -68,6 +61,7 @@ export default function MisiAnggota() {
                             member={member}
                             activity={activity}
                             responsible={titleCase(member.member_role)}
+                            setUpdateData={setUpdateData}
                         />
                     ))}
                 </OwlCarousel>
@@ -80,7 +74,9 @@ export default function MisiAnggota() {
                                 <span className="text-6xl me-3">+</span>
                                 <span style={{color:"c3b8da"}}>Tambah Aktivitas</span>
                         </button>)}
-                        mdlContent={(<ModalAktivitas members={members} member={member} categories={categories} />)}
+                        mdlContent={(<ModalAktivitas
+                            members={members} member={member} categories={categories} setUpdateData={setUpdateData}
+                        />)}
                         maxWidth="800px"
                     />
                     

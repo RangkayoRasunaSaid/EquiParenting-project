@@ -1,6 +1,5 @@
 import Breadcrumbs from '../Breadcrumbs.jsx';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import DailyMission from './Daymission.jsx';
+import { Route, Routes } from 'react-router-dom';
 import DailyMission from './DailyMission';
 import PusatReward from './PusatReward';
 import { BaseModalBackground, ModalProvider } from 'styled-react-modal';
@@ -9,8 +8,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import MisiAnggota from './MisiAnggota.jsx';
 import { toast } from 'react-toastify';
-// import '../../App.scss'
-// import ButtonLihatMisi from '../dashboard/ButtonLihatMisi.jsx';
 
 // Styled component for customizing modal background transition
 const FadingBackground = styled(BaseModalBackground)`
@@ -20,51 +17,31 @@ const FadingBackground = styled(BaseModalBackground)`
 
 export default function App() {
     const [members, setMembers] = useState([]);
+    const [updateMembers, setUpdateMembers] = useState(0)
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const token = sessionStorage.getItem('token');
-            
-            // Fetch members
-            const membersResponse = await axios.get('http://localhost:3000/members', { headers: { Authorization: token } });
-            const membersData = membersResponse.data.members;
-            setMembers(membersData);
-      
-            // Fetch rewards
-            // const rewardsResponse = await axios.get('http://localhost:3000/rewards', { headers: { Authorization: token } });
-            // const rewardsData = rewardsResponse.data;
-      
-            // // Group rewards by member ID
-            // const rewardsMappedByMember = rewardsData.reduce((acc, reward) => {
-            //   const memberId = reward.member_id;
-            //   if (!acc[memberId]) {
-            //     acc[memberId] = [];
-            //   }
-            //   acc[memberId].push(reward);
-            //   return acc;
-            // }, {});
-      
-            // // Calculate start_date and end_date for each member
-            // const membersWithDates = membersData.map(member => {
-            //   const memberRewards = rewardsMappedByMember[member.id] || [];
-            //   const lastReward = memberRewards.length > 0 ? memberRewards[memberRewards.length - 1] : null;
-            //   const { start_date, end_date } = lastReward || {};
-            //   return { ...member, start_date, end_date };
-            // });
-            // setMembers(membersWithDates);
-            
-            // setIsDataLoaded(true);
-          } catch (error) {
-            // console.error('Error fetching data:', error);
-            toast.error('Failed fetching data');
-            // window.location.reload();
-          }
-        };
-      
-        fetchData();
-      }, [members]);    
+      const fetchData = async () => {
+        try {
+          const token = sessionStorage.getItem('token');
+          
+          // Fetch members
+          const membersResponse = await axios.get('http://localhost:3000/members', { headers: { Authorization: token } });
+          const membersData = membersResponse.data.members;
+          setMembers(membersData);
 
+          // const categoriesResponse = await axios.get(`https://outrageous-gold-twill.cyclic.app/categories`);
+          const categoriesResponse = await axios.get(`http://localhost:3000/categories`);
+          setCategories(categoriesResponse.data);
+        } catch (error) {
+          // console.error('Error fetching data:', error);
+          toast.error('Failed fetching data');
+        }
+      };
+    
+      fetchData();
+    }, [updateMembers]);
+  
     return (
         <ModalProvider backgroundComponent={FadingBackground}>
             <div  className="min-h-screen text-main-color bg-violet-100 my-10 sm:mx-5 md:mx-24 mx-3 sm:p-3 md:p-10 px-3 rounded-[40px]">
@@ -73,9 +50,9 @@ export default function App() {
                     Selamat datang di misi keluarga idaman!
                 </h1>
                 <Routes>
-                    <Route path="/" element={<PusatReward members={members} />} />
-                    <Route path="/daily-mission" element={<DailyMission members={members} setMembers={setMembers} />} />
-                    <Route path="/daily-mission/:role" element={<MisiAnggota />} />
+                    <Route path="/" element={<PusatReward members={members} setUpdateMembers={setUpdateMembers} />} />
+                    <Route path="/daily-mission" element={<DailyMission members={members} setUpdateMembers={setUpdateMembers} />} />
+                    <Route path="/daily-mission/:role" element={<MisiAnggota categories={categories} />} />
                 </Routes>
                 
             </div>

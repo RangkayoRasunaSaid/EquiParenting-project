@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import moment from 'moment/moment';
 import { titleCase } from '../Breadcrumbs';
-import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 function formatDate(stringDate) {
   let date = moment(stringDate);
@@ -12,7 +12,7 @@ function formatDate(stringDate) {
   return date.format('D MMM YYYY HH:mm [WIB]')
 }
 
-const TaskItem = ({ members, member, activity, bySystem=false, responsible }) => {
+const TaskItem = ({ members, member, activity, bySystem=false, responsible, setUpdateData }) => {
   // Parse the date string using moment.js
   let date = moment(activity.date_start_act);
   date = date.utcOffset('+0700');
@@ -28,7 +28,6 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible }) =>
   else formattedDate = date.format('D MMM YYYY HH:mm [WIB]');
 
   let targetDate = moment(activity.date_stop_act);
-  let approvalDate = moment(activity.approval_date);
   let diffMilliseconds = targetDate.diff(moment());
   let diffHours = Math.floor(diffMilliseconds / (1000 * 60 * 60));
   let diffMinutes = Math.floor((diffMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
@@ -40,29 +39,26 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible }) =>
 
   const [approvedBy, setApprovedBy] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const token = sessionStorage.getItem("token");
     if (!approvedBy) {
       alert("Harap isi disetujui oleh");
       return;
     }
-
-    axios
-      .put(`http://localhost:3000/activities/approve/${activity.id}`, { approval_by: approvedBy }, {
+  
+    try {
+      const response = await axios.put(`http://localhost:3000/activities/approve/${activity.id}`, { approval_by: approvedBy }, {
         headers: {
-          Authorization: token,
+          Authorization: sessionStorage.getItem("token"),
         },
-      })
-      .then((response) => {
-        alert("Berhasil menyetujui aktifitas");
-        window.location.reload();
-      })
-      .catch((error) => {
-      //   alert("Penambahan member gagal");
-        console.error("Error approving activity:", error);
-      })
+      });
+      toast("Berhasil menyetujui aktifitas");
+    } catch (error) {
+      toast.error("Penambahan member gagal");
+      console.error("Error approving activity:", error);
+    } finally {
+      setUpdateData(Date.now())
+    }
   };
   
   return (

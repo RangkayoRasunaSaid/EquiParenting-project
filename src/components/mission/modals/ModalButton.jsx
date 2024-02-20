@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsXLg } from "react-icons/bs";
 import Modal from "styled-react-modal";
 import PropTypes from 'prop-types';
@@ -17,27 +17,27 @@ export default function ModalButton({ btnContent, mdlContent, maxWidth='400px' }
     const [isOpen, setIsOpen] = useState(false);
     const [opacity, setOpacity] = useState(0);
 
-    function toggleModal(e) {
+    useEffect(() => {
+        const handleClickInsideModal = (event) => {
+            if (event.target.closest('.modal-button')) toggleModal()
+        }
+        if (isOpen) document.addEventListener('click', handleClickInsideModal)
+        return () => document.removeEventListener('click', handleClickInsideModal);
+    }, [isOpen]);
+
+    const toggleModal = (e) => {
         setOpacity(0);
         setIsOpen(!isOpen);
     }
 
-    function afterOpen() {
-        setTimeout(() => {
-            setOpacity(1);
-        }, 100);
-    }
+    const afterOpen = () => setTimeout(() => setOpacity(1), 100)
 
-    function beforeClose() {
+    const beforeClose = () => {
         return new Promise((resolve) => {
             setOpacity(0);
             setTimeout(resolve, 300);
         });
     }
-
-    const modifiedMdlContent = React.cloneElement(mdlContent, {
-        toggleModal: toggleModal
-    });
 
     return (
         <div>
@@ -52,8 +52,8 @@ export default function ModalButton({ btnContent, mdlContent, maxWidth='400px' }
                 $maxwidth={maxWidth} // Use $maxwidth instead of maxwidth
                 backgroundProps={{ opacity }}
             >
-                <button className="absolute top-0 right-0 z-50 pe-5 pt-5" onClick={toggleModal}><BsXLg /></button>
-                {modifiedMdlContent}
+                <button className="absolute top-5 right-5 modal-button hover:bg-zinc-300 rounded-full"><BsXLg /></button>
+                {React.cloneElement(mdlContent, { className: "modal-content" })}
             </StyledModal>
         </div>
     );

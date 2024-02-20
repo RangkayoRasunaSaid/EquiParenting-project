@@ -4,7 +4,7 @@ import { FaCamera } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { titleCase } from "../../Breadcrumbs";
 
-export default function ModalCreateMember({ members, setMemberData, toggleModal }) {
+export default function ModalCreateMember({ members, setUpdateMembers }) {
     const [data, setData] = useState({
       name: "",
       member_role: "",
@@ -25,78 +25,53 @@ export default function ModalCreateMember({ members, setMemberData, toggleModal 
 
     const [isCreating, setIsCreating] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
-  
-      setIsCreating(true);
-  
       const token = sessionStorage.getItem("token");
       if (!data.name || !data.member_role) {
         toast.warning("Harap isi semua kolom!");
-        // alert("Harap isi semua kolom");
         setIsCreating(false);
         return;
       }
-
-      const loadingToastId = toast.loading('Adding a member ...')
-  
-      axios
-        .post("http://localhost:3000/members", data, {
+      const loadingToastId = toast.loading('Adding a member ...');
+      try {
+        const response = await axios.post("http://localhost:3000/members", data, {
           headers: {
             Authorization: token,
           },
-        })
-        .then(response => {
-          const { id, name, member_role } = response.data.member; // Destructure necessary data
-          const Score = {score: 0}
-
-          const existingStartDate = members.map((member) => member.Rewards[0]?.start_date);
-          const existingEndDate = members.map((member) => member.Rewards[0]?.end_date);
-
-          if (existingStartDate.length > 0 && existingEndDate.length > 0) {
-            // Create reward for the new member using the existing reward date
-            axios.post("http://localhost:3000/reward", {
-                spinned_at: '',
-                start_date: existingStartDate[0],
-                end_date: existingEndDate[0],
-                id_member: id
-              }, {
-                headers: { Authorization: token }
-            }).then((response) => {
-                console.log("Reward created successfully for member with ID:", id);
-                const Rewards = [response.data.reward]
-                const updatedMemberData = [...members, { Rewards, Score, id, name, member_role }];
-                setMemberData(updatedMemberData);
-            }).catch((error) => {
-                console.error("Error creating reward for member with ID:", id, error);
-            })
-          }
-
-          // alert("Berhasil menambahkan member");
-          toggleModal()
-          toast.update(loadingToastId, {
-            render:  "Berhasil menambahkan member",
-            isLoading: false,
-            autoClose: 5000,
-            closeOnClick: true
-          });
-        })
-        .catch((error) => {
-          toast.update(loadingToastId, {
-            render:  "Penambahan member gagal",
-            type: "error",
-            isLoading: false,
-            autoClose: 5000,
-            closeOnClick: true
-          });
-        //   alert("Penambahan member gagal");
-          console.error("Error adding member:", error);
-        })
-        .finally(() => {
-          setIsCreating(false);
         });
-    };
+    
+        const { id } = response.data.member;
+        const startDates = members
+          .filter(m => m.Rewards[0] && typeof m.Rewards[0].start_date === 'string')
+          .map(m => m.Rewards[0].start_date);
 
+        const endDates = members
+          .filter(m => m.Rewards[0] && typeof m.Rewards[0].end_date === 'string')
+          .map(m => m.Rewards[0].end_date);
+
+        if (startDates.length > 0 && endDates.length > 0) {
+          // Create reward for the new member using the existing reward date
+          const rewardResponse = await axios.post("http://localhost:3000/reward", {
+            spinned_at: '',
+            start_date: startDates[startDates.length - 1],
+            end_date: endDates[endDates.length - 1],
+            id_member: id
+          }, {
+            headers: { Authorization: token }
+          });
+          console.log("Reward created successfully for member with ID:", id);
+        }
+        toast.update(loadingToastId, { render:  `Berhasil menambahkan ${titleCase(data.name)} sebagai ${titleCase(data.member_role)}`, isLoading: false, autoClose: 5000, closeOnClick: true });
+      
+      } catch (error) {
+        toast.update(loadingToastId, { render: "Penambahan member gagal", type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
+        console.error("Error adding member:", error);
+      } finally {
+        setUpdateMembers(Date.now())
+      }
+    };
+    
     return (
         <div className="p-5">
             {/* Konten modal */}
@@ -152,7 +127,7 @@ export default function ModalCreateMember({ members, setMemberData, toggleModal 
                 <div>
                   <label className="mr-2">Peran :</label>
                   <select
-                    className={isCreating ? "focus:outline-none" : "focus:outline-none"}
+                    className="focus:outline-none"
                     disabled={isCreating}
                     onChange={(e) => setData({ ...data, member_role: e.target.value })}
                   >
@@ -165,16 +140,9 @@ export default function ModalCreateMember({ members, setMemberData, toggleModal 
               </div>
 
               <button
-                className={
-                  isCreating
-                    ? "bg-ungu2 cursor-wait text-ungu1 font-bold py-2 px-4 rounded inline-flex items-center w-32"
-                    : "bg-ungu2 hover:bg-ungu1 text-ungu1 hover:text-white font-bold py-2 px-4 rounded inline-flex items-center w-32"
-                }
+                className='modal-button bg-ungu2 text-ungu1 font-bold py-2 px-4 rounded inline-flex items-center w-32'
                 type="submit"
-                disabled={isCreating}
-              >
-                Tambahkan
-              </button>
+                disabled={isCreating}>Tambahkan</button>
             </form>
         </div>
     )

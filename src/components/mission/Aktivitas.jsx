@@ -6,15 +6,14 @@ import PropTypes from 'prop-types';
 import ModalPeriode from './modals/ModalPeriode';
 import ModalButton from './modals/ModalButton';
 
-export default function Aktivitas({ members }){
+export default function Aktivitas({ members, setUpdateMembers }){
     // Filter out members without Rewards defined
     const membersWithRewards = members.filter(member => member?.Rewards[0]);
-    // if (membersWithRewards.length === 0) return null;
     const memberIds = members.map(member => member.id);
 
     const options = {
-        stagePadding: 40, items: 5, margin:20, nav:true,
-        responsive:{ 0:{ items:1 }, 600:{ items:2 }, 1000:{ items:5 }
+        stagePadding: 40, items: 4, margin:20, nav:true,
+        responsive:{ 0:{ items:1 }, 600:{ items:2 }, 1000:{ items:4 }
         }
     }
 
@@ -32,35 +31,39 @@ export default function Aktivitas({ members }){
 
     const formattedPeriod = members[0].Rewards[0]?.start_date && members[0].Rewards[0]?.end_date ?
         `${formatDate(new Date(members[0].Rewards[0].start_date).toLocaleDateString())} - ${formatDate(new Date(members[0].Rewards[0].end_date).toLocaleDateString())}`
-        : '';      
+        : '';  
+    console.log(members);
 
     return (
-        <>
-            <h1 className="text-center text-3xl my-5 font-bold">Aktivitas</h1>
+        <div className='text-center'>
+            <h1 className="text-3xl my-5 font-bold">Aktivitas</h1>
             <div className="flex justify-center">
                 <ModalButton btnContent={(
                     <button disabled={formattedPeriod} className="disabled:bg-slate-400 flex text-2xl gap-4 justify-center items-center px-5 text-white bg-main-color rounded-2xl font-bold md:text-xl shadow-md">
                         <span>Atur Periode Mission</span>
                         <span className='text-5xl'>+</span>
                     </button>
-                )} mdlContent={(<ModalPeriode memberIds={memberIds} />)} />
+                )} mdlContent={(<ModalPeriode memberIds={memberIds} setUpdateMembers={setUpdateMembers} />)} />
             </div>
             {formattedPeriod && (
-                <h1 className='text-center my-10 text-xl font-bold'>
+                <h1 className='my-10 text-xl font-bold'>
                     Periode {formattedPeriod}
                 </h1>
             )}
-            <OwlCarousel className='owl-theme' {...options} >
-                {membersWithRewards.map(m =>(
-                    <MisiPeriode key={m.id} members={members} member={m} />
-                ))}
-            </OwlCarousel>
-            {/* <div className="flex justify-center sm:gap-10 gap-5 text-center p-2">
-                {membersWithRewards.map(m =>(
-                    <MisiPeriode key={m.id} members={members} member={m} />
-                ))}
-            </div> */}
-        </>
+            {membersWithRewards.length > 3 ? (
+                <OwlCarousel className='owl-theme' {...options} key={`carousel_${Date.now()}`} >
+                    {membersWithRewards.map(m =>(
+                        <MisiPeriode key={m.id} members={members} member={m} />
+                    ))}
+                </OwlCarousel>
+            ) : (
+                <div className="md:flex justify-center sm:gap-10 gap-5 p-2">
+                    {membersWithRewards.map(m =>(
+                        <MisiPeriode key={m.id} members={members} member={m} />
+                    ))}
+                </div>
+            )}
+        </div>
     )
 }
 

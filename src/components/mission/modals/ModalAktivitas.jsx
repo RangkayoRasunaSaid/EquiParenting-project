@@ -1,50 +1,84 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { titleCase } from "../../Breadcrumbs";
-import { Navigate } from "react-router";
 import PropTypes from 'prop-types';
+import { toast } from "react-toastify";
 
-export default function Modal({ members, member, categories }) {
+export default function Modal({ member, categories, setUpdateData }) {
+    const startRewardDate = new Date(member.Rewards[0].start_date)
+    const endRewardDate = new Date(member.Rewards[0].end_date)
+    endRewardDate.setSeconds(endRewardDate.getMinutes() - 1)
+    startRewardDate.setSeconds(startRewardDate.getMinutes() + 1)
+    const formattedSD = startRewardDate.toISOString().slice(0,startRewardDate.toISOString().lastIndexOf(":"))
+    const formattedED = endRewardDate.toISOString().slice(0,endRewardDate.toISOString().lastIndexOf(":"))
     const [data, setData] = useState({
       id_member: member.id,
       title: "",
       category: "",
-      date_start_act: "",
-      date_stop_act: "",
+      date_start_act: new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":")),
+      date_stop_act: formattedED,
       description: "",
       point: "",
     });
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-  
-      const token = sessionStorage.getItem("token");
-      if (!data.id_member || !data.title || !data.category || !data.date_start_act || !data.date_stop_act || !data.description || !data.point) {
-        alert("Harap isi semua kolom");
-        return;
-      }
-  
-      console.log(data);
-  
-      axios
-        .post("http://localhost:3000/activities", data, {
-          headers: {
-            Authorization: token,
-          },
-        })
-        .then((response) => {
-          alert("Berhasil menambahkan member");
-          window.location.reload();
-        })
-        .catch((error) => {
-        //   alert("Penambahan member gagal");
-          console.error("Error adding member:", error);
-        })
-        .finally(() => {
-          setIsCreating(false);
-        });
+    const handleEndTimeChange = (e) => {
+        const endDate = e.target.value;
+        if (endDate > formattedED) {
+            toast.warning("End date must be before curent reward period end date");
+            return;
+        }
+        if (endDate < data.date_start_act) {
+            toast.warning("End date must be after start date");
+            return;
+        }
+        if (endDate < new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"))) {
+            toast.warning("Start date must be after today's date");
+            return;
+        }
+        if (endDate < formattedSD) {
+            toast.warning("Start date must be after curent reward period start date");
+            return;
+        }
+        setData({ ...data, date_stop_act: e.target.value });
     };
 
+    const handleStartTimeChange = (e) => {
+        const startDate = e.target.value;
+        if (startDate < new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"))) {
+            toast.warning("Start date must be after today's date");
+            return;
+        }
+        if (data.date_stop_act < startDate) {
+            toast.warning("Start date must be before end date");
+            return;
+        }
+        setData({ ...data, date_start_act: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+      
+        const token = sessionStorage.getItem("token");
+        if (!data.id_member || !data.title || !data.category || !data.date_start_act || !data.date_stop_act || !data.description || !data.point) {
+          toast.warning("Harap isi semua kolom")
+          return;
+        }
+      
+        try {
+          const response = await axios.post("http://localhost:3000/activities", data, {
+            headers: {
+              Authorization: token,
+            },
+          });
+          toast('Berhasil menambahkan misi')
+        } catch (error) {
+          toast.error("Penambahan misi gagal")
+          console.error("Error adding member:", error);
+        } finally {
+          setUpdateData(Date.now())
+        }
+    };
+      
     return (
         <div className="px-5" style={{color:"#675893"}}>
             <h1 className="text-center text-2lg my-4 font-bold">Task Baru</h1>
@@ -93,6 +127,7 @@ export default function Modal({ members, member, categories }) {
                     <label for="inputPoint">Poin:</label>
                     <div className="col-sm-8">
                         <select value={data.point} onChange={(e) => setData({ ...data, point: e.target.value })} id="inputPoint" className="ms-2 border-2 form-select text-lg font-bold rounded-lg">
+                            <option value="" disabled selected>Select One</option>
                             <option key='5' value='5' className="font-bold">Mudah: 5 Poin</option>
                             <option key='10' value='10' className="font-bold">Sedang: 10 Poin</option>
                             <option key='15' value='15' className="font-bold">Sulit: 15 Poin</option>
@@ -106,7 +141,7 @@ export default function Modal({ members, member, categories }) {
                         <input
                             type="datetime-local"
                             className="border-0 text-lg mb-1 font-bold"
-                            onChange={(e) => setData({ ...data, date_start_act: e.target.value })}
+                            onChange={handleStartTimeChange}
                             id="inputTask" value={data.date_start_act} />
                     </div>
                 </div>
@@ -115,12 +150,12 @@ export default function Modal({ members, member, categories }) {
                     <div className="col-sm-8">
                         <input type="datetime-local"
                         className="border-0 text-lg mb-1 font-bold"
-                        onChange={(e) => setData({ ...data, date_stop_act: e.target.value })}
+                        onChange={handleEndTimeChange}
                         id="inputTask" value={data.date_stop_act} />
                     </div>
                 </div>
                 <div className="flex my-5 justify-center">
-                    <button type="submit" className="bg-main-color text-white text-lg rounded-lg shadow-md p-4 font-semibold">TAMBAHKAN</button>
+                    <button type="submit" className="modal-button bg-main-color text-white text-lg rounded-lg shadow-md p-4 font-semibold">TAMBAHKAN</button>
                 </div>
             </form>
         </div>

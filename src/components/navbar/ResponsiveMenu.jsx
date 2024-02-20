@@ -30,7 +30,7 @@ const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
       <div>
         {/* user profile */}
         <div className="flex mt-8 px-8 items-center justify-start gap-3">
-          {authenticatedUser ? (
+          {!sessionStorage.getItem("token") ? (
             // Display login & register buttons when not authenticated
             <>
               <Link key="/login" to="/login" onClick={handleLinkClick}>
@@ -45,6 +45,7 @@ const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
               </Link>
             </>
           ) : (
+            <>
             // Display "Profile" button when authenticated
             <Link key="/profile" to="/profile" onClick={handleLinkClick}>
               <div className="flex px-4 items-center justify-start gap-3 hover:">
@@ -54,6 +55,12 @@ const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
                 </div>
               </div>
             </Link>
+              <Link key="/register" to="/register" onClick={handleLinkClick}>
+                <button className="py-[4px] px-[16px] border-2 rounded-2xl bg-main-color border-main-color text-white transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
+                  Daftar
+                </button>
+              </Link>
+            </>
           )}
         </div>
 
