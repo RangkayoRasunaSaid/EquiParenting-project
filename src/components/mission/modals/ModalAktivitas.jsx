@@ -7,8 +7,8 @@ import { toast } from "react-toastify";
 export default function Modal({ member, categories, setUpdateData }) {
     const startRewardDate = new Date(member.Rewards[0].start_date)
     const endRewardDate = new Date(member.Rewards[0].end_date)
-    endRewardDate.setSeconds(endRewardDate.getMinutes() - 1)
-    startRewardDate.setSeconds(startRewardDate.getMinutes() + 1)
+    // endRewardDate.setSeconds(endRewardDate.getMinutes() - 1)
+    // startRewardDate.setSeconds(startRewardDate.getMinutes() + 1)
     const formattedSD = startRewardDate.toISOString().slice(0,startRewardDate.toISOString().lastIndexOf(":"))
     const formattedED = endRewardDate.toISOString().slice(0,endRewardDate.toISOString().lastIndexOf(":"))
     const [data, setData] = useState({

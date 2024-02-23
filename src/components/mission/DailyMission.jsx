@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Aktivitas from "./Aktivitas";
 import Tim from "./Daymission";
-// import Tim from "./Tim";
 import { useNavigate } from "react-router-dom";
-import ReactOwlCarousel from "react-owl-carousel";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 
-export default function DailyMission({ members, setUpdateMembers }) {
+export default function DailyMission({ members, setUpdateMembers, activities }) {
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -22,7 +20,7 @@ export default function DailyMission({ members, setUpdateMembers }) {
             <div className="bg-white mx-4 px-10 rounded-[60px] pb-5 flex flex-col justify-center">
                 <Tim members={members} setUpdateMembers={setUpdateMembers} />
                 {members.length > 0 &&
-                    <Aktivitas members={members} setUpdateMembers={setUpdateMembers} />
+                    <Aktivitas members={members} setUpdateMembers={setUpdateMembers} activities={activities} />
                 }
             </div>
         </>

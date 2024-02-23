@@ -6,13 +6,57 @@ import ModalButton from "./modals/ModalButton";
 import ModalSpin from "./modals/ModalSpin";
 import { Link } from 'react-router-dom';
 import StatSummary from './StatSummary.jsx';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-export default function PusatReward({ members }) {
+export default function PusatReward({ members, spinTime, setSpinTime, setUpdateMembers }) {
+    const [stats, setStats] = useState([]);
+
+    const keysWith100Percentage = Object.keys(stats).filter(key => stats[key].percentage === 100);
+    const spinMembers = members.filter(member => {
+        return keysWith100Percentage.includes(member.id.toString()) && member.Rewards.some(reward => reward.Reward_Items.length === 0);
+    });
+    // const [spinMembers, setSpinMembers] = useState(spinMember)
+    // console.log(spinMember);
+    // console.log(spinMembers);
+        
+    useEffect(() => {
+        const fetchMemberActivityStats = async (member) => {
+            try {
+                const response = await axios.get(`http://localhost:3000/stats/${member.id}/${member.Rewards[0]?.start_date}/${member.Rewards[0]?.end_date}`,
+                    {
+                        headers: { Authorization: sessionStorage.getItem('token') }
+                    });
+                return { [member.id]: response.data }
+            } catch (error) {
+                toast.error('Error fetching member activity stats')
+                console.error('Error fetching member activity stats:', error);
+                return { [member.id]: null }
+            }
+        };
+
+        const fetchStatsForAllMembers = async () => {
+            const statsPromises = members.map(member => fetchMemberActivityStats(member));
+            const stats = await Promise.all(statsPromises);
+            const statsObject = stats.reduce((acc, stat) => ({ ...acc, ...stat }), {})
+            setStats(statsObject)
+            // setSpinMembers(spinMember)
+        };
+
+        if (members.length > 0 && members[0].Rewards.length > 0) {
+            fetchStatsForAllMembers()
+            const endDate = new Date(members[0].Rewards[0]?.end_date)
+            const currentDate = new Date()
+            if (!spinTime) setSpinTime(endDate < currentDate);
+        };
+    }, [members]);
+
     const btnCtn = (
         <img
             role='button'
             className='rounded-circle max-w-xs'
-            src='/src/assets/7.png'
+            src={`/src/assets/${!spinTime || spinMembers.length === 0 ? '7' : '8'}.png`}
             alt="spin-wheel"
         />
     ) 
@@ -22,6 +66,8 @@ export default function PusatReward({ members }) {
         responsive:{ 0:{ items:1 }, 600:{ items:2 }, 1000:{ items:2 }
         }
     }
+    const allRolesUnique = new Set(members.map(member => member.member_role)).size === members.length;
+
 
       return (
         <div className="text-center bg-white sm:p-5 md:p-10 p-3 rounded-[60px] flex flex-col justify-center">
@@ -29,8 +75,18 @@ export default function PusatReward({ members }) {
             <div className="bg-white m-4 rounded-[60px] shadow-md flex-none lg:flex">
                 <div className="lg:w-1/3 sm:w-full flex justify-center">
                     {sessionStorage.getItem("token") ? (
-                        <ModalButton btnContent={(btnCtn)} mdlContent={(<ModalSpin />)} maxWidth='100vw' />
-                    ) : (<Link to='/login'>{btnCtn}</Link>)}
+                        !spinTime || spinMembers.length === 0 ? (
+                            <div onClick={() => {
+                                if (!spinTime) toast.warning('Belum Bisa Putar Spin karena Periode Masih Berjalan')
+                                else toast.warning('Silahkan Coba Lagi di Periode Berikutnya')
+                            }
+                            }>{btnCtn}</div>
+                        ) : (
+                            <ModalButton btnContent={btnCtn} mdlContent={<ModalSpin spinMembers={spinMembers} setUpdateMembers={setUpdateMembers} />} maxWidth='100vw' />
+                        )
+                    ) : (
+                        <Link to='/login'>{btnCtn}</Link>
+                    )}
                 </div>
                 {members.length === 0 ? (
                     <div className='flex flex-col justify-center items-center lg:mx-auto'>
@@ -43,7 +99,14 @@ export default function PusatReward({ members }) {
                 ) : (
                     <OwlCarousel className='owl-theme lg:w-2/3 my-10' {...options} >
                         {members.map(member => (
-                            <WheelReward key={member.id} member={member} />
+                            <WheelReward
+                                key={member.id}
+                                member={member}
+                                percent={stats[member.id]?.percentage}
+                                memberName={!allRolesUnique}
+                                spinTime={spinTime}
+                                setSpinTime={setSpinTime}
+                            />
                         ))}
                     </OwlCarousel>
                 )}
@@ -57,7 +120,7 @@ export default function PusatReward({ members }) {
             {members.filter(member => member.Rewards[0]).length > 0 &&
                 <>
                     <h1 className='mt-5 text-center text-3xl font-bold'>Ringkasan</h1>
-                    <StatSummary members={members} />
+                    <StatSummary members={members} stats={stats} />
                 </>
             }
 

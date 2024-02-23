@@ -38,6 +38,7 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible, setU
   let timeDifference = (isLate ? "Terlambat " : "") + diffHours + " Jam " + diffMinutes + " Menit";
 
   const [approvedBy, setApprovedBy] = useState('');
+  const allRolesUnique = new Set(members.map(member => member.member_role)).size === members.length;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,7 +118,7 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible, setU
                             <option
                               key={m.id} className="text-xs font-bold"
                               style={{color:"#675893"}} value={m.member_role}>
-                                {titleCase(m.member_role)}
+                                {titleCase(m.member_role)} {allRolesUnique ? '' : titleCase(m.name)}
                             </option>
                           ))}
                       </select>

@@ -40,8 +40,8 @@ export default function MisiAnggota({ categories }) {
         }
     }
     return (
-        <div className="bg-white py-5 rounded-[40px]">
-            <div className="flex items-center justify-between text-3xl font-semibold mb-10 px-5">
+        <div className="bg-white py-5 rounded-[40px] text-center">
+            <div className="flex items-center justify-between text-3xl font-semibold px-5">
                 <Link to="/mission/daily-mission">
                     <BsArrowLeftShort />
                 </Link>
@@ -52,7 +52,8 @@ export default function MisiAnggota({ categories }) {
                 />
             </div>
             <div>
-                <h1 className="text-2xl font-semibold text-center mb-5">Yuk, Buat Misi Sendiri untuk {titleCase(member.member_role)}!</h1>
+                <h5 className='text-slate-300 mt-2 font-bold text-sm'>{titleCase(member.name)}</h5>
+                <h1 className="text-2xl font-semibold mt-6 mb-5">Yuk, Buat Misi Sendiri untuk {titleCase(member.member_role)}!</h1>
                 <OwlCarousel className='owl-theme' {...options} key={`carousel_${Date.now()}`} >
                     {data.map(activity => (
                         <TaskItem

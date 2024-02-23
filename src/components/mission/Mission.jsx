@@ -15,10 +15,11 @@ const FadingBackground = styled(BaseModalBackground)`
     transition: all 0.3s ease-in-out;
 `;
 
-export default function App() {
-    const [members, setMembers] = useState([]);
-    const [updateMembers, setUpdateMembers] = useState(0)
+export default function App({ members, setMembers, updateMembers, setUpdateMembers, activities }) {
     const [categories, setCategories] = useState([]);
+    let endDate
+    let currentDate = new Date();
+    const [spinTime, setSpinTime] = useState(endDate < currentDate);
 
     useEffect(() => {
       const fetchData = async () => {
@@ -29,6 +30,11 @@ export default function App() {
           const membersResponse = await axios.get('http://localhost:3000/members', { headers: { Authorization: token } });
           const membersData = membersResponse.data.members;
           setMembers(membersData);
+          if (members.length > 0 && members[0].Rewards?.length > 0) {
+              endDate = new Date(members[0].Rewards[0]?.end_date)
+              currentDate = new Date()
+              if (!spinTime) setSpinTime(endDate < currentDate);
+          };
 
           // const categoriesResponse = await axios.get(`https://outrageous-gold-twill.cyclic.app/categories`);
           const categoriesResponse = await axios.get(`http://localhost:3000/categories`);
@@ -50,8 +56,8 @@ export default function App() {
                     Selamat datang di misi keluarga idaman!
                 </h1>
                 <Routes>
-                    <Route path="/" element={<PusatReward members={members} setUpdateMembers={setUpdateMembers} />} />
-                    <Route path="/daily-mission" element={<DailyMission members={members} setUpdateMembers={setUpdateMembers} />} />
+                    <Route path="/" element={<PusatReward members={members} setUpdateMembers={setUpdateMembers} spinTime={spinTime} setSpinTime={setSpinTime} />} />
+                    <Route path="/daily-mission" element={<DailyMission members={members} setUpdateMembers={setUpdateMembers} activities={activities} />} />
                     <Route path="/daily-mission/:role" element={<MisiAnggota categories={categories} />} />
                 </Routes>
                 

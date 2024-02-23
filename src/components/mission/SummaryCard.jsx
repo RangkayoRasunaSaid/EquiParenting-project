@@ -1,9 +1,10 @@
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import PropTypes from 'prop-types';
+import { titleCase } from '../Breadcrumbs';
 
 // SummaryCard component function
-export default function SummaryCard({ title, value, fontSz, description, firstRow }) {
+export default function SummaryCard({ title, value, fontSz, description, firstRow, memberName }) {
   return (
     <div className='flex justify-center'>
       <div
@@ -12,7 +13,12 @@ export default function SummaryCard({ title, value, fontSz, description, firstRo
       >
         {firstRow >= 0 ? (
           <>
-            <h5 className='text-[14px] md:text-3xl font-semibold'>{firstRow !== 100 ? title.split(" ")[0] : title}</h5>
+            <div>
+              <h5 className='text-[14px] md:text-3xl font-semibold'>{firstRow !== 100 ? title.split(" ")[0] : title}</h5>
+              {memberName && (
+                <h5 className='text-slate-300 mt-0.5 font-bold text-sm'>{titleCase(memberName)}</h5>
+              )}
+            </div>
             <div className='flex justify-center'>
               <div style={{ width: 130, height: 130 }}>
                 <CircularProgressbarWithChildren value={firstRow} strokeWidth={12}
@@ -38,7 +44,7 @@ export default function SummaryCard({ title, value, fontSz, description, firstRo
         ) : (
           <>
             <h5 className='text-[14px] md:text-3xl font-semibold'>{title}</h5>
-            <h6 className={`my-2 font-bold ${fontSz}`}>{value}</h6>
+            <h6 className={`my-2 font-bold ${fontSz}`}>{typeof value === 'string' ? value.replace('/', ' / ') : value}</h6>
             <div className='text-violet-400 text-[10px] font-semibold md:text-lg font-normal bg-transparent border-0'>
               {description}
             </div>

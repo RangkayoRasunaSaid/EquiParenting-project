@@ -53,7 +53,7 @@ export default function ModalButton({ btnContent, mdlContent, maxWidth='400px' }
                 backgroundProps={{ opacity }}
             >
                 <button className="absolute top-5 right-5 modal-button hover:bg-zinc-300 rounded-full"><BsXLg /></button>
-                {React.cloneElement(mdlContent, { className: "modal-content" })}
+                {mdlContent}
             </StyledModal>
         </div>
     );
