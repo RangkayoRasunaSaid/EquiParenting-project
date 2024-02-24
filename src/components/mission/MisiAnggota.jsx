@@ -22,9 +22,7 @@ export default function MisiAnggota({ categories }) {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const activitiesResponse = await axios.get(config.apiUrl + `
-                /activities/${member.id}/${member.Rewards[0].start_date}/${member.Rewards[0].end_date}
-            `);
+            const activitiesResponse = await axios.get(config.apiUrl + `/activities/${member.id}/${member.Rewards[0].start_date}/${member.Rewards[0].end_date}`);
             setData(activitiesResponse.data);
           } catch (error) {
             console.error('Error fetching data:', error);
