@@ -16,6 +16,7 @@ import { ToastContainer, Flip } from 'react-toastify';
 import History from './components/mission/History.jsx';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import config from './config/config.js';
 
 function App() {
   const [updateMembers, setUpdateMembers] = useState(0)
@@ -26,8 +27,7 @@ function App() {
     const fetchActivities = async () => {
       try {
         const token = sessionStorage.getItem('token');
-        // const response = await axios.get('http://localhost:3000/activities', { headers: { Authorization: token } });
-        const response = await axios.get('https://jolly-hen-jodhpurs.cyclic.app/activities', { headers: { Authorization: token } });
+        const response = await axios.get(config.apiUrl + '/activities', { headers: { Authorization: token } });
         setActivities(response.data);
       } catch (error) {
         console.error('Error fetching activities:', error);
