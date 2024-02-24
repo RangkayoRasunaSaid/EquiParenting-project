@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { FaCamera } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { titleCase } from "../../Breadcrumbs";
+import config from "../../../config/config";
 
 export default function ModalCreateMember({ members, setUpdateMembers }) {
     const [data, setData] = useState({
@@ -35,7 +36,7 @@ export default function ModalCreateMember({ members, setUpdateMembers }) {
       }
       const loadingToastId = toast.loading('Adding a member ...');
       try {
-        const response = await axios.post("http://localhost:3000/members", data, {
+        const response = await axios.post(config.apiUrl + "/members", data, {
           headers: {
             Authorization: token,
           },
@@ -52,7 +53,7 @@ export default function ModalCreateMember({ members, setUpdateMembers }) {
 
         if (startDates.length > 0 && endDates.length > 0) {
           // Create reward for the new member using the existing reward date
-          const rewardResponse = await axios.post("http://localhost:3000/reward", {
+          const rewardResponse = await axios.post(config.apiUrl + "/reward", {
             spinned_at: '',
             start_date: startDates[startDates.length - 1],
             end_date: endDates[endDates.length - 1],

@@ -26,7 +26,8 @@ function App() {
     const fetchActivities = async () => {
       try {
         const token = sessionStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/activities', { headers: { Authorization: token } });
+        // const response = await axios.get('http://localhost:3000/activities', { headers: { Authorization: token } });
+        const response = await axios.get('https://jolly-hen-jodhpurs.cyclic.app/activities', { headers: { Authorization: token } });
         setActivities(response.data);
       } catch (error) {
         console.error('Error fetching activities:', error);

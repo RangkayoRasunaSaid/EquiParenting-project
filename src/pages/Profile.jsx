@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserProfile } from '../redux/actions/profile';
 import Loading from '../Loading';
 import { toast } from 'react-toastify';
+import config from '../config/config';
 
 const Profile = () => {
   // const dispatch = useDispatch();
@@ -83,7 +84,7 @@ const Profile = () => {
 
     try {
       const token = sessionStorage.getItem('token');
-      const response = await axios.put('http://localhost:3000/update-profile', profile,{
+      const response = await axios.put(config.apiUrl + '/update-profile', profile,{
         headers: { Authorization: token } 
       });
       if (response.ok) {
@@ -124,7 +125,7 @@ const Profile = () => {
     const loadingToastId = toast.loading('Updating password ...')
     try {
       const token = sessionStorage.getItem('token');
-      const response = await axios.put('http://localhost:3000/update-profile', password,{
+      const response = await axios.put(config.apiUrl + '/update-profile', password,{
         headers: { Authorization: token } 
       });
       if (response.ok) {

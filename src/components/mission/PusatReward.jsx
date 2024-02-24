@@ -9,6 +9,7 @@ import StatSummary from './StatSummary.jsx';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import config from '../../config/config.js';
 
 export default function PusatReward({ members, spinTime, setSpinTime, setUpdateMembers }) {
     const [stats, setStats] = useState([]);
@@ -17,14 +18,11 @@ export default function PusatReward({ members, spinTime, setSpinTime, setUpdateM
     const spinMembers = members.filter(member => {
         return keysWith100Percentage.includes(member.id.toString()) && member.Rewards.some(reward => reward.Reward_Items.length === 0);
     });
-    // const [spinMembers, setSpinMembers] = useState(spinMember)
-    // console.log(spinMember);
-    // console.log(spinMembers);
         
     useEffect(() => {
         const fetchMemberActivityStats = async (member) => {
             try {
-                const response = await axios.get(`http://localhost:3000/stats/${member.id}/${member.Rewards[0]?.start_date}/${member.Rewards[0]?.end_date}`,
+                const response = await axios.get(config.apiUrl + `/stats/${member.id}/${member.Rewards[0]?.start_date}/${member.Rewards[0]?.end_date}`,
                     {
                         headers: { Authorization: sessionStorage.getItem('token') }
                     });

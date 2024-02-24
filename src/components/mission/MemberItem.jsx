@@ -6,6 +6,7 @@ import ModalButton from "./modals/ModalButton";
 import { titleCase } from "../Breadcrumbs";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import config from "../../config/config";
 
 const MemberItem = ({ member, members, setUpdateMembers }) => {
     const [percent, setPercent] = useState(0)
@@ -14,7 +15,7 @@ const MemberItem = ({ member, members, setUpdateMembers }) => {
     const handleDelete = async (memberId) => {
       const loadingToastId = toast.loading(`Deleting ${titleCase(member.name)} as ${titleCase(member.member_role)} ...`)
       try {
-        await axios.delete(`http://localhost:3000/members/${memberId}`, {
+        await axios.delete(config.apiUrl + `/members/${memberId}`, {
           headers: {
             Authorization: token,
           },
@@ -31,7 +32,7 @@ const MemberItem = ({ member, members, setUpdateMembers }) => {
     useEffect(() => {
         const fetchMemberActivityStats = async (member) => {
         try {
-            const response = await axios.get(`http://localhost:3000/stats/${member.id}/${member.Rewards[0].start_date}/${member.Rewards[0].end_date}`,
+            const response = await axios.get(config.apiUrl + `/stats/${member.id}/${member.Rewards[0].start_date}/${member.Rewards[0].end_date}`,
               {
                 headers: { Authorization: token }
               });

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast, Flip } from 'react-toastify';
 import axios from "axios";
 import Loading from "../Loading";
+import config from "../config/config";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -26,7 +27,7 @@ const Login = () => {
     const loadingToastId = toast.loading('Logging in...', {transition: Flip})
 
     try {
-      const response = await axios.post("http://localhost:3000/login", data);
+      const response = await axios.post(config.apiUrl + "/login", data);
       console.log(data);
       const { token } = response.data;
 

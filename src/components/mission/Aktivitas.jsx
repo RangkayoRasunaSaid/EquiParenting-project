@@ -20,6 +20,7 @@ export function formatDate(inputDate) {
 }
 
 export default function Aktivitas({ members, setUpdateMembers, activities }){
+    console.log(activities);
     const endDate = new Date(members[0].Rewards[0]?.end_date)
     const currentDate = new Date();
     let hasActivities

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 import axios from "axios";
 import Loading from "../Loading";
+import config from "../config/config";
 
 const Register = () => {
   const [data, setData] = useState({
@@ -54,13 +55,12 @@ const Register = () => {
     const loadingToastId = toast.loading('Signing up...')
 
     try {
-      const response = await axios.post("http://localhost:3000/register", {
+      const response = await axios.post(config.apiUrl + "/register", {
         username: data.username,
         email: data.email,
         password: data.password,
       });
-
-      // alert("Pendaftaran akun berhasil!");
+      
       toast.update(loadingToastId, {
         render:  "Pendaftaran akun berhasil!",
         type: "success",

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import config from '../../../config/config';
 
 export default function ModalPeriode({ memberIds, setUpdateMembers }) {
     const [data, setData] = useState({
@@ -55,7 +56,7 @@ export default function ModalPeriode({ memberIds, setUpdateMembers }) {
             };
       
             // Create reward for the member
-            const rewardResponse = await axios.post("http://localhost:3000/reward", requestData, {
+            const rewardResponse = await axios.post(config.apiUrl + "/reward", requestData, {
               headers: {
                 Authorization: token,
               },
@@ -63,7 +64,7 @@ export default function ModalPeriode({ memberIds, setUpdateMembers }) {
             console.log("Reward created successfully for member with ID:", memberIds);
       
             // Reset the score for the current memberId
-            const resetResponse = await axios.put("http://localhost:3000/reset-score", { memberId: memberId }, {
+            const resetResponse = await axios.put(config.apiUrl + "/reset-score", { memberId: memberId }, {
               headers: {
                 Authorization: token,
               },

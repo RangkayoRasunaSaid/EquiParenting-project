@@ -3,6 +3,7 @@ import { useState } from "react";
 import { titleCase } from "../../Breadcrumbs";
 import PropTypes from 'prop-types';
 import { toast } from "react-toastify";
+import config from "../../../config/config";
 
 export default function Modal({ member, categories, setUpdateData }) {
     const startRewardDate = new Date(member.Rewards[0].start_date)
@@ -65,7 +66,8 @@ export default function Modal({ member, categories, setUpdateData }) {
         }
       
         try {
-          const response = await axios.post("http://localhost:3000/activities", data, {
+        //   const response = await axios.post("http://localhost:3000/activities", data, {
+          const response = await axios.post(config.apiUrl + "/activities", data, {
             headers: {
               Authorization: token,
             },

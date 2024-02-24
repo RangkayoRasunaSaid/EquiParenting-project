@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import MisiAnggota from './MisiAnggota.jsx';
 import { toast } from 'react-toastify';
+import config from '../../config/config.js';
 
 // Styled component for customizing modal background transition
 const FadingBackground = styled(BaseModalBackground)`
@@ -27,17 +28,16 @@ export default function App({ members, setMembers, updateMembers, setUpdateMembe
           const token = sessionStorage.getItem('token');
           
           // Fetch members
-          const membersResponse = await axios.get('http://localhost:3000/members', { headers: { Authorization: token } });
+          const membersResponse = await axios.get(config.apiUrl + '/members', { headers: { Authorization: token } });
           const membersData = membersResponse.data.members;
           setMembers(membersData);
           if (members.length > 0 && members[0].Rewards?.length > 0) {
               endDate = new Date(members[0].Rewards[0]?.end_date)
               currentDate = new Date()
-              if (!spinTime) setSpinTime(endDate < currentDate);
+              setSpinTime(endDate < currentDate);
           };
 
-          // const categoriesResponse = await axios.get(`https://outrageous-gold-twill.cyclic.app/categories`);
-          const categoriesResponse = await axios.get(`http://localhost:3000/categories`);
+          const categoriesResponse = await axios.get(config.apiUrl + `/categories`);
           setCategories(categoriesResponse.data);
         } catch (error) {
           // console.error('Error fetching data:', error);

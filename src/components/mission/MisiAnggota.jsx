@@ -11,6 +11,7 @@ import { titleCase } from "../Breadcrumbs";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import config from "../../config/config";
 
 export default function MisiAnggota({ categories }) {
     const { state } = useLocation()
@@ -21,9 +22,8 @@ export default function MisiAnggota({ categories }) {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            // const activitiesResponse = await axios.get(`https://outrageous-gold-twill.cyclic.app/activities/${member.id}`);
-            const activitiesResponse = await axios.get(`
-                http://localhost:3000/activities/${member.id}/${member.Rewards[0].start_date}/${member.Rewards[0].end_date}
+            const activitiesResponse = await axios.get(config.apiUrl + `
+                /activities/${member.id}/${member.Rewards[0].start_date}/${member.Rewards[0].end_date}
             `);
             setData(activitiesResponse.data);
           } catch (error) {

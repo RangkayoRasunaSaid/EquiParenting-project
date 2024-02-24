@@ -3,6 +3,7 @@ import './spinStyle.css'
 import { titleCase } from '../../Breadcrumbs';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import config from '../../../config/config';
 
 const sectors = [
     { color: '#6A5ACD', label: 'A Relaxing Spa Day' },
@@ -83,7 +84,7 @@ const ModalSpin = ({ spinMembers, setUpdateMembers }) => {
         if (spinMembers.length === 1) reqData = rewardFor
         else reqData = JSON.parse(rewardFor)
         try {
-          const response = await axios.post("http://localhost:3000/spin-wheel", {
+          const response = await axios.post(config.apiUrl + "/spin-wheel", {
             id_member: reqData.id,
             title: title,
             id_reward: reqData.Rewards[0].id,

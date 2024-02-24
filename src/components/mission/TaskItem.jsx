@@ -5,6 +5,7 @@ import { titleCase } from '../Breadcrumbs';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import config from '../../config/config';
 
 function formatDate(stringDate) {
   let date = moment(stringDate);
@@ -13,8 +14,8 @@ function formatDate(stringDate) {
 }
 
 const TaskItem = ({ members, member, activity, bySystem=false, responsible, setUpdateData }) => {
-  // Parse the date string using moment.js
   let date = moment(activity.date_start_act);
+  if (activity.approval_date) date = moment(activity.approval_date)
   date = date.utcOffset('+0700');
   let currentDate = moment().utcOffset('+0700');
   let yesterday = moment().subtract(1, 'days').utcOffset('+0700');
@@ -48,7 +49,7 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible, setU
     }
   
     try {
-      const response = await axios.put(`http://localhost:3000/activities/approve/${activity.id}`, { approval_by: approvedBy }, {
+      const response = await axios.put(config.apiUrl + `/activities/approve/${activity.id}`, { approval_by: approvedBy }, {
         headers: {
           Authorization: sessionStorage.getItem("token"),
         },
