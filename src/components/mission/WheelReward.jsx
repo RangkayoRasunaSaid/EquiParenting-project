@@ -35,7 +35,7 @@ export default function WheelReward({ member, percent, memberName, spinTime, set
                     </h4>
                     <p className='text-sm font-semibold text-violet-400'>
                         {spinTime ? `
-                                (Diperoleh Pada: ${member.Rewards[0].Reward_Items.length > 0 ? formatDate(spinnedAt) : '-' })
+                                ${percent === 100 ? `(Diperoleh Pada: ${member.Rewards[0].Reward_Items.length > 0 ? formatDate(spinnedAt) : '-' })` : ''}
                             ` : `
                                 (Periode selesai pada: ${formatDate(endDate)})
                         `}
