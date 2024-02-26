@@ -40,7 +40,7 @@ export default function MisiAnggota({ categories }) {
     return (
         <div className="bg-white py-5 rounded-[40px] text-center">
             <div className="flex items-center justify-between text-3xl font-semibold px-5">
-                <Link to="/mission/daily-mission">
+                <Link to="/mission/daily-mission" onClick={() => window.scrollTo(0, 0)}>
                     <BsArrowLeftShort />
                 </Link>
                 <h1>Aktivitas {titleCase(member.member_role)}</h1>

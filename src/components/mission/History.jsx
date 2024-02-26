@@ -31,7 +31,7 @@ export default function History({ activities, members, setUpdateMembers }) {
     return (
         <div  className="min-h-screen text-main-color bg-violet-100 my-10 sm:mx-5 md:mx-24 mx-3 sm:p-3 md:p-10 px-3 rounded-[40px]">
                 <div className="flex items-center justify-between text-3xl font-semibold px-5 mb-5">
-                    <Link to="/mission/daily-mission">
+                    <Link to="/mission/daily-mission" onClick={() => window.scrollTo(0, 0)}>
                         <BsArrowLeftShort />
                     </Link>
                     <h1>History</h1>

@@ -20,7 +20,7 @@ function Breadcrumbs() {
             ) : (
               <>
                 <li>
-                  <Link to={`/${pathSegments.slice(0, index + 1).join('/')}`} style={{color: '#a49eb5'}} className='no-underline'>
+                  <Link to={`/${pathSegments.slice(0, index + 1).join('/')}`} style={{color: '#a49eb5'}} className='no-underline' onClick={() => window.scrollTo(0, 0)}>
                     {titleCase(segment.replace('-', ' ').replace(':', ''))}
                   </Link>
                 </li>
