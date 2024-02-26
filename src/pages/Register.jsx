@@ -70,6 +70,7 @@ const Register = () => {
       });
 
       window.location.href = "/login";
+      window.scrollTo(0, 0)
     } catch (error) {
       if (error.response) {
         if (error.response.status === 400) {

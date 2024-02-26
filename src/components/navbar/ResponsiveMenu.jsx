@@ -3,18 +3,7 @@ import { FaUserCircle } from "react-icons/fa"
 import { FaXmark } from 'react-icons/fa6';
 
 // eslint-disable-next-line react/prop-types
-const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Clear authentication data
-    sessionStorage.removeItem("token");
-    localStorage.removeItem("username");
-    toast.info("Anda telah logout");
-
-    // Redirect to the login page
-    navigate("/login");
-  };
+const ResponsiveMenu = ({ showMenu, toggleMenu, handleLogout }) => {
   const location = useLocation().pathname
 
   const navMenu = [
@@ -37,11 +26,11 @@ const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
 
   return (
     <div
-      className={`${showMenu ? "-right-[100%]" : "right-0"} rounded-bl-3xl shadow-md
+      className={`right-0 rounded-bl-3xl shadow-md
       h-[40%] w-[60%] bg-white fixed top-0 z-20 transition-all duration-200 pb-6 flex flex-col justify-between text-main-color md:hidden`}>
 
       <div className='relative'>
-        <FaXmark onClick={toggleMenu} className="absolute top-8 right-4 w-6 h-6 text-main-color cursor-pointer transition-all" />
+        <FaXmark onClick={toggleMenu} className="absolute top-7 right-4 w-6 h-6 text-main-color cursor-pointer transition-all" />
         {/* user profile */}
         <div className="flex mt-8 px-8 items-center justify-start gap-3">
           {!sessionStorage.getItem("token") ? (

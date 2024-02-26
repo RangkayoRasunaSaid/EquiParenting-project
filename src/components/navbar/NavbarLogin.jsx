@@ -19,6 +19,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     // Clear authentication data
+    window.scrollTo(0, 0)
     sessionStorage.removeItem("token");
     localStorage.removeItem("username");
     toast.info("Anda telah logout");
@@ -146,16 +147,14 @@ const Navbar = () => {
             </div>
 
             <div className="md:hidden">
-              {showMenu ? (
                 <FaBars onClick={toggleMenu} className="w-6 h-6 text-main-color cursor-pointer transition-all" />
-              ) : (
-                <FaXmark onClick={toggleMenu} className="w-6 h-6 text-main-color cursor-pointer transition-all" />
-              )}
             </div>
           </div>
         </nav>
 
-        <ResponsiveMenu ref={menuRef} showMenu={showMenu} toggleMenu={toggleMenu} />
+        {showMenu && (
+          <ResponsiveMenu ref={menuRef} showMenu={showMenu} toggleMenu={toggleMenu} handleLogout={handleLogout} />
+        )}
       </header>
     </>
   )

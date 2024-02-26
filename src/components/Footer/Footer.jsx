@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import logo from "../../assets/logo.svg"
 import {
   FaFacebook,
@@ -7,7 +8,6 @@ import {
   FaMobileAlt,
 } from "react-icons/fa"
 import { MdOutlineMail } from "react-icons/md"
-import { Link } from 'react-router-dom'
 
 
 const Footer = () => {
@@ -26,9 +26,9 @@ const Footer = () => {
           {/* logo and contact */}
           <div className="pl-8 md:pl-16 py-8">
             {/* <div> */}
-            <a href="/">
+            <Link to="/" onClick={() => window.scrollTo(0, 0)}>
               <img src={logo} alt="logo" className="w-[200px] h-auto" />
-            </a>
+            </Link>
             {/* </div> */}
             {/* <p className="">
               Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet

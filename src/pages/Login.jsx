@@ -32,6 +32,7 @@ const Login = () => {
       const { token } = response.data;
 
       sessionStorage.setItem("token", token);
+      window.scrollTo(0, 0)
 
       // alert("Login Berhasil");
       toast.update(loadingToastId, {
