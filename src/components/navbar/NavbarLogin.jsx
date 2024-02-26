@@ -7,6 +7,7 @@ import ResponsiveMenu from "./ResponsiveMenu"
 import { toast } from "react-toastify"
 
 export const handleLogout = () => {
+  const navigate = useNavigate();
   // Clear authentication data
   sessionStorage.removeItem("token");
   localStorage.removeItem("username");
@@ -17,9 +18,34 @@ export const handleLogout = () => {
 };
 
 const Navbar = () => {
-  const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null); // Ref for dropdown element
+  const navRef = useRef(null); // Ref for dropdown element
+  const [showNav, setShowNav] = useState(true); // State to manage navbar visibility
+  const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      const isScrolledDown = prevScrollPos < currentScrollPos;
+
+      setShowNav(!isScrolledDown);
+      if (currentScrollPos === 0 || isScrolledDown) navRef.current.classList.remove('fixed');
+      else if (prevScrollPos > currentScrollPos) navRef.current.classList.add('fixed');
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [prevScrollPos]);
+
+  useEffect(() => {
+    // Cleanup function for resetting navbar visibility when component unmounts
+    return () => {
+      setShowNav(true); // Reset to show navbar when component unmounts
+    };
+  }, []);
 
   useEffect(() => {
     // Function to close dropdown when clicking outside
@@ -62,7 +88,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="bg-white text-main-color">
+      <header ref={navRef} className={`bg-white text-main-color w-full z-50`}>
         <nav className="shadow-lg bg-white md:px-[32px] p-[16px] max-w-screen-2xl mx-auto text-main-color cursor-pointer top-0 right-0 left-0">
           <div className="container space-x-[24px] mx-auto flex justify-between items-center">
             <div className="relative min-w-screen-md">
