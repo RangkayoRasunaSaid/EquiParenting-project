@@ -9,9 +9,13 @@ import { toast } from "react-toastify"
 const Navbar = () => {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null); // Ref for dropdown element
-  const navRef = useRef(null); // Ref for dropdown element
+  const dropdownRef = useRef(null);
+  const navRef = useRef(null);
+  const menuRef = useRef(null);
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
+  const [showMenu, setShowMenu] = useState(false);
+
+  const toggleMenu = () => setShowMenu(!showMenu);
 
   const handleLogout = () => {
     // Clear authentication data
@@ -41,24 +45,17 @@ const Navbar = () => {
   useEffect(() => {
     // Function to close dropdown when clicking outside
     function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false);
-      }
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) setDropdownOpen(false);
+      if (menuRef.current && !menuRef.current.contains(event.target)) setShowMenu(false);
     }
 
     // Attach event listener to document body when dropdown is open
-    if (dropdownOpen) {
-      document.addEventListener('click', handleClickOutside);
-    } else {
-      // Remove event listener when dropdown is closed
-      document.removeEventListener('click', handleClickOutside);
-    }
+    if (dropdownOpen || showMenu) document.addEventListener('click', handleClickOutside);
+    else document.removeEventListener('click', handleClickOutside);
 
     // Cleanup function to remove event listener
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [dropdownOpen]);
+    return () => { document.removeEventListener('click', handleClickOutside) };
+  }, [dropdownOpen, showMenu]);
 
   const location = useLocation().pathname
 
@@ -68,12 +65,6 @@ const Navbar = () => {
     { link: "Mission", path: "/mission" },
     // { link: "Ceritaku", path: "/ceritaku" }, // next feature
   ]
-
-  const [showMenu, setShowMenu] = useState(false);
-
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
-  }
 
   const isAuthenticated = sessionStorage.getItem("token");
 
@@ -164,7 +155,7 @@ const Navbar = () => {
           </div>
         </nav>
 
-        <ResponsiveMenu showMenu={showMenu} toggleMenu={toggleMenu} />
+        <ResponsiveMenu ref={menuRef} showMenu={showMenu} toggleMenu={toggleMenu} />
       </header>
     </>
   )

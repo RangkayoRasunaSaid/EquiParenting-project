@@ -134,10 +134,19 @@ const Profile = () => {
 
   const handleUpdatePassword = async (e) => {
     e.preventDefault();
+
+    if (!password.old) {
+      toast.warning('Harap masukkan password lama')
+      return
+    }
+    if (!password.new) {
+      toast.warning('Harap masukkan password baru')
+      return
+    }
     const loadingToastId = toast.loading('Updating password ...')
     try {
       const token = sessionStorage.getItem('token');
-      const response = await axios.put(config.apiUrl + '/update-profile', password,{
+      const response = await axios.put(config.apiUrl + '/update-password', password,{
         headers: { Authorization: token } 
       });
       if (response.ok) {
@@ -231,7 +240,6 @@ const Profile = () => {
                   placeholder="Masukkan Password Lama"
                   value={password.old}
                   onChange={(e) => setPassword({ ...password, old: e.target.value })}
-                  required
                 />
                 <br />
                 <input
@@ -240,7 +248,6 @@ const Profile = () => {
                   placeholder="Masukkan Password Baru"
                   value={password.new}
                   onChange={(e) => setPassword({ ...password, new: e.target.value })}
-                  required
                 />
                 <br />
               </div>

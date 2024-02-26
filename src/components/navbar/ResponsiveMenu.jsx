@@ -37,8 +37,8 @@ const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
 
   return (
     <div
-      className={`${showMenu ? "-right-[100%]" : "right-0"} rounded-bl-3xl
-      h-[40%] w-[70%] bg-white fixed top-0 z-20 transition-all duration-200 pb-6 flex flex-col justify-between text-main-color md:hidden`}>
+      className={`${showMenu ? "-right-[100%]" : "right-0"} rounded-bl-3xl shadow-md
+      h-[40%] w-[60%] bg-white fixed top-0 z-20 transition-all duration-200 pb-6 flex flex-col justify-between text-main-color md:hidden`}>
 
       <div className='relative'>
         <FaXmark onClick={toggleMenu} className="absolute top-8 right-4 w-6 h-6 text-main-color cursor-pointer transition-all" />
