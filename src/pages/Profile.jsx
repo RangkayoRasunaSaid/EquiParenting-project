@@ -34,15 +34,27 @@ const Profile = () => {
 
   useEffect(() => {
     const getUserProfile = async () => {
+      const loadingToastId = toast.loading('Getting profile info ...')
       try {
         const token = sessionStorage.getItem('token');
-        const response = await axios.get('https://outrageous-gold-twill.cyclic.app/profile', { headers: { Authorization: token } });
+        const response = await axios.get(config.apiUrl + '/profile', { headers: { Authorization: token } });
         setProfile(response.data);
+        toast.update(loadingToastId, {
+          render:  "Your Profile is Ready",
+          isLoading: false,
+          autoClose: 5000,
+          closeOnClick: true
+        });
 
       } catch (error) {
         console.error('Error fetching profile:', error);
-        toast.error('Error fetching profile')
-        // Handle error
+        toast.update(loadingToastId, {
+          render:  "Error fetching profile",
+          isLoading: error,
+          type: "success",
+          autoClose: 5000,
+          closeOnClick: true
+        });
       }
     };
 

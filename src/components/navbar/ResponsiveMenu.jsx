@@ -1,9 +1,19 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa"
-import { handleLogout } from './NavbarLogin'
 
 // eslint-disable-next-line react/prop-types
 const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear authentication data
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("username");
+    toast.info("Anda telah logout");
+
+    // Redirect to the login page
+    navigate("/login");
+  };
   const location = useLocation().pathname
 
   const navMenu = [

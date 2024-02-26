@@ -6,22 +6,22 @@ import { FaUserCircle } from "react-icons/fa"
 import ResponsiveMenu from "./ResponsiveMenu"
 import { toast } from "react-toastify"
 
-export const handleLogout = () => {
-  const navigate = useNavigate();
-  // Clear authentication data
-  sessionStorage.removeItem("token");
-  localStorage.removeItem("username");
-  toast.info("Anda telah logout");
-
-  // Redirect to the login page
-  navigate("/login");
-};
-
 const Navbar = () => {
+  const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null); // Ref for dropdown element
   const navRef = useRef(null); // Ref for dropdown element
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
+
+  const handleLogout = () => {
+    // Clear authentication data
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("username");
+    toast.info("Anda telah logout");
+
+    // Redirect to the login page
+    navigate("/login");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
