@@ -57,11 +57,11 @@ export default function Aktivitas({ members, setUpdateMembers, activities }){
             <div className="flex justify-between items-center my-5">
                 <div className='px-2 invisible md:block hidden'>Lihat <br /> Riwayat</div>
                 <h1 className="text-3xl font-bold">Aktivitas</h1>
-                <Link to='/history'><button className={`border-2 rounded-xl px-2 py-0 ${!hasActivities ? 'invisible' : '' }`}>Lihat <br /> Riwayat</button></Link>
+                <Link to='/history'><button className={`border-2 rounded-xl px-2 py-0 ${!hasActivities ? 'invisible' : '' }`} onClick={() => window.scrollTo(0, 0)}>Lihat <br /> Riwayat</button></Link>
             </div>
                 <div className="flex justify-center">
                     <ModalButton btnContent={(
-                        <button disabled={formattedPeriod && !currentDate > endDate} className="disabled:bg-slate-400 flex text-2xl gap-4 justify-center items-center px-5 text-white bg-main-color rounded-2xl font-bold md:text-xl shadow-md">
+                        <button disabled={formattedPeriod || currentDate > endDate} className="disabled:bg-slate-400 flex text-2xl gap-4 justify-center items-center px-5 text-white bg-main-color rounded-2xl font-bold md:text-xl shadow-md">
                             <span>Atur Periode Mission</span>
                             <span className='text-5xl'>+</span>
                         </button>

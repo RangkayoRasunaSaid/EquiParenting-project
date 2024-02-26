@@ -69,7 +69,8 @@ const heroSection = () => {
                     dukungan yang setara.
                     <span className="text-sm md:text-xl font-medium text-black-color">&quot;</span>
                   </p>
-                  <button className={sessionStorage.getItem("token") ? 'hidden' : ''}>
+                  <button className={sessionStorage.getItem("token") ? 'hidden' : ''}
+                    onClick={() => window.scrollTo(0, 0)}>
                     <Link
                       className="flex justify-center bg-main-color rounded-3xl mt-2 sm:my-0 px-4 py-2 text-sm md:text-lg text-white text-center font-medium hover:bg-tertiery"
                       to="/login">

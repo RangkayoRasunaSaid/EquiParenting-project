@@ -93,7 +93,6 @@ export default function ModalPeriode({ memberIds, setUpdateMembers }) {
                             type="datetime-local"
                             name="endTime"
                             id="endTime"
-                            // value="2024-02-13T03:35"
                             value={
                                 new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"))
                             }

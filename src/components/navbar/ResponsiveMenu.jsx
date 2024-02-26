@@ -21,6 +21,7 @@ const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
   const handleLinkClick = () => {
     // Call the toggleMenu function to hide the menu
     toggleMenu();
+    window.scrollTo(0, 0)
   }
 
   return (

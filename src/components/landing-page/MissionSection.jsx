@@ -79,7 +79,7 @@ const MissionSection = () => {
           </div>
 
           {/* button for explore mission */}
-          <div className="mt-3 md:mt-6 px-6 text-left">
+          <div className="mt-3 md:mt-6 px-6 text-left" onClick={() => window.scrollTo(0, 0)}>
             <Link
               className="text-base md:text-xl font-semibold tracking-wide bg-main-color text-white rounded-3xl py-2 px-4 md:p-4 inline-block shadow-lg hover:bg-tertiery"
               to="/mission">Jelajahi Mission Sekarang!

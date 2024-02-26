@@ -112,7 +112,7 @@ export default function PusatReward({ members, spinTime, setSpinTime, setUpdateM
       
             {/* link to daily mission */}
             <Link to="/mission/daily-mission" >
-                <button className="p-sm-3 p-md-4 mb-4 p-4 mt-8 text-white bg-main-color rounded-[60px] font-bold text-[16px] md:text-xl shadow-md w-full">Lihat Aktivitas Daily Mission</button>
+                <button className="p-sm-3 p-md-4 mb-4 p-4 mt-8 text-white bg-main-color rounded-[60px] font-bold text-[16px] md:text-xl shadow-md w-full"onClick={() => window.scrollTo(0, 0)}>Lihat Aktivitas Daily Mission</button>
             </Link>
 
             {members.filter(member => member.Rewards[0]).length > 0 &&

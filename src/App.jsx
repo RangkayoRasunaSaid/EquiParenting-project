@@ -37,6 +37,7 @@ function App() {
     fetchActivities();
   }, [members])
 
+
   return (
     <Provider store={store}>
       <Router>
