@@ -21,7 +21,6 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null); // Ref for dropdown element
   const navRef = useRef(null); // Ref for dropdown element
-  const [showNav, setShowNav] = useState(true); // State to manage navbar visibility
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
 
   useEffect(() => {
@@ -29,9 +28,8 @@ const Navbar = () => {
       const currentScrollPos = window.scrollY;
       const isScrolledDown = prevScrollPos < currentScrollPos;
 
-      setShowNav(!isScrolledDown);
       if (currentScrollPos === 0 || isScrolledDown) navRef.current.classList.remove('fixed');
-      else if (prevScrollPos > currentScrollPos) navRef.current.classList.add('fixed');
+      else if (!isScrolledDown) navRef.current.classList.add('fixed');
       setPrevScrollPos(currentScrollPos);
     };
 
@@ -39,13 +37,6 @@ const Navbar = () => {
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos]);
-
-  useEffect(() => {
-    // Cleanup function for resetting navbar visibility when component unmounts
-    return () => {
-      setShowNav(true); // Reset to show navbar when component unmounts
-    };
-  }, []);
 
   useEffect(() => {
     // Function to close dropdown when clicking outside
@@ -92,7 +83,7 @@ const Navbar = () => {
         <nav className="shadow-lg bg-white md:px-[32px] p-[16px] max-w-screen-2xl mx-auto text-main-color cursor-pointer top-0 right-0 left-0">
           <div className="container space-x-[24px] mx-auto flex justify-between items-center">
             <div className="relative min-w-screen-md">
-              <Link to="/">
+              <Link to="/" onClick={() => window.scrollTo(0, 0)}>
                 <img src={logo} alt="logo" className="w-[120px] h-auto inline-block items-center" />
               </Link>
             </div>
@@ -108,7 +99,7 @@ const Navbar = () => {
                       key={link}
                       to={path}
                       className={`text-lg block py-[4px] px-[16px] rounded-2xl hover:bg-secondary-color hover:font-medium transition-none ${isActive ? 'bg-secondary-color font-medium transition-none' : ''}`}
-                      style={{ color: isActive ? 'bg-secondary-color' : '' }}>
+                      style={{ color: isActive ? 'bg-secondary-color' : '' }} onClick={() => window.scrollTo(0, 0)}>
                       {link}
                     </Link>
                   )
@@ -119,12 +110,12 @@ const Navbar = () => {
                 {!sessionStorage.getItem("token") ? (
                   // Display "Masuk" and "Daftar" buttons when not authenticated
                   <>
-                    <Link key="/login" to="/login">
+                    <Link key="/login" to="/login" onClick={() => window.scrollTo(0, 0)}>
                       <button className="py-[4px] px-[16px] border-2 rounded-2xl border-main-color transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
                         Masuk
                       </button>
                     </Link>
-                    <Link key="/register" to="/register">
+                    <Link key="/register" to="/register" onClick={() => window.scrollTo(0, 0)}>
                       <button className="py-[4px] px-[16px] border-2 rounded-2xl bg-main-color border-main-color text-white transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
                         Daftar
                       </button>
