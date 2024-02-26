@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa"
+import { FaXmark } from 'react-icons/fa6';
 
 // eslint-disable-next-line react/prop-types
 const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
@@ -36,10 +37,11 @@ const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
 
   return (
     <div
-      className={`${showMenu ? "-right-[100%]" : "right-0"} 
-      h-[50%] w-[75%] bg-white fixed top-[81px] z-20 transition-all duration-200 pb-6 flex flex-col justify-between text-main-color md:hidden`}>
+      className={`${showMenu ? "-right-[100%]" : "right-0"} rounded-bl-3xl
+      h-[40%] w-[70%] bg-white fixed top-0 z-20 transition-all duration-200 pb-6 flex flex-col justify-between text-main-color md:hidden`}>
 
-      <div>
+      <div className='relative'>
+        <FaXmark onClick={toggleMenu} className="absolute top-8 right-4 w-6 h-6 text-main-color cursor-pointer transition-all" />
         {/* user profile */}
         <div className="flex mt-8 px-8 items-center justify-start gap-3">
           {!sessionStorage.getItem("token") ? (
@@ -61,7 +63,7 @@ const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
             {/* Display "Profile" button when authenticated */}
             <Link key="/profile" to="/profile" onClick={handleLinkClick}>
               <div className="flex px-4 items-center justify-start gap-3 hover:">
-                <FaUserCircle size={50} className="hover:lavender-shade transition-all" />
+                <FaUserCircle size={40} className="hover:lavender-shade transition-all" />
                 <div>
                   <h1>{authenticatedUser.username}</h1>
                 </div>

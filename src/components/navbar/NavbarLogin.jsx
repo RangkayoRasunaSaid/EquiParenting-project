@@ -79,7 +79,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header ref={navRef} className={`bg-white text-main-color w-full z-50`}>
+      <header ref={navRef} className={`bg-white text-main-color w-full z-40`}>
         <nav className="shadow-lg bg-white md:px-[32px] p-[16px] max-w-screen-2xl mx-auto text-main-color cursor-pointer top-0 right-0 left-0">
           <div className="container space-x-[24px] mx-auto flex justify-between items-center">
             <div className="relative min-w-screen-md">
