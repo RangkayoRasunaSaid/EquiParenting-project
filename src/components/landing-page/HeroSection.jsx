@@ -1,6 +1,6 @@
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import OwlCarousel from 'react-owl-carousel'
+import 'owl.carousel/dist/assets/owl.carousel.css'
+import 'owl.carousel/dist/assets/owl.theme.default.css'
 import { Link } from 'react-router-dom';
 
 const heroSection = () => {
@@ -16,12 +16,11 @@ const heroSection = () => {
     "https://akcdn.detik.net.id/visual/2023/05/03/5-kebiasaan-ayah-di-rumah-yang-jadi-contoh-buruk-anak-bikin-sulit-dekat_169.jpeg?w=750&q=90"
 
   ];
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+  const options = {
+    dots: false,
+    loop: true,
+    // autoplaySpeed: 500,
+    items: 1,
     autoplay: true,
     autoplaySpeed: 3000,
   };
@@ -33,7 +32,7 @@ const heroSection = () => {
           <div className="flex flex-row-reverse">
             <div className="hero-section relative overflow-hidden">
 
-              {/* image slider */}
+              {/* image slider
               <Slider {...settings} className="hero w-full">
                 {images.map((imageUrl, index) => (
                   <div key={index} className="w-full h-[48vh]">
@@ -44,7 +43,18 @@ const heroSection = () => {
                     />
                   </div>
                 ))}
-              </Slider>
+              </Slider> */}
+              <OwlCarousel className='owl-theme hero w-full z-0' {...options} key={`carousel_${Date.now()}`} >
+                  {images.map((imageUrl, index) => (
+                    <div key={index} className="item w-full h-[48vh]">
+                      <img
+                        className="hero w-full object-cover h-[54vh]  md:opacity-80"
+                        src={imageUrl}
+                        alt={`Slide ${index + 1}`}
+                      />
+                    </div>
+                  ))}
+              </OwlCarousel>
 
               {/* hero content */}
               <div className="absolute inset-0 flex items-end justify-center">
@@ -59,12 +69,12 @@ const heroSection = () => {
                     dukungan yang setara.
                     <span className="text-sm md:text-xl font-medium text-black-color">&quot;</span>
                   </p>
-                  <button>
-                  <Link
-                    className="flex justify-center bg-main-color rounded-3xl mt-2 sm:my-0 px-4 py-2 text-sm md:text-lg text-white text-center font-medium hover:bg-tertiery"
-                    to="/login">
-                      Mari Bergabung 
-                  </Link>
+                  <button className={sessionStorage.getItem("token") ? 'hidden' : ''}>
+                    <Link
+                      className="flex justify-center bg-main-color rounded-3xl mt-2 sm:my-0 px-4 py-2 text-sm md:text-lg text-white text-center font-medium hover:bg-tertiery"
+                      to="/login">
+                        Mari Bergabung 
+                    </Link>
                   </button>
                 </div>
               </div>

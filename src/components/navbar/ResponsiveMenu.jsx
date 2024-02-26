@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa"
+import { handleLogout } from './NavbarLogin'
 
 // eslint-disable-next-line react/prop-types
 const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
@@ -46,7 +47,7 @@ const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
             </>
           ) : (
             <>
-            // Display "Profile" button when authenticated
+            {/* Display "Profile" button when authenticated */}
             <Link key="/profile" to="/profile" onClick={handleLinkClick}>
               <div className="flex px-4 items-center justify-start gap-3 hover:">
                 <FaUserCircle size={50} className="hover:lavender-shade transition-all" />
@@ -55,9 +56,9 @@ const ResponsiveMenu = ({ showMenu, toggleMenu }) => {
                 </div>
               </div>
             </Link>
-              <Link key="/register" to="/register" onClick={handleLinkClick}>
-                <button className="py-[4px] px-[16px] border-2 rounded-2xl bg-main-color border-main-color text-white transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
-                  Daftar
+              <Link key="/login" to="/login">
+                <button onClick={handleLogout} className="py-[4px] px-[16px] border-2 rounded-2xl bg-main-color border-main-color text-white transition-all duration-300 hover:text-white hover:bg-tertiery-color hover:border-tertiery-color">
+                  Logout
                 </button>
               </Link>
             </>
