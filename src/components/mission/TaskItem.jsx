@@ -13,7 +13,8 @@ function formatDate(stringDate) {
   return date.format('D MMM YYYY HH:mm [WIB]')
 }
 
-const TaskItem = ({ members, member, activity, bySystem=false, responsible, setUpdateData }) => {
+const TaskItem = ({ members, activity, bySystem=false, responsible, setUpdateData }) => {
+  const [isCreating, setIsCreating] = useState(false)
   let date = moment(activity.date_start_act);
   if (activity.approval_date) date = moment(activity.approval_date)
   date = date.utcOffset('+0700');
@@ -47,6 +48,8 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible, setU
       alert("Harap isi disetujui oleh");
       return;
     }
+    setIsCreating(true)
+    const loadingToastId = toast.loading('Menyetujui Aktifitas ...');
   
     try {
       const response = await axios.put(config.apiUrl + `/activities/approve/${activity.id}`, { approval_by: approvedBy }, {
@@ -54,10 +57,12 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible, setU
           Authorization: sessionStorage.getItem("token"),
         },
       });
-      toast("Berhasil menyetujui aktifitas");
+      toast.update(loadingToastId, { render:  'Berhasil menyetujui aktifitas', isLoading: false, autoClose: 5000, closeOnClick: true });
+    
     } catch (error) {
-      toast.error("Penambahan member gagal");
       console.error("Error approving activity:", error);
+      setIsCreating(false)
+      toast.update(loadingToastId, { render: 'Penambahan member gagal', type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
     } finally {
       setUpdateData(Date.now())
     }
@@ -136,7 +141,7 @@ const TaskItem = ({ members, member, activity, bySystem=false, responsible, setU
                     <button
                       type='submit'
                       className="text-white disabled:opacity-60 bg-main-color rounded-lg shadow-md py-2 px-3 font-semibold "
-                      disabled={activity.approval_date}>
+                      disabled={isCreating || activity.approval_date}>
                         Misi Selesai
                     </button>
                 </div>

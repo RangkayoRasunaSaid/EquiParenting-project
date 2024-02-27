@@ -65,6 +65,7 @@ export default function Modal({ member, categories, setUpdateData }) {
           toast.warning("Harap isi semua kolom")
           return;
         }
+        const loadingToastId = toast.loading('Membuat Misi ...');
         buttonRef.current.classList.add('modal-button');
         buttonRef.current.click();
       
@@ -75,9 +76,10 @@ export default function Modal({ member, categories, setUpdateData }) {
               Authorization: token,
             },
           });
-          toast('Berhasil menambahkan misi')
+          toast.update(loadingToastId, { render:  'Berhasil menambahkan misi', isLoading: false, autoClose: 5000, closeOnClick: true });
+        
         } catch (error) {
-          toast.error("Penambahan misi gagal")
+          toast.update(loadingToastId, { render: 'Penambahan misi gagal', type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
           console.error("Error adding member:", error);
         } finally {
           setUpdateData(Date.now())
