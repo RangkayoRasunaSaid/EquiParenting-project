@@ -18,9 +18,6 @@ const FadingBackground = styled(BaseModalBackground)`
 
 export default function App({ members, setMembers, updateMembers, setUpdateMembers, activities }) {
     const [categories, setCategories] = useState([]);
-    let endDate
-    let currentDate = new Date();
-    const [spinTime, setSpinTime] = useState(endDate < currentDate);
 
     useEffect(() => {
       const fetchData = async () => {
@@ -31,11 +28,6 @@ export default function App({ members, setMembers, updateMembers, setUpdateMembe
           const membersResponse = await axios.get(config.apiUrl + '/members', { headers: { Authorization: token } });
           const membersData = membersResponse.data.members;
           setMembers(membersData);
-          if (members.length > 0 && members[0].Rewards?.length > 0) {
-              endDate = new Date(members[0].Rewards[0]?.end_date)
-              currentDate = new Date()
-              setSpinTime(endDate < currentDate);
-          };
 
           const categoriesResponse = await axios.get(config.apiUrl + `/categories`);
           setCategories(categoriesResponse.data);
@@ -57,7 +49,7 @@ export default function App({ members, setMembers, updateMembers, setUpdateMembe
                     Selamat datang di misi keluarga idaman!
                 </h1>
                 <Routes>
-                    <Route path="/" element={<PusatReward members={members} setUpdateMembers={setUpdateMembers} spinTime={spinTime} setSpinTime={setSpinTime} />} />
+                    <Route path="/" element={<PusatReward members={members} setUpdateMembers={setUpdateMembers} />} />
                     <Route path="/daily-mission" element={<DailyMission members={members} setUpdateMembers={setUpdateMembers} activities={activities} />} />
                     <Route path="/daily-mission/:role" element={<MisiAnggota categories={categories} />} />
                 </Routes>

@@ -4,18 +4,10 @@ import PropTypes from 'prop-types';
 
 export default function WheelReward({ member, percent, memberName, spinTime, setSpinTime }) {
     let endDate = new Date(member.Rewards[0]?.end_date);
+    endDate.setTime(endDate.getTime() - (7 * 60 * 60 * 1000))
+    let currentDate = new Date();
     let spinnedAt = new Date(member.Rewards[0]?.spinned_at)
     if (member.Rewards[0].Reward_Items.length > 0) spinnedAt = new Date(member.Rewards[0].spinned_at)
-
-    useEffect(() => {
-        if (spinTime) return
-        const interval = setInterval(() => {
-            const currentDate = new Date();
-            endDate = new Date(member.Rewards[0]?.end_date);
-            setSpinTime(endDate < currentDate);
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [spinTime]);
 
     const formatDate = (date) => {
         const addLeadingZero = (num) => (num < 10 ? "0" + num : num);
@@ -29,12 +21,12 @@ export default function WheelReward({ member, percent, memberName, spinTime, set
                 <>
                     <h4 className='text-2xl font-bold my-3'>
                         {member.Rewards[0].Reward_Items.length > 0 ? member.Rewards[0].Reward_Items[0].title : (
-                            spinTime ? `Putar Spin ${percent < 100 ? 'apabila Score 100%' : ''}`
+                            endDate < currentDate ? `Putar Spin ${percent < 100 ? 'apabila Score 100%' : ''}`
                                 : `Putar Spin Setelah Periode Selesai ${percent < 100 ? 'dengan Score 100%' : ''}`
                         )}
                     </h4>
                     <p className='text-sm font-semibold text-violet-400'>
-                        {spinTime ? `
+                        {endDate < currentDate ? `
                                 ${percent === 100 ? `(Diperoleh Pada: ${member.Rewards[0].Reward_Items.length > 0 ? formatDate(spinnedAt) : '-' })` : ''}
                             ` : `
                                 (Periode selesai pada: ${formatDate(endDate)})
