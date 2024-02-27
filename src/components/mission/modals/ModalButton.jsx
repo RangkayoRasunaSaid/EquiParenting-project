@@ -53,7 +53,9 @@ export default function ModalButton({ btnContent, mdlContent, maxWidth='400px' }
                 backgroundProps={{ opacity }}
             >
                 <button className="absolute top-5 right-5 modal-button hover:bg-zinc-300 rounded-full"><BsXLg /></button>
-                {mdlContent}
+                <div className='z-50 relative'>
+                    {mdlContent}
+                </div>
             </StyledModal>
         </div>
     );

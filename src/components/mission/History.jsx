@@ -29,7 +29,8 @@ export default function History({ activities, members, setUpdateMembers }) {
     }
 
     return (
-        <div  className="min-h-screen text-main-color bg-violet-100 my-10 sm:mx-5 md:mx-24 mx-3 sm:p-3 md:p-10 px-3 rounded-[40px]">
+        <div className="pt-10">
+            <div  className="min-h-screen text-main-color bg-violet-100 sm:mx-5 md:mx-24 mx-3 sm:p-3 md:p-10 px-3 rounded-[40px]">
                 <div className="flex items-center justify-between text-3xl font-semibold px-5 mb-5">
                     <Link to="/mission/daily-mission" onClick={() => window.scrollTo(0, 0)}>
                         <BsArrowLeftShort />
@@ -37,25 +38,26 @@ export default function History({ activities, members, setUpdateMembers }) {
                     <h1>History</h1>
                     <BsArrowLeftShort className="invisible" />
                 </div>
-            <div className="bg-white py-5 rounded-[40px] text-center">
-                {activities.map(reward =>
-                    reward.activities.length > 0 && (
-                        <div>
-                            <h1 className="mt-5 font-semibold">{`${formatDate(new Date(reward.rewardPeriod.start_date).toLocaleDateString())} - ${formatDate(new Date(reward.rewardPeriod.end_date).toLocaleDateString())}`}</h1>
-                            <OwlCarousel className='owl-theme' {...options} key={`carousel_${Date.now()}`} >
-                                {reward.activities.map(activity => (
-                                    <TaskItem
-                                        key={activity.id}
-                                        members={members}
-                                        activity={activity}
-                                        responsible={titleCase(memberRole(activity.id_member)) || activity.id_member.toString()}
-                                        setUpdateData={setUpdateMembers}
-                                    />
-                                ))}
-                            </OwlCarousel>
-                        </div>
-                    )
-                )}
+                <div className="bg-white py-5 rounded-[40px] text-center">
+                    {activities.map(reward =>
+                        reward.activities.length > 0 && (
+                            <div>
+                                <h1 className="mt-5 font-semibold">{`${formatDate(new Date(reward.rewardPeriod.start_date).toLocaleDateString())} - ${formatDate(new Date(reward.rewardPeriod.end_date).toLocaleDateString())}`}</h1>
+                                <OwlCarousel className='owl-theme' {...options} key={`carousel_${Date.now()}`} >
+                                    {reward.activities.map(activity => (
+                                        <TaskItem
+                                            key={activity.id}
+                                            members={members}
+                                            activity={activity}
+                                            responsible={titleCase(memberRole(activity.id_member)) || activity.id_member.toString()}
+                                            setUpdateData={setUpdateMembers}
+                                        />
+                                    ))}
+                                </OwlCarousel>
+                            </div>
+                        )
+                    )}
+                </div>
             </div>
         </div>
     )

@@ -49,9 +49,9 @@ export default function StatSummary({ members, stats }) {
                     ))}
                 </OwlCarousel>
             ) : (
-                <div className={`${members.length === 2 && 'flex justify-center sm:gap-10 gap-5 p-2'}`}>
+                <div className={`${members.length === 2 ? 'flex justify-center sm:gap-10 gap-5 p-2' : ''}`}>
                     {members.map(m =>(
-                        <div className={`${members.length === 1 ? 'grid md:grid-cols-4 grid-cols-2 gap-4' : ''}`} key={m.id}>
+                        <div className={`${members.length === 1 ? 'md:flex justify-center md:grid-cols-4 grid-cols-2 gap-10' : ''}`} key={m.id}>
                             <SummaryCard title={`${titleCase(m.member_role)} Idaman`} fontSz='text-7xl'
                                 description={`Selesaikan banyak misi untuk menaikkan score menjadi "${titleCase(m.member_role)} Idaman”`}
                                 firstRow={stats[m.id]?.percentage}

@@ -9,12 +9,10 @@ import PropTypes from 'prop-types';
 const DailyMission = ({ members, setUpdateMembers }) => {
 
   const mdlBtn = (
-    <div role="button" className="text-center mb-5 py-4 md:px-5 rounded-[40px] border-0 shadow-md h-100 bg-main-color text-white flex flex-col justify-between">
-        <h5 className="text-2xl font-bold">Tambah Anggota</h5>
+    <div role="button" className="text-center mb-5 py-4 md:px-16 rounded-[40px] border-0 shadow-md h-100 bg-main-color text-white flex flex-col justify-between">
+        <h5 className="text-2xl font-bold">Tambah</h5>
         <h6 className="text-7xl font-bold">+</h6>
-        <div className="text-lg font-bold bg-transparent border-0">
-            Max Total 2 Tim
-        </div>
+        <h5 className="text-2xl font-bold">Anggota</h5>
     </div>
   )
 

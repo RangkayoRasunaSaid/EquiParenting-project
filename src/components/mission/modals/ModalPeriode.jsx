@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import config from '../../../config/config';
 
 export default function ModalPeriode({ memberIds, setUpdateMembers }) {
+  const buttonRef = useRef(null);
     const [data, setData] = useState({
       spinned_at: '',
       start_date: new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":")),
@@ -44,6 +45,8 @@ export default function ModalPeriode({ memberIds, setUpdateMembers }) {
             toast.warning("Harap isi semua kolom");
             return;
         }
+        buttonRef.current.classList.add('modal-button');
+        buttonRef.current.click();
         
         try {
           // Create rewards for each member asynchronously
@@ -112,7 +115,7 @@ export default function ModalPeriode({ memberIds, setUpdateMembers }) {
                     </div>
                 </div>
                 <div className="flex justify-center">
-                    <button type="submit" className="modal-button bg-main-color text-white text-base rounded-md shadow-md my-5 py-2 px-4 font-semibold">Atur</button>
+                    <button ref={buttonRef} type="submit" className="bg-main-color text-white text-base rounded-md shadow-md my-5 py-2 px-4 font-semibold">Atur</button>
                 </div>
             </form>
         </div>

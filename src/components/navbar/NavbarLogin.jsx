@@ -71,7 +71,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header ref={navRef} className={`bg-white text-main-color w-full z-40`}>
+      <header ref={navRef} className={`bg-white text-main-color w-full z-30`}>
         <nav className="shadow-lg bg-white md:px-[32px] p-[16px] max-w-screen-2xl mx-auto text-main-color cursor-pointer top-0 right-0 left-0">
           <div className="container space-x-[24px] mx-auto flex justify-between items-center">
             <div className="relative min-w-screen-md">
@@ -127,7 +127,9 @@ const Navbar = () => {
                     </div>
                     {dropdownOpen && (
                       <div className="absolute bg-white shadow-md top-full right-0 mt-1 z-50">
-                        <ul onClick={() => setDropdownOpen(!dropdownOpen)}>
+                        <ul onClick={() => {
+                          setDropdownOpen(!dropdownOpen)
+                          window.scrollTo(0, 0)}}>
                           <li>
                             <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100">
                               Profile

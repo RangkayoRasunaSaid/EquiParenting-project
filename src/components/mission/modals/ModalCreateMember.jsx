@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaCamera } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { titleCase } from "../../Breadcrumbs";
 import config from "../../../config/config";
 
 export default function ModalCreateMember({ members, setUpdateMembers }) {
+  const buttonRef = useRef(null);
     const [data, setData] = useState({
       name: "",
       member_role: "",
@@ -34,6 +35,8 @@ export default function ModalCreateMember({ members, setUpdateMembers }) {
         setIsCreating(false);
         return;
       }
+      buttonRef.current.classList.add('modal-button');
+      buttonRef.current.click();
       const loadingToastId = toast.loading('Adding a member ...');
       try {
         const response = await axios.post(config.apiUrl + "/members", data, {
@@ -76,7 +79,7 @@ export default function ModalCreateMember({ members, setUpdateMembers }) {
     return (
         <div className="p-5">
             {/* Konten modal */}
-            <h2 className="text-2xl text-center text-ungu1 font-bold mb-4">Buat Tim Baru</h2>
+            <h2 className="text-2xl text-center text-ungu1 font-bold mb-4">Tambah Member</h2>
             <form className="flex flex-col items-center" onSubmit={handleSubmit}>
               {/* <div className="mb-4">
                 <img
@@ -141,7 +144,8 @@ export default function ModalCreateMember({ members, setUpdateMembers }) {
               </div>
 
               <button
-                className='modal-button bg-ungu2 text-ungu1 font-bold py-2 px-4 rounded inline-flex items-center w-32'
+                ref={buttonRef}
+                className='bg-ungu2 text-ungu1 font-bold py-2 px-4 rounded inline-flex items-center w-32'
                 type="submit"
                 disabled={isCreating}>Tambahkan</button>
             </form>

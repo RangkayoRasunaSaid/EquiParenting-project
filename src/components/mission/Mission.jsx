@@ -44,7 +44,7 @@ export default function App({ members, setMembers, updateMembers, setUpdateMembe
           toast.error('Failed fetching data');
         }
       };
-    
+      if (!sessionStorage.getItem("token")) return
       fetchData();
     }, [updateMembers]);
   

@@ -12,7 +12,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import NavbarLogin from "./components/navbar/NavbarLogin"
 import Footer from './components/Footer/Footer'
-import { ToastContainer, Flip } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import History from './components/mission/History.jsx';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -34,6 +34,7 @@ function App() {
       }
     };
 
+    if (!sessionStorage.getItem('token')) return
     fetchActivities();
   }, [members])
 

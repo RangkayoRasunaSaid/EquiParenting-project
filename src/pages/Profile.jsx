@@ -5,8 +5,14 @@ import { fetchUserProfile } from '../redux/actions/profile';
 import Loading from '../Loading';
 import { toast } from 'react-toastify';
 import config from '../config/config';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
+  const navigate = useNavigate()
+  const token = sessionStorage.getItem('token');
+  useEffect(() => {
+      if (!token) navigate('/login')
+  }, []);
   // const dispatch = useDispatch();
   // const userProfile = useSelector((state) => state.userProfile);
   const [profile, setProfile] = useState({
@@ -58,6 +64,7 @@ const Profile = () => {
       }
     };
 
+    if (!token) return
     getUserProfile();
   }, []);
 

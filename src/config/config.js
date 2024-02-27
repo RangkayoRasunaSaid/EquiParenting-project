@@ -1,6 +1,6 @@
 // src/config/config.js
 const config = {
-    apiUrl: 'https://frightened-panama-hat-bass.cyclic.app/'
+    apiUrl: 'https://wild-tan-jumper.cyclic.app/'
   };
   
 export default config;  

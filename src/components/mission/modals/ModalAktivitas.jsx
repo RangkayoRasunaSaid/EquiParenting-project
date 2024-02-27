@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { titleCase } from "../../Breadcrumbs";
 import PropTypes from 'prop-types';
 import { toast } from "react-toastify";
 import config from "../../../config/config";
 
 export default function Modal({ member, categories, setUpdateData }) {
+    const buttonRef = useRef(null);
     const startRewardDate = new Date(member.Rewards[0].start_date)
     const endRewardDate = new Date(member.Rewards[0].end_date)
     // endRewardDate.setSeconds(endRewardDate.getMinutes() - 1)
@@ -64,6 +65,8 @@ export default function Modal({ member, categories, setUpdateData }) {
           toast.warning("Harap isi semua kolom")
           return;
         }
+        buttonRef.current.classList.add('modal-button');
+        buttonRef.current.click();
       
         try {
         //   const response = await axios.post("http://localhost:3000/activities", data, {
@@ -157,7 +160,7 @@ export default function Modal({ member, categories, setUpdateData }) {
                     </div>
                 </div>
                 <div className="flex my-5 justify-center">
-                    <button type="submit" className="modal-button bg-main-color text-white text-lg rounded-lg shadow-md p-4 font-semibold">TAMBAHKAN</button>
+                    <button ref={buttonRef} type="submit" className="bg-main-color text-white text-lg rounded-lg shadow-md p-4 font-semibold">TAMBAHKAN</button>
                 </div>
             </form>
         </div>
