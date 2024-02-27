@@ -73,9 +73,10 @@ export default function PusatReward({ members, spinTime, setSpinTime, setUpdateM
             <div className="bg-white m-4 rounded-[60px] shadow-md flex-none lg:flex">
                 <div className="lg:w-1/3 sm:w-full flex justify-center">
                     {sessionStorage.getItem("token") ? (
-                        !spinTime || spinMembers.length === 0 ? (
+                        members.length === 0 || !spinTime || spinMembers.length === 0 ? (
                             <div onClick={() => {
                                 if (!spinTime) toast.warning('Belum Bisa Putar Spin karena Periode Masih Berjalan')
+                                else if (members.length === 0) toast.warning('Silahkan Buat Tim Terlebih Dahulu')
                                 else toast.warning('Silahkan Coba Lagi di Periode Berikutnya')
                             }
                             }>{btnCtn}</div>
@@ -89,7 +90,7 @@ export default function PusatReward({ members, spinTime, setSpinTime, setUpdateM
                 {members.length === 0 ? (
                     <div className='flex flex-col justify-center items-center lg:mx-auto'>
                         <Link to={sessionStorage.getItem("token") ? "/mission/daily-mission" : '/login'}>
-                            <button className='flex items-center justify-center px-5 py-3 rounded-3xl shadow-lg text-xl font-semibold'>
+                            <button onClick={() => window.scrollTo(0, 0)} className='flex items-center justify-center px-5 py-3 rounded-3xl shadow-lg text-xl font-semibold'>
                                 Buat Tim <span className='ms-5 text-4xl'>+</span>
                             </button>
                         </Link>
@@ -112,7 +113,7 @@ export default function PusatReward({ members, spinTime, setSpinTime, setUpdateM
       
             {/* link to daily mission */}
             <Link to="/mission/daily-mission" >
-                <button className="p-sm-3 p-md-4 mb-4 p-4 mt-8 text-white bg-main-color rounded-[60px] font-bold text-[16px] md:text-xl shadow-md w-full"onClick={() => window.scrollTo(0, 0)}>Lihat Aktivitas Daily Mission</button>
+                <button className="p-sm-3 p-md-4 mb-4 p-4 mt-8 text-white bg-main-color rounded-[60px] font-bold text-[16px] md:text-xl shadow-md w-full" onClick={() => window.scrollTo(0, 0)}>Lihat Aktivitas Daily Mission</button>
             </Link>
 
             {members.filter(member => member.Rewards[0]).length > 0 &&

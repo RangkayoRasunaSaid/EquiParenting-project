@@ -1,6 +1,6 @@
 // src/config/config.js
 const config = {
-    apiUrl: 'https://wild-tan-jumper.cyclic.app/'
+    apiUrl: 'https://victorious-school-uniform-cow.cyclic.app/'
   };
   
 export default config;  
