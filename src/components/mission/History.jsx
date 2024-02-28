@@ -8,9 +8,6 @@ import { titleCase } from "../Breadcrumbs";
 import { formatDate } from "./Aktivitas";
 
 export default function History({ activities, members, setUpdateMembers }) {
-    console.log(activities);
-    console.log(members);
-
     const options = {
         stagePadding: 40, items: 3, margin:20, nav:true,
         responsive:{ 0:{ items:1 }, 600:{ items:2 }, 1000:{ items:3 }
@@ -41,7 +38,7 @@ export default function History({ activities, members, setUpdateMembers }) {
                 <div className="bg-white py-5 rounded-[40px] text-center">
                     {activities.map(reward =>
                         reward.activities.length > 0 && (
-                            <div>
+                            <div key={reward.id}>
                                 <h1 className="mt-5 font-semibold">{`${formatDate(new Date(reward.rewardPeriod.start_date).toLocaleDateString())} - ${formatDate(new Date(reward.rewardPeriod.end_date).toLocaleDateString())}`}</h1>
                                 <OwlCarousel className='owl-theme' {...options} key={`carousel_${Date.now()}`} >
                                     {reward.activities.map(activity => (

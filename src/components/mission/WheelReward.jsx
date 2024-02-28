@@ -6,7 +6,7 @@ export default function WheelReward({ member, percent, memberName, spinTime, set
     let endDate = new Date(member.Rewards[0]?.end_date);
     endDate.setTime(endDate.getTime() - (7 * 60 * 60 * 1000))
     let currentDate = new Date();
-    let spinnedAt = new Date(member.Rewards[0]?.spinned_at)
+    let spinnedAt
     if (member.Rewards[0].Reward_Items.length > 0) spinnedAt = new Date(member.Rewards[0].spinned_at)
 
     const formatDate = (date) => {
