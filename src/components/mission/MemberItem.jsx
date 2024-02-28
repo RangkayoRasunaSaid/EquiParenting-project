@@ -7,6 +7,9 @@ import { titleCase } from "../Breadcrumbs";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import config from "../../config/config";
+import others from '../../assets/others.png'
+import bunda from '../../assets/bunda.svg'
+import ayah from '../../assets/ayah.svg'
 
 const MemberItem = ({ member, members, setUpdateMembers }) => {
     const [percent, setPercent] = useState(0)
@@ -52,7 +55,12 @@ const MemberItem = ({ member, members, setUpdateMembers }) => {
             <FaXmark /></button>
           )} mdlContent={(<ModalHapusMember member={member} handleDelete={handleDelete} />)} />
         <div className="flex justify-center mb-2">
-          <img src={member.avatar ? member.avatar : `/src/assets/${member.member_role === 'others' ? 'others.png' : member.member_role+'.svg'}`} className={`rounded-full ${member.avatar || member.member_role === 'others' && 'ring-2 ring-purple-500'}`} style={{height:"90px", width:"90px"}} alt="..." />
+          <img
+            src={member.avatar ? member.avatar : (member.member_role === 'others' ? others : member.member_role === 'bunda' ? bunda : ayah)}
+            className={`rounded-full ${(!member.avatar && member.member_role === 'others') && 'ring-2 ring-purple-500'}`}
+            style={{ height: "90px", width: "90px" }}
+            alt="..."
+          />
         </div>
         <h5 className="text-xl font-bold" style={{color:"#675893"}}>{titleCase(member.member_role)}</h5>
         <p className="text-slate-300 font-bold text-sm my-1">{titleCase(member.name)}</p>

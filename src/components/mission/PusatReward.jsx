@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import config from '../../config/config.js';
+import img1 from '../../assets/8.png'
+import img2 from '../../assets/7.png'
 
 export default function PusatReward({ members, setUpdateMembers }) {
     const [stats, setStats] = useState([]);
@@ -70,7 +72,7 @@ export default function PusatReward({ members, setUpdateMembers }) {
         <img
             role='button'
             className='rounded-circle max-w-xs'
-            src={`/src/assets/${spinTime && spinMembers.length > 0 ? '8' : '7'}.png`}
+            src={spinTime && spinMembers.length > 0 ? img1 : img2}
             alt="spin-wheel"
         />
     ) 
