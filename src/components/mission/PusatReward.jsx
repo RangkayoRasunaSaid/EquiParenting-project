@@ -57,6 +57,7 @@ export default function PusatReward({ members, setUpdateMembers }) {
             // setSpinMembers(spinMember)
         };
 
+        if (!sessionStorage.getItem('token')) return
         if (members.length > 0 && members[0].Rewards.length > 0) {
             fetchStatsForAllMembers()
             const endDate = new Date(members[0].Rewards[0]?.end_date)
