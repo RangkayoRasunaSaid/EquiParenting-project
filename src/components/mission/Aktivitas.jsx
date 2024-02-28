@@ -59,7 +59,7 @@ export default function Aktivitas({ members, setUpdateMembers, activities }){
             <div className="flex justify-between items-center my-5">
                 <div className='px-2 invisible md:block hidden'>Lihat <br /> Riwayat</div>
                 <h1 className="text-3xl font-bold">Aktivitas</h1>
-                <Link to='/history'><button className={`border-2 rounded-xl px-2 py-0 ${!hasActivities ? 'invisible' : '' }`} onClick={() => window.scrollTo(0, 0)}>Lihat <br /> Riwayat</button></Link>
+                <Link to='/history'><button className={`border-2 rounded-xl p-2 bg-ungu1 text-white hover:bg-dark-main-color focus:bg-ungu3 focus:outline-none ${!hasActivities ? 'invisible' : '' }`} onClick={() => window.scrollTo(0, 0)}>Lihat <br /> Riwayat</button></Link>                
             </div>
                 <div className="flex justify-center">
                     <ModalButton btnContent={(
