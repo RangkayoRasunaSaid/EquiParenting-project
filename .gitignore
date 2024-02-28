@@ -70,7 +70,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-src/config/config.js
+# src/config/config.js
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
