@@ -9,22 +9,20 @@ export default function Modal({ member, categories, setUpdateData }) {
     const buttonRef = useRef(null);
     const startRewardDate = new Date(member.Rewards[0].start_date)
     const endRewardDate = new Date(member.Rewards[0].end_date)
-    // endRewardDate.setSeconds(endRewardDate.getMinutes() - 1)
-    // startRewardDate.setSeconds(startRewardDate.getMinutes() + 1)
     const formattedSD = startRewardDate.toISOString().slice(0,startRewardDate.toISOString().lastIndexOf(":"))
     const formattedED = endRewardDate.toISOString().slice(0,endRewardDate.toISOString().lastIndexOf(":"))
     const [data, setData] = useState({
       id_member: member.id,
       title: "",
       category: "",
-      date_start_act: new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":")),
+      date_start_act: formattedSD,
       date_stop_act: formattedED,
       description: "",
       point: "",
     });
 
     const handleEndTimeChange = (e) => {
-        const endDate = e.target.value;
+        let endDate = new Date(e.target.value)
         if (endDate > formattedED) {
             toast.warning("End date must be before curent reward period end date");
             return;
@@ -45,7 +43,7 @@ export default function Modal({ member, categories, setUpdateData }) {
     };
 
     const handleStartTimeChange = (e) => {
-        const startDate = e.target.value;
+        let startDate = new Date(e.target.value)
         if (startDate < new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"))) {
             toast.warning("Start date must be after today's date");
             return;
@@ -70,8 +68,19 @@ export default function Modal({ member, categories, setUpdateData }) {
         buttonRef.current.click();
       
         try {
-        //   const response = await axios.post("http://localhost:3000/activities", data, {
-          const response = await axios.post(config.apiUrl + "/activities", data, {
+            const startDate = new Date(data.date_start_act);
+            const endDate = new Date(data.date_stop_act);
+            startDate.setHours(startDate.getHours() + 7);
+            endDate.setHours(endDate.getHours() + 7);
+          const response = await axios.post(config.apiUrl + "/activities", {
+            id_member: member.id,
+            title: data.title,
+            category: data.category,
+            date_start_act: startDate,
+            date_stop_act: endDate,
+            description: data.description,
+            point: data.point,
+          }, {
             headers: {
               Authorization: token,
             },

@@ -7,7 +7,6 @@ import MemberItem from "./MemberItem";
 import PropTypes from 'prop-types';
 
 const DailyMission = ({ members, setUpdateMembers }) => {
-
   const mdlBtn = (
     <div role="button" className="text-center mb-5 py-4 md:px-16 rounded-[40px] border-0 shadow-md h-100 bg-main-color text-white flex flex-col justify-between">
         <h5 className="text-2xl font-bold">Tambah</h5>

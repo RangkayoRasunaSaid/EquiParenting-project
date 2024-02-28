@@ -51,12 +51,16 @@ export default function ModalPeriode({ memberIds, setUpdateMembers, setIsCreatin
         const loadingToastId = toast.loading('Creating Reward Dates ...');
         
         try {
+          const startDate = new Date(data.start_date);
+          const endDate = new Date(data.end_date);
+          startDate.setHours(startDate.getHours() + 7);
+          endDate.setHours(endDate.getHours() + 7);
           // Create rewards for each member asynchronously
           await Promise.all(memberIds.map(async (memberId) => {
             const requestData = {
               spinned_at: '',
-              start_date: data.start_date,
-              end_date: data.end_date,
+              start_date: startDate,
+              end_date: endDate,
               id_member: memberId
             };
       
@@ -80,10 +84,10 @@ export default function ModalPeriode({ memberIds, setUpdateMembers, setIsCreatin
           
         } catch (error) {
           console.error("Error:", error);
-          setIsCreating(false)
           toast.update(loadingToastId, { render: 'Error Creating Reward Dates', type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
         } finally {
             setUpdateMembers(Date.now())
+            setIsCreating(false)
         }
       };
       
