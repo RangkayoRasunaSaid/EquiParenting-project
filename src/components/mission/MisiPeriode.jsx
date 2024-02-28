@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { titleCase } from "../Breadcrumbs";
 import PropTypes from 'prop-types';
+import others from '../../assets/others.png'
+import bunda from '../../assets/bunda.svg'
+import ayah from '../../assets/ayah.svg'
 
 export default function MisiPeriode({ members, member, memberName }) {
     const memberRole = !memberName ? member.member_role : `${member.member_role}-${member.name}`
@@ -15,7 +18,9 @@ export default function MisiPeriode({ members, member, memberName }) {
                     <h5 className='text-slate-300 mt-0.5 font-bold text-sm'>{titleCase(member.name)}</h5>
                 )}
                 <div className="flex justify-center mt-3">
-                    <img className={`rounded-full ${member.avatar || member.member_role === 'others' && 'ring-2 ring-purple-500'}`} style={{ height: "90px", width: "90px" }} alt="..." src={`/src/assets/${member.member_role === 'others' ? 'others.png' : member.member_role+'.svg'}`} />
+                    <img className={`rounded-full ${member.avatar || member.member_role === 'others' && 'ring-2 ring-purple-500'}`}
+                    style={{ height: "90px", width: "90px" }} alt="..."
+                    src={member.avatar ? member.avatar : (member.member_role === 'others' ? others : member.member_role === 'bunda' ? bunda : ayah)} />
                 </div>
             </div>
         </Link>
