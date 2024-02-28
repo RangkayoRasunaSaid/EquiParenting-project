@@ -3,11 +3,14 @@ import { titleCase } from "../Breadcrumbs"
 import PropTypes from 'prop-types';
 
 export default function WheelReward({ member, percent, memberName, spinTime, setSpinTime }) {
-    let endDate = new Date(member.Rewards[0]?.end_date);
-    endDate.setTime(endDate.getTime() - (7 * 60 * 60 * 1000))
+    let endDate
+    if (member.Rewards.length > 0) {
+        endDate = new Date(member.Rewards[0]?.end_date)
+        endDate.setTime(endDate.getTime() - (7 * 60 * 60 * 1000))
+    }
     let currentDate = new Date();
     let spinnedAt
-    if (member.Rewards[0].Reward_Items.length > 0) spinnedAt = new Date(member.Rewards[0].spinned_at)
+    if (member.Rewardslength > 0 && member.Rewards[0].Reward_Items.length > 0) spinnedAt = new Date(member.Rewards[0].spinned_at)
 
     const formatDate = (date) => {
         const addLeadingZero = (num) => (num < 10 ? "0" + num : num);
