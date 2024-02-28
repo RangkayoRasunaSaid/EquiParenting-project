@@ -38,7 +38,7 @@ const MemberItem = ({ member, members, setUpdateMembers }) => {
               });
             setPercent(response.data.percentage)
         } catch (error) {
-          toast.update(loadingToastId, { render: `Error fetching member activity stats`, type:'error', isLoading: false, autoClose: 5000, closeOnClick: true });
+          toast.error(`Error fetching member activity stats`);
           console.error('Error fetching member activity stats:', error);
         }
         };

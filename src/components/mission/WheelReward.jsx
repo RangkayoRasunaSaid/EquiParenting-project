@@ -10,7 +10,7 @@ export default function WheelReward({ member, percent, memberName, spinTime, set
     }
     let currentDate = new Date();
     let spinnedAt
-    if (member.Rewardslength > 0 && member.Rewards[0].Reward_Items.length > 0) spinnedAt = new Date(member.Rewards[0].spinned_at)
+    if (member.Rewards.length > 0 && member.Rewards[0].Reward_Items.length > 0) spinnedAt = new Date(member.Rewards[0].spinned_at)
 
     const formatDate = (date) => {
         const addLeadingZero = (num) => (num < 10 ? "0" + num : num);
