@@ -11,13 +11,28 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import config from '../../config/config.js';
 
-export default function PusatReward({ members, spinTime, setSpinTime, setUpdateMembers }) {
+export default function PusatReward({ members, setUpdateMembers }) {
     const [stats, setStats] = useState([]);
+    let endDate
+    if (members.length > 0) {
+      endDate = new Date(members[0].Rewards[0]?.end_date)
+      endDate.setTime(endDate.getTime() - (7 * 60 * 60 * 1000))
+    }
+    let currentDate = new Date();
+    const [spinTime, setSpinTime] = useState(endDate < currentDate);
 
     const keysWith100Percentage = Object.keys(stats).filter(key => stats[key].percentage === 100);
     const spinMembers = members.filter(member => {
         return keysWith100Percentage.includes(member.id.toString()) && member.Rewards.some(reward => reward.Reward_Items.length === 0);
     });
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            currentDate = new Date();
+            setSpinTime(endDate < currentDate);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [spinTime]);
         
     useEffect(() => {
         const fetchMemberActivityStats = async (member) => {
@@ -46,7 +61,7 @@ export default function PusatReward({ members, spinTime, setSpinTime, setUpdateM
             fetchStatsForAllMembers()
             const endDate = new Date(members[0].Rewards[0]?.end_date)
             const currentDate = new Date()
-            if (!spinTime) setSpinTime(endDate < currentDate);
+            // if (!spinTime) setSpinTime(endDate < currentDate);
         };
     }, [members]);
 
@@ -54,7 +69,7 @@ export default function PusatReward({ members, spinTime, setSpinTime, setUpdateM
         <img
             role='button'
             className='rounded-circle max-w-xs'
-            src={`/src/assets/${!spinTime || spinMembers.length === 0 ? '7' : '8'}.png`}
+            src={`/src/assets/${spinTime && spinMembers.length > 0 ? '8' : '7'}.png`}
             alt="spin-wheel"
         />
     ) 
@@ -73,9 +88,9 @@ export default function PusatReward({ members, spinTime, setSpinTime, setUpdateM
             <div className="bg-white m-4 rounded-[60px] shadow-md flex-none lg:flex">
                 <div className="lg:w-1/3 sm:w-full flex justify-center">
                     {sessionStorage.getItem("token") ? (
-                        members.length === 0 || !spinTime || spinMembers.length === 0 ? (
+                        members.length === 0 || endDate > currentDate || spinMembers.length === 0 ? (
                             <div onClick={() => {
-                                if (!spinTime) toast.warning('Belum Bisa Putar Spin karena Periode Masih Berjalan')
+                                if (endDate > currentDate) toast.warning('Belum Bisa Putar Spin karena Periode Masih Berjalan')
                                 else if (members.length === 0) toast.warning('Silahkan Buat Tim Terlebih Dahulu')
                                 else toast.warning('Silahkan Coba Lagi di Periode Berikutnya')
                             }

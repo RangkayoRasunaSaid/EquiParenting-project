@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import config from '../../../config/config';
 
-export default function ModalPeriode({ memberIds, setUpdateMembers }) {
+export default function ModalPeriode({ memberIds, setUpdateMembers, setIsCreating }) {
   const buttonRef = useRef(null);
     const [data, setData] = useState({
       spinned_at: '',
@@ -47,6 +47,8 @@ export default function ModalPeriode({ memberIds, setUpdateMembers }) {
         }
         buttonRef.current.classList.add('modal-button');
         buttonRef.current.click();
+        setIsCreating(true)
+        const loadingToastId = toast.loading('Creating Reward Dates ...');
         
         try {
           // Create rewards for each member asynchronously
@@ -74,10 +76,12 @@ export default function ModalPeriode({ memberIds, setUpdateMembers }) {
             });
             console.log("Score reset successfully for member with ID:", memberId);
           }))
-            toast('Reward Dates Created Successfully');
+            toast.update(loadingToastId, { render:  'Reward Dates Created Successfully', isLoading: false, autoClose: 5000, closeOnClick: true });
+          
         } catch (error) {
           console.error("Error:", error);
-          toast.error('Error Creating Reward Dates')
+          setIsCreating(false)
+          toast.update(loadingToastId, { render: 'Error Creating Reward Dates', type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
         } finally {
             setUpdateMembers(Date.now())
         }

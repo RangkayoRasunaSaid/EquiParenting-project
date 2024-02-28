@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import ModalPeriode from './modals/ModalPeriode';
 import ModalButton from './modals/ModalButton';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 export function formatDate(inputDate) {
     const months = [
@@ -20,10 +21,10 @@ export function formatDate(inputDate) {
 }
 
 export default function Aktivitas({ members, setUpdateMembers, activities }){
-    console.log(activities);
+    const [isCreating, setIsCreating] = useState(false)
     const endDate = new Date(members[0].Rewards[0]?.end_date)
+    endDate.setTime(endDate.getTime() - (7 * 60 * 60 * 1000))
     const currentDate = new Date();
-    console.log(currentDate > endDate);
     let hasActivities
     if (activities) hasActivities = activities.some(item => item.activities.length > 0);
     // Filter out members without Rewards defined
@@ -49,10 +50,9 @@ export default function Aktivitas({ members, setUpdateMembers, activities }){
     }
 
     const formattedPeriod = members[0].Rewards[0]?.start_date && members[0].Rewards[0]?.end_date ?
-        `${formatDate(new Date(members[0].Rewards[0].start_date).toLocaleDateString())} - ${formatDate(new Date(members[0].Rewards[0].end_date).toLocaleDateString())}`
+        `${formatDate(currentDate)} - ${formatDate(endDate)}`
         : '';  
     const allRolesUnique = new Set(members.map(member => member.member_role)).size === members.length;
-    console.log(formattedPeriod);
 
     return (
         <div className='text-center'>
@@ -63,11 +63,11 @@ export default function Aktivitas({ members, setUpdateMembers, activities }){
             </div>
                 <div className="flex justify-center">
                     <ModalButton btnContent={(
-                        <button disabled={currentDate < endDate} className="disabled:bg-slate-400 flex text-2xl gap-4 justify-center items-center px-5 text-white bg-main-color rounded-2xl font-bold md:text-xl shadow-md">
+                        <button disabled={currentDate < endDate || isCreating} className="disabled:bg-slate-400 flex text-2xl gap-4 justify-center items-center px-5 text-white bg-main-color rounded-2xl font-bold md:text-xl shadow-md">
                             <span>Atur Periode Mission</span>
                             <span className='text-5xl'>+</span>
                         </button>
-                    )} mdlContent={(<ModalPeriode memberIds={memberIds} setUpdateMembers={setUpdateMembers} />)} />
+                    )} mdlContent={(<ModalPeriode memberIds={memberIds} setUpdateMembers={setUpdateMembers} setIsCreating={setIsCreating} />)} />
                 </div>
             {currentDate < endDate &&
                 <>

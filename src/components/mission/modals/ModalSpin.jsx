@@ -21,7 +21,6 @@ const sectors = [
   ];
 
 const ModalSpin = ({ spinMembers, setUpdateMembers }) => {
-  // const [claimingReward, setClaimingReward] = useState(false)
   let claimingReward = false
   let memberSpin = ''
   if (spinMembers.length === 1) memberSpin = spinMembers[0]
@@ -64,10 +63,11 @@ const ModalSpin = ({ spinMembers, setUpdateMembers }) => {
     };
 
     const rotate = () => {
+      if (claimingReward) return
       const sector = sectors[getIndex()];
       canvas.style.transform = `rotate(${ang - PI / 2}rad)`;
-      spanRef.current.textContent = !angVel ? 'SPIN' : sector.label;
-      spinRef.current.style.background = sector.color;
+      if (spanRef.current) spanRef.current.textContent = !angVel ? 'SPIN' : sector.label;
+      if (spinRef.current) spinRef.current.style.background = sector.color;
       setTitle(sector.label)
     };
 
@@ -76,10 +76,8 @@ const ModalSpin = ({ spinMembers, setUpdateMembers }) => {
       let newAngVel = angVel * friction;
       if (newAngVel < 0.002) {
         claimingReward = true
-        console.log(claimingReward);
         newAngVel = 0
         const loadingToastId = toast.loading('Claiming the Reward ...');
-        console.log(ang, angVel, claimingReward);
         let reqData
         if (spinMembers.length === 1) reqData = rewardFor
         else reqData = JSON.parse(rewardFor)
@@ -102,6 +100,7 @@ const ModalSpin = ({ spinMembers, setUpdateMembers }) => {
         }
       };
 
+      if (claimingReward) return
       let newAng = ang + newAngVel;
       newAng %= TAU;
       setAng(newAng);
@@ -110,6 +109,7 @@ const ModalSpin = ({ spinMembers, setUpdateMembers }) => {
     };
 
     const engine = () => {
+      if (claimingReward) return
       frame();
       requestAnimationFrame(engine);
     };
