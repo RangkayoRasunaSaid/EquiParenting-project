@@ -1,3 +1,8 @@
+import img1 from '../../assets/pola-asuh.svg'
+import img2 from '../../assets/emosi-self-awarness.svg'
+import img3 from '../../assets/perilaku.svg'
+import img4 from '../../assets/sosial.svg'
+
 const FeatureSection = () => {
   return (
     <>
@@ -12,7 +17,7 @@ const FeatureSection = () => {
           <div className="flex flex-col items-center mb-2">
             <img
               className="size-2/4 md:size-3/5 mb-2"
-              src="src/assets/pola-asuh.svg"
+              src={img1}
               alt="equiparenting memiliki concern tentang pola asuh"
             />
             <p>Pola Asuh</p>
@@ -20,7 +25,7 @@ const FeatureSection = () => {
           <div className="flex flex-col items-center mb-2">
             <img
               className="size-[44%] md:size-[47%] mb-2"
-              src="src/assets/emosi-self-awarness.svg"
+              src={img2}
               alt="equiparenting memiliki concern tentang pola asuh"
             />
             <p>Emosi & Self Awarness</p>
@@ -28,7 +33,7 @@ const FeatureSection = () => {
           <div className="flex flex-col items-center mb-2">
             <img
               className="size-2/4 md:size-3/5 mb-2"
-              src="src/assets/perilaku.svg"
+              src={img3}
               alt="equiparenting memiliki concern tentang pola asuh"
             />
             <p>Perilaku</p>
@@ -36,7 +41,7 @@ const FeatureSection = () => {
           <div className="flex flex-col items-center mb-2">
             <img
               className="size-2/4 md:size-3/5 mb-2"
-              src="src/assets/sosial.svg"
+              src={img4}
               alt="equiparenting memiliki concern tentang pola asuh"
             />
             <p>Sosial</p>

@@ -1,4 +1,10 @@
 import { Link } from 'react-router-dom';
+import img1 from '../../assets/mission-section.png'
+import img2 from '../../assets/mission-section-explanation.png'
+import img3 from '../../assets/task-icon-mission.svg'
+import img4 from '../../assets/badge-icon-mission.svg'
+import img5 from '../../assets/reward-icon-mission.svg'
+import img6 from '../../assets/love-icon-mission.svg'
 
 const MissionSection = () => {
   return (
@@ -11,7 +17,7 @@ const MissionSection = () => {
         <div className="flex justify-center">
           <img
             className="w-full md:w-[72%]"
-            src="src/assets/mission-section.png"
+            src={img1}
             alt="special-service-or-special-feature"
           />
         </div>
@@ -22,7 +28,7 @@ const MissionSection = () => {
       <div className="flex flex-col md:flex-row items-center justify-between my-8">
         <div className="w-full md:w-[65%] px-6 md:px-0 md:ml-12">
           <img
-            src="src/assets/mission-section-explanation.png"
+            src={img2}
             alt="mission-feature-explanation-figure"
           />
         </div>
@@ -46,7 +52,7 @@ const MissionSection = () => {
               <div>
                 <img
                   className="w-10 md:w-16 lg:w-14 h-auto mx-auto mb-1"
-                  src="src/assets/task-icon-mission.svg"
+                  src={img3}
                   alt="equiparenting memiliki concern tentang pola asuh"
                 />
                 <h3 className="text-base lg:text-xl font-semibold text-center">Misi</h3>
@@ -54,7 +60,7 @@ const MissionSection = () => {
               <div>
                 <img
                   className="w-10 md:w-16 lg:w-14 h-auto mx-auto mb-1"
-                  src="src/assets/badge-icon-mission.svg"
+                  src={img4}
                   alt="equiparenting memiliki concern tentang pola asuh"
                 />
                 <h3 className="text-base lg:text-xl font-semibold">Lencana</h3>
@@ -62,7 +68,7 @@ const MissionSection = () => {
               <div>
                 <img
                   className="w-10 md:w-16 lg:w-14 h-auto mx-auto mb-1"
-                  src="src/assets/reward-icon-mission.svg"
+                  src={img5}
                   alt="equiparenting memiliki concern tentang pola asuh"
                 />
                 <h3 className="text-base lg:text-xl font-semibold">Hadiah</h3>
@@ -70,7 +76,7 @@ const MissionSection = () => {
               <div>
                 <img
                   className="w-10 md:w-16 lg:w-14 h-auto mx-auto mb-1"
-                  src="src/assets/love-icon-mission.svg"
+                  src={img6}
                   alt="equiparenting memiliki concern tentang pola asuh"
                 />
                 <h3 className="text-base lg:text-xl font-semibold">Harmonis</h3>

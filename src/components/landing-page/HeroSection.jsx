@@ -3,6 +3,14 @@ import 'owl.carousel/dist/assets/owl.carousel.css'
 import 'owl.carousel/dist/assets/owl.theme.default.css'
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import img1 from '../../assets/hero/1.jpeg'
+import img2 from '../../assets/hero/2.svg'
+import img3 from '../../assets/hero/3.jpg'
+import img4 from '../../assets/hero/4.jpg'
+import img5 from '../../assets/hero/5.jpeg'
+import img6 from '../../assets/hero/6.jpg'
+import img7 from '../../assets/hero/7.jpg'
+import img8 from '../../assets/hero/8.jpeg'
 
 const heroSection = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -16,16 +24,7 @@ const heroSection = () => {
     };
 
     const loadImages = async () => {
-      const imageUrls = [
-        '/src/assets/hero/1.jpeg',
-        '/src/assets/hero/2.svg',
-        '/src/assets/hero/3.jpg',
-        '/src/assets/hero/4.jpg',
-        '/src/assets/hero/5.jpeg',
-        '/src/assets/hero/6.jpg',
-        '/src/assets/hero/7.jpg',
-        '/src/assets/hero/8.jpeg'
-      ];
+      const imageUrls = [img1, img2, img3, img4, img5, img6, img7, img8];
 
       const loadedImages = await Promise.all(imageUrls.map(loadImage));
       setImages(loadedImages);
