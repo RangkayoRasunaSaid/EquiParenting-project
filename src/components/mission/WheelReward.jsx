@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { titleCase } from "../Breadcrumbs"
 import PropTypes from 'prop-types';
 
-export default function WheelReward({ member, percent, memberName, spinTime, setSpinTime }) {
+export default function WheelReward({ member, percent, memberName }) {
     let endDate
     if (member.Rewards.length > 0) {
         endDate = new Date(member.Rewards[0]?.end_date)

@@ -21,20 +21,11 @@ export default function PusatReward({ members, setUpdateMembers }) {
       endDate.setTime(endDate.getTime() - (7 * 60 * 60 * 1000))
     }
     let currentDate = new Date();
-    const [spinTime, setSpinTime] = useState(endDate < currentDate);
 
     const keysWith100Percentage = Object.keys(stats).filter(key => stats[key].percentage === 100);
     const spinMembers = members.filter(member => {
         return keysWith100Percentage.includes(member.id.toString()) && member.Rewards.some(reward => reward.Reward_Items.length === 0);
     });
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            currentDate = new Date();
-            setSpinTime(endDate < currentDate);
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [spinTime]);
         
     useEffect(() => {
         const fetchMemberActivityStats = async (member) => {
@@ -56,15 +47,11 @@ export default function PusatReward({ members, setUpdateMembers }) {
             const stats = await Promise.all(statsPromises);
             const statsObject = stats.reduce((acc, stat) => ({ ...acc, ...stat }), {})
             setStats(statsObject)
-            // setSpinMembers(spinMember)
         };
 
         if (!sessionStorage.getItem('token')) return
         if (members.length > 0 && members[0].Rewards.length > 0) {
             fetchStatsForAllMembers()
-            const endDate = new Date(members[0].Rewards[0]?.end_date)
-            const currentDate = new Date()
-            // if (!spinTime) setSpinTime(endDate < currentDate);
         };
     }, [members]);
 
@@ -72,7 +59,7 @@ export default function PusatReward({ members, setUpdateMembers }) {
         <img
             role='button'
             className='rounded-circle max-w-xs'
-            src={spinTime && spinMembers.length > 0 ? img1 : img2}
+            src={endDate < currentDate && spinMembers.length > 0 ? img1 : img2}
             alt="spin-wheel"
         />
     ) 
@@ -121,8 +108,6 @@ export default function PusatReward({ members, setUpdateMembers }) {
                                 member={member}
                                 percent={stats[member.id]?.percentage}
                                 memberName={!allRolesUnique}
-                                spinTime={spinTime}
-                                setSpinTime={setSpinTime}
                             />
                         ))}
                     </OwlCarousel>
