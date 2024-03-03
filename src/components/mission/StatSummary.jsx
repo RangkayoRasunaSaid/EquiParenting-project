@@ -22,8 +22,8 @@ export default function StatSummary({ members, stats }) {
                 <OwlCarousel className='owl-theme text-center' {...options} key={`carousel_${Date.now()}`} >
                     {members.map(m => (
                         <div key={m.id} className='item'>
-                            <SummaryCard title={`${titleCase(m.member_role)} Idaman`} fontSz='text-7xl'
-                                description={`selesaikan banyak misi untuk menaikkan score menjadi "${titleCase(m.member_role)} Idaman”`}
+                            <SummaryCard title={`${m.member_role === 'others' ? 'Member' : titleCase(m.member_role)} Idaman`} fontSz='text-7xl'
+                                description={`selesaikan banyak misi untuk menaikkan score menjadi "${m.member_role === 'others' ? 'Member' : titleCase(m.member_role)} Idaman”`}
                                 firstRow={stats[m.id]?.percentage} memberName={!allRolesUnique ? m.name : ''}
                             />
                             <SummaryCard title='Daily Mission'
