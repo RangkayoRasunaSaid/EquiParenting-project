@@ -1,4 +1,5 @@
 // actions.js
+import config from '../../config/config';
 import * as actionTypes from '../actionTypes/reward';
 import axios from 'axios';
 
@@ -6,7 +7,7 @@ export const createReward = (rewardData) => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.CREATE_REWARD_REQUEST });
     try {
-      await axios.post('https://outrageous-gold-twill.cyclic.app/rewards', rewardData);
+      await axios.post(config.apiUrl + '/rewards', rewardData);
       dispatch({ type: actionTypes.CREATE_REWARD_SUCCESS });
     } catch (error) {
       dispatch({
@@ -21,7 +22,7 @@ export const updateReward = (id, rewardData) => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.UPDATE_REWARD_REQUEST });
     try {
-      await axios.put(`https://outrageous-gold-twill.cyclic.app/rewards/${id}`, rewardData);
+      await axios.put(config.apiUrl + `/rewards/${id}`, rewardData);
       dispatch({ type: actionTypes.UPDATE_REWARD_SUCCESS });
     } catch (error) {
       dispatch({
@@ -36,7 +37,7 @@ export const getReward = (id) => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.GET_REWARD_REQUEST });
     try {
-      const response = await axios.get(`https://outrageous-gold-twill.cyclic.app/rewards/${id}`);
+      const response = await axios.get(config.apiUrl + `/rewards/${id}`);
       dispatch({
         type: actionTypes.GET_REWARD_SUCCESS,
         payload: response.data
@@ -54,7 +55,7 @@ export const getAllRewards = () => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.GET_ALL_REWARDS_REQUEST });
     try {
-      const response = await axios.get('https://outrageous-gold-twill.cyclic.app/rewards');
+      const response = await axios.get(config.apiUrl + '/rewards');
       dispatch({
         type: actionTypes.GET_ALL_REWARDS_SUCCESS,
         payload: response.data

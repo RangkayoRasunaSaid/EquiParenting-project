@@ -23,10 +23,8 @@ export default function PusatReward({ members, setUpdateMembers }) {
     let currentDate = new Date();
 
     const keysWith100Percentage = Object.keys(stats).filter(key => stats[key].percentage === 100);
-    const spinMembers = members.filter(member => {
-        return keysWith100Percentage.includes(member.id.toString()) && member.Rewards.some(reward => reward.Reward_Items.length === 0);
-    });
-        
+    const spinMembers = members.filter(member => keysWith100Percentage.includes(member.id.toString()) && member.Rewards.some(reward => reward.Reward_Items.length === 0));
+   
     useEffect(() => {
         const fetchMemberActivityStats = async (member) => {
             try {
@@ -49,10 +47,8 @@ export default function PusatReward({ members, setUpdateMembers }) {
             setStats(statsObject)
         };
 
-        if (!sessionStorage.getItem('token')) return
-        if (members.length > 0 && members[0].Rewards.length > 0) {
-            fetchStatsForAllMembers()
-        };
+        if (!sessionStorage.getItem('token') || members.length === 0 || members[0].Rewards.length === 0) return
+        fetchStatsForAllMembers()
     }, [members]);
 
     const btnCtn = (
