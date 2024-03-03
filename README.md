@@ -11,21 +11,21 @@ EquiParenting is a web application aimed at empowering parents or any other prov
 
 ## Key Features
 
-1. Mission Management: Users can create, view, and manage household chores or tasks within specified periods. Each task can be assigned to a specific member of the family, and details such as title, category, description, start and end dates, and points can be specified.
-2. Period Management: Users can set the start and end dates for mission periods, defining specific timeframes during which household chores should be completed.
-3. Reward System: Upon completing all tasks within a specified period and earning a 100% score, the member becomes eligible to claim a reward. This feature encourages active participation and acknowledges the efforts of family members.
-4. Scoring and Approval: The application includes a scoring mechanism to track task completion and calculate each member's score within a period. Members can approve completed tasks, promoting accountability and collaboration.
-5. Comprehensive View: The project provides a comprehensive view of past activities and reward periods, helping users track their progress and achievements over time.
+1. **Mission Management:** Users can create, view, and manage household chores or tasks within specified periods. Each task can be assigned to a specific member of the family, and details such as title, category, description, start and end dates, and points can be specified.
+2. **Period Management:** Users can set the start and end dates for mission periods, defining specific timeframes during which household chores should be completed.
+3. **Reward System:** Upon completing all tasks within a specified period and earning a 100% score, the member becomes eligible to claim a reward. This feature encourages active participation and acknowledges the efforts of family members.
+4. **Scoring and Approval:** The application includes a scoring mechanism to track task completion and calculate each member's score within a period. Members can approve completed tasks, promoting accountability and collaboration.
+5. **Comprehensive View:** The project provides a comprehensive view of past activities and reward periods, helping users track their progress and achievements over time.
 
 ## Installation and Setup
 
 To set up the EquiParenting web application locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/RangkayoRasunaSaid/EquiParenting-project.git`
-2. Navigate to the project directory: `cd EquiParenting-project`
-3. Install dependencies: `npm install`
-4. Start the development server: `npm start`
-5. Open the application in your browser: `http://localhost:5173`
+1. Clone the repository: **`git clone https://github.com/RangkayoRasunaSaid/EquiParenting-project.git`**
+2. Navigate to the project directory: **`cd EquiParenting-project`**
+3. Install dependencies: **`npm install`**
+4. Start the development server: **`npm start`**
+5. Open the application in your browser: **`http://localhost:5173`**
 
 ## Credits
 
