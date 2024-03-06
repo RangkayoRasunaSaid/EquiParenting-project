@@ -33,7 +33,7 @@ const Navbar = () => {
       const currentScrollPos = window.scrollY;
       const isScrolledDown = prevScrollPos < currentScrollPos;
 
-      if (currentScrollPos === 0 || isScrolledDown) navRef.current.classList.remove('fixed');
+      if (currentScrollPos === 0 || isScrolledDown && navRef.current) navRef.current.classList.remove('fixed');
       else if (!isScrolledDown) navRef.current.classList.add('fixed');
       setPrevScrollPos(currentScrollPos);
     };

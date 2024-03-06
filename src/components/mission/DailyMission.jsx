@@ -4,26 +4,29 @@ import Tim from "./Daymission";
 import { useNavigate } from "react-router-dom";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { useSelector } from "react-redux";
+import { override } from "../../pages/Profile";
+import { ClipLoader } from "react-spinners";
 
-export default function DailyMission({ members, setUpdateMembers, activities }) {
+export default function DailyMission({ setUpdateMembers, activities }) {
     const navigate = useNavigate()
+    if (!sessionStorage.getItem('token')) navigate('/login')
 
-    useEffect(() => {
-        const token = sessionStorage.getItem('token');
-        if (!token) {
-            navigate('/login');
-        }
-    }, []);
+    const { members, loading } = useSelector(state => state.member)
   
     return (
-        <>
-            <div className="bg-white mx-4 px-10 rounded-[60px] pb-5 flex flex-col justify-center">
-                <Tim members={members} setUpdateMembers={setUpdateMembers} />
+        <div className="bg-white mx-4 px-10 rounded-[60px] pb-5 flex flex-col justify-center">
+        {!members ? (
+          <ClipLoader color="silver" loading={loading} cssOverride={override} size={50} aria-label="Loading Spinner" data-testid="loader" />
+        ) : (
+            <>
+                <Tim setUpdateMembers={setUpdateMembers} />
                 {members.length > 0 &&
-                    <Aktivitas members={members} setUpdateMembers={setUpdateMembers} activities={activities} />
+                    <Aktivitas setUpdateMembers={setUpdateMembers} activities={activities} />
                 }
-            </div>
-        </>
+            </>
+        )}
+        </div>
     )
 }
 // DailyMission.propTypes = {

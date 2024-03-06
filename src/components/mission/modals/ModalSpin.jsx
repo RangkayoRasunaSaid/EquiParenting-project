@@ -23,7 +23,7 @@ const sectors = [
 const ModalSpin = ({ spinMembers, setUpdateMembers }) => {
   let claimingReward = false
   let memberSpin = ''
-  if (spinMembers.length === 1) memberSpin = spinMembers[0]
+  if (spinMembers && spinMembers.length === 1) memberSpin = spinMembers[0]
   const [rewardFor, setRewardFor] = useState(memberSpin)
   const [title, setTitle] = useState('')
   const canvasRef = useRef(null);
