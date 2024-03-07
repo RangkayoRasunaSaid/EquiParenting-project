@@ -52,8 +52,8 @@ export default function ModalButton({ btnContent, mdlContent, maxWidth='400px' }
                 $maxwidth={maxWidth} // Use $maxwidth instead of maxwidth
                 backgroundProps={{ opacity }}
             >
-                <button className="absolute top-5 right-5 modal-button hover:bg-zinc-300 rounded-full"><BsXLg /></button>
-                <div className='z-50 relative'>
+                <button className="z-50 absolute top-5 right-5 modal-button hover:bg-zinc-300 rounded-full"><BsXLg /></button>
+                <div className='z-40 relative'>
                     {mdlContent}
                 </div>
             </StyledModal>
