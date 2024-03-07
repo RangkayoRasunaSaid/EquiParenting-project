@@ -14,50 +14,26 @@ import NavbarLogin from "./components/navbar/NavbarLogin"
 import Footer from './components/Footer/Footer'
 import { ToastContainer } from 'react-toastify';
 import History from './components/mission/History.jsx';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import config from './config/config.js';
 
 function App() {
-  const [updateMembers, setUpdateMembers] = useState(0)
-  const [members, setMembers] = useState([])
-  const [activities, setActivities] = useState([]);
-
-  useEffect(() => {
-    const fetchActivities = async () => {
-      try {
-        const token = sessionStorage.getItem('token');
-        const response = await axios.get(config.apiUrl + '/activities', { headers: { Authorization: token } });
-        setActivities(response.data);
-      } catch (error) {
-        console.error('Error fetching activities:', error);
-      }
-    };
-
-    if (!sessionStorage.getItem('token')) return
-    fetchActivities();
-  }, [members])
-
-
   return (
     <Provider store={store}>
       <Router>
           {/* <Navbar /> */}
           <div className="bg-[url('/src/assets/background2.jpg')]">
-          <ToastContainer
-            closeOnClick
-            position="top-center"
-          />
-          <NavbarLogin />
+            <ToastContainer closeOnClick position="top-center" />
+            
+            <NavbarLogin />
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="/mission/*" element={<Mission members={members} setMembers={setMembers} updateMembers={updateMembers} setUpdateMembers={setUpdateMembers} activities={activities} />} />
+              <Route path="/mission/*" element={<Mission />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/history" element={<History activities={activities} members={members} setUpdateMembers={setUpdateMembers} />} />
+              <Route path="/history" element={<History />} />
             </Routes>
-          <Footer />
+
+            <Footer />
           </div>
       </Router>
     </Provider>

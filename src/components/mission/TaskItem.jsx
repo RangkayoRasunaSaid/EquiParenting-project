@@ -1,20 +1,24 @@
 // TaskItem.js
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import moment from 'moment/moment';
 import { titleCase } from '../Breadcrumbs';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-import config from '../../config/config';
+import { useDispatch, useSelector } from 'react-redux';
+import { approveActivity } from '../../redux/slices/activitySlice';
 
 function formatDate(stringDate) {
+  const buttonRef = useRef(null);
   let date = moment(stringDate);
   date = moment(stringDate).utcOffset('+0700');
   return date.format('D MMM YYYY HH:mm [WIB]')
 }
 
-const TaskItem = ({ members, activity, bySystem=false, responsible, setUpdateData }) => {
-  const [isCreating, setIsCreating] = useState(false)
+const TaskItem = ({ activity, responsible, history=false }) => {
+  const buttonRef = useRef(null);
+  const dispatch = useDispatch();
+  const { members } = useSelector(state => state.member)
+  const { loading } = useSelector(state => state.activity)
   let date = moment(activity.date_start_act);
   if (activity.approval_date) date = moment(activity.approval_date)
   date = date.utcOffset('+0700');
@@ -40,32 +44,19 @@ const TaskItem = ({ members, activity, bySystem=false, responsible, setUpdateDat
   let timeDifference = (isLate ? "Terlambat " : "") + diffHours + " Jam " + diffMinutes + " Menit";
 
   const [approvedBy, setApprovedBy] = useState('');
-  const allRolesUnique = new Set(members.map(member => member.member_role)).size === members.length;
+  let allRolesUnique = true
+  if (members) allRolesUnique = new Set(members.map(member => member.member_role)).size === members.length;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    buttonRef.current.disabled = true
     if (!approvedBy) {
-      alert("Harap isi disetujui oleh");
-      return;
+      buttonRef.current.disabled = false
+      return toast.warning("Harap isi disetujui oleh")
     }
-    setIsCreating(true)
-    const loadingToastId = toast.loading('Menyetujui Aktifitas ...');
-  
-    try {
-      const response = await axios.put(config.apiUrl + `/activities/approve/${activity.id}`, { approval_by: approvedBy }, {
-        headers: {
-          Authorization: sessionStorage.getItem("token"),
-        },
-      });
-      toast.update(loadingToastId, { render:  'Berhasil menyetujui aktifitas', isLoading: false, autoClose: 5000, closeOnClick: true });
-    
-    } catch (error) {
-      console.error("Error approving activity:", error);
-      setIsCreating(false)
-      toast.update(loadingToastId, { render: 'Penambahan member gagal', type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
-    } finally {
-      setUpdateData(Date.now())
-    }
+    buttonRef.current.disabled = true
+    const member = members.find(member => member.id === activity.id_member);
+    dispatch(approveActivity({activity, approvedBy, member}))
   };
   
   return (
@@ -77,22 +68,6 @@ const TaskItem = ({ members, activity, bySystem=false, responsible, setUpdateDat
           <h6 className="text-left mb-3 text-slate-300 text-xs font-semibold">
             {formattedDate}
           </h6>
-          {/* {!bySystem ? (
-            <div className="text-center rounded-[30px] mb-3 text-xs font-bold" style={{ maxHeight: "150px", overflow: "hidden", backgroundColor:"#d9d9d9", color:"#a49eb5" }}>
-              {!activity.imageUrl ? (
-                  <div className="p-4">
-                      <label role="button" for='photo-input'>
-                          <p className="mb-4">Unggah Bukti Berupa Foto</p>
-                          <h1 className="text-6xl" style={{color:"#675893"}}><i className="bi bi-upload"></i></h1>
-                      </label>
-                      <input id="photo-input" type="file" style={{display:"none"}} />
-                  </div>
-              ) : (
-                  <img style={{ width: "100%", height: "auto", objectFit: "cover" }} alt="..." src={activity.imageUrl} />
-              )}
-              
-            </div>
-          ) : ''} */}
           <p className="text-left text-xs font-bold">Deskripsi:</p>
           <p className="text-left text-xs font-medium mb-2">{activity.description}</p>
           <p className="text-slate-300 text-xs font-semibold text-center my-3">
@@ -102,7 +77,7 @@ const TaskItem = ({ members, activity, bySystem=false, responsible, setUpdateDat
               isLateApproval ? (
                 <span className='text-red-500'>Diselesaikan Terlambat</span>
               ) : (
-                <span>Diselesaikan Tepat Waktu</span> // <- Replaced <p> with <span>
+                <span>Diselesaikan Tepat Waktu</span>
               )
             )}
           </p>
@@ -110,8 +85,8 @@ const TaskItem = ({ members, activity, bySystem=false, responsible, setUpdateDat
           <p className="text-left text-xs font-bold mb-2">Poin yang {!activity.approval_by ? 'Akan' : ''} Diperoleh: {activity.point} Poin</p>
           <p className="text-left text-xs font-bold mb-2">Penanggung Jawab: {responsible}</p>
           <form onSubmit={handleSubmit}>
-            {activity.approval_by ? (
-              <p className="text-left text-xs font-bold mb-2">Disetujui Oleh: {titleCase(activity.approval_by)}</p>
+            {activity.approval_by || history ? (
+              <p className="text-left text-xs font-bold mb-2">Disetujui Oleh: {!activity.approval_by ? '-' : titleCase(activity.approval_by)}</p>
             ) : (
               <div className="flex items-center gap-3 text-xs font-bold mb-2">
                   <div>
@@ -120,7 +95,7 @@ const TaskItem = ({ members, activity, bySystem=false, responsible, setUpdateDat
                   <div>
                       <select value={approvedBy} onChange={(e) => setApprovedBy(e.target.value)} className="form-select text-xs font-bold rounded-[30px] form-select-sm" style={{color:"#675893"}}>
                         <option value="" disabled>Select One</option>
-                          {members.map(m => (
+                          {members && members.map(m => (
                             <option
                               key={m.id} className="text-xs font-bold"
                               style={{color:"#675893"}} value={m.member_role}>
@@ -131,17 +106,14 @@ const TaskItem = ({ members, activity, bySystem=false, responsible, setUpdateDat
                   </div>
               </div>
             ) }
-              {/* {!bySystem ? ( */}
                 <p className="text-xs font-bold mb-4">
                   Waktu Aktivitas: {formatDate(activity.date_start_act)} - {formatDate(activity.date_stop_act)}
-                  {/* <i className="ms-1 font-bold bi bi-pencil-square"></i> */}
                 </p>
-              {/* ) : '' } */}
                 <div className="flex justify-center">
-                    <button
+                    <button ref={buttonRef}
                       type='submit'
-                      className="text-white disabled:opacity-60 bg-main-color rounded-lg shadow-md py-2 px-3 font-semibold "
-                      disabled={isCreating || activity.approval_date}>
+                      className="text-white hover:bg-ungu1/50 disabled:bg-ungu1/50 bg-ungu1 rounded-lg shadow-md py-2 px-3 font-semibold "
+                      disabled={loading || activity.approval_date || history}>
                         Misi Selesai
                     </button>
                 </div>

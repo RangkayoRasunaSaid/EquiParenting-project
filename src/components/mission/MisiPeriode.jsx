@@ -5,12 +5,12 @@ import others from '../../assets/others.png'
 import bunda from '../../assets/bunda.svg'
 import ayah from '../../assets/ayah.svg'
 
-export default function MisiPeriode({ members, member, memberName }) {
+export default function MisiPeriode({ member, memberName }) {
     const memberRole = !memberName ? member.member_role : `${member.member_role}-${member.name}`
     return (
         <Link
             to={`/mission/daily-mission/:${memberRole}`}
-            state={{ members, member }}
+            state={ member }
         >
             <div className={`px-10 py-6 rounded-[20px] border-0 shadow-md h-100 item`} onClick={() => window.scrollTo(0, 0)}>
                 <h5 className="text-xl font-bold" style={{ color: "#675893" }}>Misi {titleCase(member.member_role)}</h5>

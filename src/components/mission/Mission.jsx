@@ -7,8 +7,9 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import MisiAnggota from './MisiAnggota.jsx';
-import { toast } from 'react-toastify';
 import config from '../../config/config.js';
+import { fetchMembers } from '../../redux/slices/memberSlice.js';
+import { useDispatch } from 'react-redux';
 
 // Styled component for customizing modal background transition
 const FadingBackground = styled(BaseModalBackground)`
@@ -16,29 +17,18 @@ const FadingBackground = styled(BaseModalBackground)`
     transition: all 0.3s ease-in-out;
 `;
 
-export default function App({ members, setMembers, updateMembers, setUpdateMembers, activities }) {
+export default function App() {
     const [categories, setCategories] = useState([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
       const fetchData = async () => {
-        try {
-          const token = sessionStorage.getItem('token');
-          
-          // Fetch members
-          const membersResponse = await axios.get(config.apiUrl + '/members', { headers: { Authorization: token } });
-          const membersData = membersResponse.data.members;
-          setMembers(membersData);
-
-          const categoriesResponse = await axios.get(config.apiUrl + `/categories`);
-          setCategories(categoriesResponse.data);
-        } catch (error) {
-          // console.error('Error fetching data:', error);
-          toast.error('Failed fetching data');
-        }
+        dispatch(fetchMembers())
+        const categoriesResponse = await axios.get(config.apiUrl + '/categories');
+        setCategories(categoriesResponse.data);
       };
-      if (!sessionStorage.getItem("token")) return
-      fetchData();
-    }, [updateMembers]);
+      if (sessionStorage.getItem("token")) fetchData();
+    }, []);
   
     return (
         <ModalProvider backgroundComponent={FadingBackground}>
@@ -49,8 +39,8 @@ export default function App({ members, setMembers, updateMembers, setUpdateMembe
                     Selamat datang di misi keluarga idaman!
                 </h1>
                 <Routes>
-                    <Route path="/" element={<PusatReward members={members} setUpdateMembers={setUpdateMembers} />} />
-                    <Route path="/daily-mission" element={<DailyMission members={members} setUpdateMembers={setUpdateMembers} activities={activities} />} />
+                    <Route path="/" element={<PusatReward />} />
+                    <Route path="/daily-mission" element={<DailyMission />} />
                     <Route path="/daily-mission/:role" element={<MisiAnggota categories={categories} />} />
                 </Routes>
             </div>

@@ -1,16 +1,18 @@
-import axios from "axios";
 import { useRef, useState } from "react";
 import { titleCase } from "../../Breadcrumbs";
 import PropTypes from 'prop-types';
 import { toast } from "react-toastify";
-import config from "../../../config/config";
+import { useDispatch } from "react-redux";
+import { createActivity } from "../../../redux/slices/activitySlice";
 
-export default function Modal({ member, categories, setUpdateData }) {
+export default function Modal({ member, categories }) {
     const buttonRef = useRef(null);
+    const dispatch = useDispatch();
     const startRewardDate = new Date(member.Rewards[0].start_date)
     const endRewardDate = new Date(member.Rewards[0].end_date)
     const formattedSD = startRewardDate.toISOString().slice(0,startRewardDate.toISOString().lastIndexOf(":"))
     const formattedED = endRewardDate.toISOString().slice(0,endRewardDate.toISOString().lastIndexOf(":"))
+    
     const [data, setData] = useState({
       id_member: member.id,
       title: "",
@@ -23,76 +25,32 @@ export default function Modal({ member, categories, setUpdateData }) {
 
     const handleEndTimeChange = (e) => {
         let endDate = new Date(e.target.value)
-        if (endDate > formattedED) {
-            toast.warning("End date must be before curent reward period end date");
-            return;
-        }
-        if (endDate < data.date_start_act) {
-            toast.warning("End date must be after start date");
-            return;
-        }
-        if (endDate < new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"))) {
-            toast.warning("Start date must be after today's date");
-            return;
-        }
-        if (endDate < formattedSD) {
-            toast.warning("Start date must be after curent reward period start date");
-            return;
-        }
+        if (endDate > formattedED) return toast.warning("End date must be before curent reward period end date")
+        if (endDate < data.date_start_act) return toast.warning("End date must be after start date")
+        if (endDate < new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"))) return toast.warning("Start date must be after today's date")
+        if (endDate < formattedSD) return toast.warning("Start date must be after curent reward period start date")
         setData({ ...data, date_stop_act: e.target.value });
     };
 
     const handleStartTimeChange = (e) => {
         let startDate = new Date(e.target.value)
-        if (startDate < new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"))) {
-            toast.warning("Start date must be after today's date");
-            return;
-        }
-        if (data.date_stop_act < startDate) {
-            toast.warning("Start date must be before end date");
-            return;
-        }
+        if (startDate < new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":"))) return toast.warning("Start date must be after today's date")
+        if (data.date_stop_act < startDate) return toast.warning("Start date must be before end date")
         setData({ ...data, date_start_act: e.target.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-      
-        const token = sessionStorage.getItem("token");
-        if (!data.id_member || !data.title || !data.category || !data.date_start_act || !data.date_stop_act || !data.description || !data.point) {
-          toast.warning("Harap isi semua kolom")
-          return;
+        buttonRef.current.disabled = true
+        if (Object.values(data).some(value => !value)) {
+            buttonRef.current.disabled = false
+            return toast.warning("Harap isi semua kolom")
         }
-        const loadingToastId = toast.loading('Membuat Misi ...');
         buttonRef.current.classList.add('modal-button');
+        buttonRef.current.disabled = false
         buttonRef.current.click();
-      
-        try {
-            const startDate = new Date(data.date_start_act);
-            const endDate = new Date(data.date_stop_act);
-            startDate.setHours(startDate.getHours() + 7);
-            endDate.setHours(endDate.getHours() + 7);
-          const response = await axios.post(config.apiUrl + "/activities", {
-            id_member: member.id,
-            title: data.title,
-            category: data.category,
-            date_start_act: startDate,
-            date_stop_act: endDate,
-            description: data.description,
-            point: data.point,
-          }, {
-            headers: {
-              Authorization: token,
-            },
-          });
-          toast.update(loadingToastId, { render:  'Berhasil menambahkan misi', isLoading: false, autoClose: 5000, closeOnClick: true });
-        
-        } catch (error) {
-          toast.update(loadingToastId, { render: 'Penambahan misi gagal', type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
-          console.error("Error adding member:", error);
-        } finally {
-          setUpdateData(Date.now())
-        }
+        buttonRef.current.disabled = true
+        dispatch(createActivity({data, member}))
     };
       
     return (
@@ -171,7 +129,13 @@ export default function Modal({ member, categories, setUpdateData }) {
                     </div>
                 </div>
                 <div className="flex my-5 justify-center">
-                    <button ref={buttonRef} type="submit" className="bg-main-color text-white text-lg rounded-lg shadow-md p-4 font-semibold">TAMBAHKAN</button>
+                    <button
+                        disabled={Object.values(data).some(value => value === "")}
+                        ref={buttonRef} type="submit"
+                        className="hover:bg-ungu1/70 disabled:bg-ungu1/70 bg-ungu1 text-white text-lg rounded-lg shadow-md py-2 px-4 font-semibold"
+                    >
+                        TAMBAHKAN
+                    </button>
                 </div>
             </form>
         </div>

@@ -5,6 +5,9 @@ import { titleCase } from '../Breadcrumbs';
 
 // SummaryCard component function
 export default function SummaryCard({ title, value, fontSz, description, firstRow, memberName }) {
+  let splitValues
+  if (value) splitValues = value.toString().split('/')
+
   return (
     <div className='flex justify-center'>
       <div
@@ -41,10 +44,17 @@ export default function SummaryCard({ title, value, fontSz, description, firstRo
               {firstRow !== 100 && description}
             </div>
           </>
-        ) : (
+        ) : value && (
           <>
             <h5 className='text-[14px] md:text-3xl font-semibold'>{title}</h5>
-            <h6 className={`my-2 font-bold ${fontSz}`}>{typeof value === 'string' ? value.replace('/', ' / ') : value}</h6>
+            <div className="my-2 flex justify-center items-end">
+              <h6 className={`font-bold ${fontSz}`}>
+                {!splitValues || fontSz === 'text-3xl' ? value.toString().replace('/', ' / ') : splitValues[0]}
+              </h6>
+              {fontSz !== 'text-3xl' && splitValues.length > 1 &&
+                <h6 className='text-violet-400 font-semibold text-lg'>/ {splitValues[1]}</h6>
+              }
+            </div>
             <div className='text-violet-400 text-[10px] font-semibold md:text-lg font-normal bg-transparent border-0'>
               {description}
             </div>
