@@ -1,11 +1,12 @@
 import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createReward } from '../../../redux/slices/RewardSlice';
 
 export default function ModalPeriode({ memberIds }) {
   const buttonRef = useRef(null);
   const dispatch = useDispatch();
+  const { loading } = useSelector(state => state.reward)
   const [data, setData] = useState({
     spinned_at: '',
     start_date: new Date().toISOString().slice(0,new Date().toISOString().lastIndexOf(":")),
@@ -42,9 +43,15 @@ export default function ModalPeriode({ memberIds }) {
 
   const handleSubmit = async (e) => {
       e.preventDefault();
-      if (!data.start_date || !data.end_date) return toast.warning("Harap isi semua kolom")
-      buttonRef.current.classList.add('modal-button');
-      buttonRef.current.click();
+      buttonRef.current.disabled = true
+      if (!data.start_date || !data.end_date) {
+        buttonRef.current.disabled = false
+        return toast.warning("Harap isi semua kolom")
+    }
+    buttonRef.current.classList.add('modal-button');
+    buttonRef.current.disabled = false
+    buttonRef.current.click();
+    buttonRef.current.disabled = true
       dispatch(createReward({ data, memberIds }))
     };
     
@@ -79,7 +86,10 @@ export default function ModalPeriode({ memberIds }) {
                   </div>
               </div>
               <div className="flex justify-center">
-                  <button ref={buttonRef} type="submit" className="bg-main-color text-white text-base rounded-md shadow-md my-5 py-2 px-4 font-semibold">Atur</button>
+                  <button
+                    disabled={loading || !data.start_date || !data.end_date}
+                    ref={buttonRef} type="submit"
+                    className="hover:bg-ungu1/50 disabled:bg-ungu1/50 bg-ungu1 text-white text-base rounded-md shadow-md my-5 py-2 px-4 font-semibold">Atur</button>
               </div>
           </form>
       </div>

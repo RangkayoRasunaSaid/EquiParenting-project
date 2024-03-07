@@ -3,6 +3,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import config from '../../config/config';
 import { toast } from 'react-toastify';
+import { fetchStats } from './statsSlice';
+import { fetchHistory } from './historySlice';
 
 const token = sessionStorage.getItem("token");
 
@@ -24,6 +26,10 @@ export const approveActivity = createAsyncThunk(
       });
       toast.update(loadingToastId, { render: response.data.message, isLoading: false, autoClose: 5000, closeOnClick: true })
       dispatch(fetchActivity(member))
+      const startDate = member.Rewards[0].start_date
+      const endDate = member.Rewards[0].end_date
+      dispatch(fetchStats({ startDate, endDate }))
+      dispatch(fetchHistory())
     } catch (error) {
       console.error(error.response.data.message, error);
       toast.update(loadingToastId, { render: error.response.data.message, type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
@@ -37,24 +43,26 @@ export const createActivity = createAsyncThunk(
     const loadingToastId = toast.loading('Membuat Misi ...');
   
     try {
-      const startDate = new Date(data.date_start_act);
-      const endDate = new Date(data.date_stop_act);
-      startDate.setHours(startDate.getHours() + 7);
-      endDate.setHours(endDate.getHours() + 7);
+      const start_date = new Date(data.date_start_act);
+      const end_date = new Date(data.date_stop_act);
+      start_date.setHours(start_date.getHours() + 7);
+      end_date.setHours(end_date.getHours() + 7);
 
       const response = await axios.post(config.apiUrl + "/activities", {
         id_member: member.id,
         title: data.title,
         category: data.category,
-        date_start_act: startDate,
-        date_stop_act: endDate,
+        date_start_act: start_date,
+        date_stop_act: end_date,
         description: data.description,
         point: data.point,
-      }, {
-        headers: { Authorization: token },
-      });
-      toast.update(loadingToastId, { render:  'Berhasil menambahkan misi', isLoading: false, autoClose: 5000, closeOnClick: true });
+      }, { headers: { Authorization: token } });
+
+      toast.update(loadingToastId, { render: 'Berhasil menambahkan misi', isLoading: false, autoClose: 5000, closeOnClick: true });
       dispatch(fetchActivity(member))
+      const startDate = member.Rewards[0].start_date
+      const endDate = member.Rewards[0].end_date
+      dispatch(fetchStats({ startDate, endDate }))
     } catch (error) {
       toast.update(loadingToastId, { render: error.response.data.message, type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
       console.error(error.response.data.message, error);

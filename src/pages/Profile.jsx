@@ -14,7 +14,6 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { user, loading, error } = useSelector(state => state.user)
   const [username, setUsername] = useState('');
-  console.log(error);
 
   const [profile, setProfile] = useState(user && user.username || { avatar: "", username: "" });
   const [password, setPassword] = useState({ oldPassword: "", newPassword: "" });
@@ -44,7 +43,6 @@ const Profile = () => {
     dispatch(updatePassword(password))
     setPassword({ newPassword: '', oldPassword: '' })
   };
-  console.log(profile);
 
   return (
     <div className="bg-[url('/src/assets/background2.jpg')] bg-fixed">

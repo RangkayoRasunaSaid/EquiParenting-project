@@ -41,9 +41,15 @@ export default function Modal({ member, categories }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (Object.values(data).some(value => !value)) return toast.warning("Harap isi semua kolom")
+        buttonRef.current.disabled = true
+        if (Object.values(data).some(value => !value)) {
+            buttonRef.current.disabled = false
+            return toast.warning("Harap isi semua kolom")
+        }
         buttonRef.current.classList.add('modal-button');
+        buttonRef.current.disabled = false
         buttonRef.current.click();
+        buttonRef.current.disabled = true
         dispatch(createActivity({data, member}))
     };
       
@@ -123,7 +129,13 @@ export default function Modal({ member, categories }) {
                     </div>
                 </div>
                 <div className="flex my-5 justify-center">
-                    <button ref={buttonRef} type="submit" className="bg-main-color text-white text-lg rounded-lg shadow-md p-4 font-semibold">TAMBAHKAN</button>
+                    <button
+                        disabled={Object.values(data).some(value => value === "")}
+                        ref={buttonRef} type="submit"
+                        className="hover:bg-ungu1/70 disabled:bg-ungu1/70 bg-ungu1 text-white text-lg rounded-lg shadow-md py-2 px-4 font-semibold"
+                    >
+                        TAMBAHKAN
+                    </button>
                 </div>
             </form>
         </div>

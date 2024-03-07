@@ -17,7 +17,7 @@ const FadingBackground = styled(BaseModalBackground)`
     transition: all 0.3s ease-in-out;
 `;
 
-export default function App({ setUpdateMembers, activities }) {
+export default function App() {
     const [categories, setCategories] = useState([]);
     const dispatch = useDispatch();
 
@@ -39,8 +39,8 @@ export default function App({ setUpdateMembers, activities }) {
                     Selamat datang di misi keluarga idaman!
                 </h1>
                 <Routes>
-                    <Route path="/" element={<PusatReward setUpdateMembers={setUpdateMembers} />} />
-                    <Route path="/daily-mission" element={<DailyMission setUpdateMembers={setUpdateMembers} activities={activities} />} />
+                    <Route path="/" element={<PusatReward />} />
+                    <Route path="/daily-mission" element={<DailyMission />} />
                     <Route path="/daily-mission/:role" element={<MisiAnggota categories={categories} />} />
                 </Routes>
             </div>

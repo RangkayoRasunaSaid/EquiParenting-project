@@ -4,6 +4,7 @@ import axios from 'axios';
 import config from '../../config/config';
 import { toast } from 'react-toastify';
 import { fetchMembers } from './memberSlice';
+import { fetchStats } from './statsSlice';
 
 export const createReward = createAsyncThunk(
   'reward/createReward',
@@ -44,9 +45,32 @@ export const createReward = createAsyncThunk(
       }))
       toast.update(loadingToastId, { render: response.data.message, isLoading: false, autoClose: 5000, closeOnClick: true });
       dispatch(fetchMembers())
+      dispatch(fetchStats({ startDate, endDate }))
     } catch (error) {
       console.error("Error:", error);
       toast.update(loadingToastId, { render: error.response.data.message, type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
+    }
+  }
+)
+
+export const spinReward = createAsyncThunk(
+  'reward/spinReward',
+  async ({ reqData, title }, { dispatch }) => {
+    const loadingToastId = toast.loading('Claiming the Reward ...')
+    try {
+      const response = await axios.post(config.apiUrl + "/spin-wheel", {
+        id_member: reqData.id,
+        title: title,
+        id_reward: reqData.Rewards[0].id,
+      });
+      toast.update(loadingToastId, { render: 'Selamat Menikmati Rewardmu!', isLoading: false, autoClose: 5000, closeOnClick: true });
+      dispatch(fetchMembers())
+    } catch (error) {
+      let message
+      if (error.response.data.error) message = error.response.data.error
+      else message = error.response.data.message
+      toast.update(loadingToastId, { render: message, type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
+      console.error("Error adding claiming reward:", error);
     }
   }
 )
@@ -75,7 +99,22 @@ const RewardSlice = createSlice({
       state.loading = false
       state.reward = null
       state.error = action.error.message
-      console.log(action);
+      toast.error(action.error.message)
+    })
+    builder.addCase(spinReward.pending, state => {
+      state.loading = true
+      state.reward = null
+      state.error = null
+    })
+    builder.addCase(spinReward.fulfilled, (state, action) => {
+      state.loading = false
+      // state.reward = action.payload
+      state.error = null
+    })
+    builder.addCase(spinReward.rejected, (state, action) => {
+      state.loading = false
+      state.reward = null
+      state.error = action.error.message
       toast.error(action.error.message)
     })
   }

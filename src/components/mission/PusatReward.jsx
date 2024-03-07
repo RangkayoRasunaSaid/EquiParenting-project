@@ -21,7 +21,7 @@ const options = {
     }
 }
 
-export default function PusatReward({ setUpdateMembers }) {
+export default function PusatReward() {
     const dispatch = useDispatch();
     const { stats, loading } = useSelector(state => state.stats)
     const { members } = useSelector(state => state.member)
@@ -50,7 +50,7 @@ export default function PusatReward({ setUpdateMembers }) {
         fetchMemberActivityStats()
     }, [members]);
 
-    if (stats) {
+    if (stats && members) {
         keysWith100Percentage = Object.keys(stats).filter(key => stats[key].percentage === 100);
         spinMembers = members.filter(member => keysWith100Percentage.includes(member.id.toString()) && member.Rewards.some(reward => reward.Reward_Items.length === 0));
         allRolesUnique = new Set(members.map(member => member.member_role)).size === members.length;
@@ -79,7 +79,7 @@ export default function PusatReward({ setUpdateMembers }) {
                                         else toast.warning('Silahkan Coba Lagi di Periode Berikutnya')
                                     }}>{btnCtn}</div>
                                 ) : (
-                                    <ModalButton btnContent={btnCtn} mdlContent={<ModalSpin spinMembers={spinMembers} setUpdateMembers={setUpdateMembers} />} maxWidth='100vw' />
+                                    <ModalButton btnContent={btnCtn} mdlContent={<ModalSpin spinMembers={spinMembers} />} maxWidth='100vw' />
                                 )
                             ) : (
                                 <Link to='/login'>{btnCtn}</Link>
@@ -112,7 +112,7 @@ export default function PusatReward({ setUpdateMembers }) {
             
                     {/* link to daily mission */}
                     <Link to="/mission/daily-mission">
-                        <button className="p-sm-3 p-md-4 mb-4 p-4 mt-8 text-white bg-main-color rounded-[60px] font-bold text-[16px] md:text-xl shadow-md w-full" onClick={() => window.scrollTo(0, 0)}>Lihat Aktivitas Daily Mission</button>
+                        <button className="p-sm-3 p-md-4 mb-4 p-4 mt-8 text-white hover:bg-ungu1/90 bg-ungu1 rounded-[60px] font-bold text-[16px] md:text-xl shadow-md w-full" onClick={() => window.scrollTo(0, 0)}>Lihat Aktivitas Daily Mission</button>
                     </Link>
 
                     <h1 className='mt-5 text-center text-3xl font-bold'>Ringkasan</h1>

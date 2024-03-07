@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './spinStyle.css'
 import { titleCase } from '../../Breadcrumbs';
-import axios from 'axios';
 import { toast } from 'react-toastify';
-import config from '../../../config/config';
+import { useDispatch } from 'react-redux';
+import { spinReward } from '../../../redux/slices/RewardSlice';
 
 const sectors = [
     { color: '#6A5ACD', label: 'A Relaxing Spa Day' },
@@ -20,7 +20,8 @@ const sectors = [
     { color: '#FF69B4', label: 'Handwritten Love Letter' }
   ];
 
-const ModalSpin = ({ spinMembers, setUpdateMembers }) => {
+const ModalSpin = ({ spinMembers }) => {
+  const dispatch = useDispatch();
   let claimingReward = false
   let memberSpin = ''
   if (spinMembers && spinMembers.length === 1) memberSpin = spinMembers[0]
@@ -77,27 +78,13 @@ const ModalSpin = ({ spinMembers, setUpdateMembers }) => {
       if (newAngVel < 0.002) {
         claimingReward = true
         newAngVel = 0
-        const loadingToastId = toast.loading('Claiming the Reward ...');
         let reqData
         if (spinMembers.length === 1) reqData = rewardFor
         else reqData = JSON.parse(rewardFor)
-        try {
-          const response = await axios.post(config.apiUrl + "/spin-wheel", {
-            id_member: reqData.id,
-            title: title,
-            id_reward: reqData.Rewards[0].id,
-          });
-          toast.update(loadingToastId, { render:  'Selamat Menikmati Rewardmu!', isLoading: false, autoClose: 5000, closeOnClick: true });
-        
-        } catch (error) {
-          toast.update(loadingToastId, { render: "Pengambilan member gagal", type: "error", isLoading: false, autoClose: 5000, closeOnClick: true });
-          console.error("Error adding claiming reward:", error);
-        } finally {
-          spinRef.current.classList.add('modal-button');
-          spinRef.current.click();
-          setUpdateMembers(Date.now())
-          return
-        }
+        dispatch(spinReward({ reqData, title }))
+        spinRef.current.classList.add('modal-button');
+        spinRef.current.click();
+        return
       };
 
       if (claimingReward) return

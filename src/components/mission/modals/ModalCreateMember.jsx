@@ -30,9 +30,15 @@ export default function ModalCreateMember() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!data.name || !data.member_role) return toast.warning("Harap isi semua kolom!")
+    buttonRef.current.disabled = true
+    if (!data.name || !data.member_role) {
+      buttonRef.current.disabled = false
+      return toast.warning("Harap isi semua kolom")
+    }
     buttonRef.current.classList.add('modal-button');
+    buttonRef.current.disabled = false
     buttonRef.current.click();
+    buttonRef.current.disabled = true
     dispatch(createMember(data))
   };
   
@@ -70,9 +76,9 @@ export default function ModalCreateMember() {
 
             <button
               ref={buttonRef}
-              className='bg-ungu2 text-ungu1 font-bold py-2 px-4 rounded inline-flex items-center w-32'
+              className='hover:bg-ungu1/50 disabled:bg-ungu1/50 bg-ungu1 text-white font-bold py-2 px-4 rounded inline-flex items-center w-32'
               type="submit"
-              disabled={loading}>Tambahkan</button>
+              disabled={loading || Object.values(data).some(value => value === "")}>Tambahkan</button>
           </form>
       </div>
   )

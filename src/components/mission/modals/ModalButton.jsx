@@ -61,8 +61,6 @@ export default function ModalButton({ btnContent, mdlContent, maxWidth='400px' }
     );
 }
 
-// export { toggleModal }
-
 ModalButton.propTypes = {
     btnContent: PropTypes.element.isRequired,
     mdlContent: PropTypes.element.isRequired,

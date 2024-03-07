@@ -1,5 +1,5 @@
 // TaskItem.js
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import moment from 'moment/moment';
 import { titleCase } from '../Breadcrumbs';
 import PropTypes from 'prop-types';
@@ -8,12 +8,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { approveActivity } from '../../redux/slices/activitySlice';
 
 function formatDate(stringDate) {
+  const buttonRef = useRef(null);
   let date = moment(stringDate);
   date = moment(stringDate).utcOffset('+0700');
   return date.format('D MMM YYYY HH:mm [WIB]')
 }
 
-const TaskItem = ({ activity, responsible }) => {
+const TaskItem = ({ activity, responsible, history=false }) => {
+  const buttonRef = useRef(null);
   const dispatch = useDispatch();
   const { members } = useSelector(state => state.member)
   const { loading } = useSelector(state => state.activity)
@@ -47,7 +49,12 @@ const TaskItem = ({ activity, responsible }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!approvedBy) return toast.warning("Harap isi disetujui oleh")
+    buttonRef.current.disabled = true
+    if (!approvedBy) {
+      buttonRef.current.disabled = false
+      return toast.warning("Harap isi disetujui oleh")
+    }
+    buttonRef.current.disabled = true
     const member = members.find(member => member.id === activity.id_member);
     dispatch(approveActivity({activity, approvedBy, member}))
   };
@@ -78,8 +85,8 @@ const TaskItem = ({ activity, responsible }) => {
           <p className="text-left text-xs font-bold mb-2">Poin yang {!activity.approval_by ? 'Akan' : ''} Diperoleh: {activity.point} Poin</p>
           <p className="text-left text-xs font-bold mb-2">Penanggung Jawab: {responsible}</p>
           <form onSubmit={handleSubmit}>
-            {activity.approval_by ? (
-              <p className="text-left text-xs font-bold mb-2">Disetujui Oleh: {titleCase(activity.approval_by)}</p>
+            {activity.approval_by || history ? (
+              <p className="text-left text-xs font-bold mb-2">Disetujui Oleh: {!activity.approval_by ? '-' : titleCase(activity.approval_by)}</p>
             ) : (
               <div className="flex items-center gap-3 text-xs font-bold mb-2">
                   <div>
@@ -103,10 +110,10 @@ const TaskItem = ({ activity, responsible }) => {
                   Waktu Aktivitas: {formatDate(activity.date_start_act)} - {formatDate(activity.date_stop_act)}
                 </p>
                 <div className="flex justify-center">
-                    <button
+                    <button ref={buttonRef}
                       type='submit'
-                      className="text-white disabled:opacity-60 bg-main-color rounded-lg shadow-md py-2 px-3 font-semibold "
-                      disabled={loading || activity.approval_date}>
+                      className="text-white hover:bg-ungu1/50 disabled:bg-ungu1/50 bg-ungu1 rounded-lg shadow-md py-2 px-3 font-semibold "
+                      disabled={loading || activity.approval_date || history}>
                         Misi Selesai
                     </button>
                 </div>

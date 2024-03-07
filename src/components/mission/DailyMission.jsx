@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Aktivitas from "./Aktivitas";
 import Tim from "./Daymission";
 import { useNavigate } from "react-router-dom";
@@ -7,11 +6,17 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { useSelector } from "react-redux";
 import { override } from "../../pages/Profile";
 import { ClipLoader } from "react-spinners";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
-export default function DailyMission({ setUpdateMembers, activities }) {
+export default function DailyMission() {
     const navigate = useNavigate()
-    if (!sessionStorage.getItem('token')) navigate('/login')
-
+    useEffect(() => {
+        if (!sessionStorage.getItem('token')) {
+            toast.info('Anda Belum Masuk')
+            navigate('/login')
+        }
+    })
     const { members, loading } = useSelector(state => state.member)
   
     return (
@@ -20,10 +25,8 @@ export default function DailyMission({ setUpdateMembers, activities }) {
           <ClipLoader color="silver" loading={loading} cssOverride={override} size={50} aria-label="Loading Spinner" data-testid="loader" />
         ) : (
             <>
-                <Tim setUpdateMembers={setUpdateMembers} />
-                {members.length > 0 &&
-                    <Aktivitas setUpdateMembers={setUpdateMembers} activities={activities} />
-                }
+                <Tim />
+                {members.length > 0 && <Aktivitas /> }
             </>
         )}
         </div>

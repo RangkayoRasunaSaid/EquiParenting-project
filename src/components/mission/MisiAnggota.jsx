@@ -33,12 +33,12 @@ export default function MisiAnggota({ categories }) {
     return (
         <div className="bg-white py-5 rounded-[40px] text-center">
             <div className="flex items-center justify-between text-3xl font-semibold px-5">
-                <Link to="/mission/daily-mission" onClick={() => window.scrollTo(0, 0)}>
+                <Link to="/mission/daily-mission" onClick={() => window.scrollTo(0, 0)} className="hover:bg-zinc-300 rounded-full">
                     <BsArrowLeftShort />
                 </Link>
                 <h1>Aktivitas {titleCase(state.member_role)}</h1>
                 <ModalButton
-                    btnContent={(<BsFillQuestionCircleFill role="button" />)}
+                    btnContent={(<BsFillQuestionCircleFill className="hover:ungu1/50" role="button" />)}
                     mdlContent={(<ModalHelp role={state.member_role} />)} maxWidth="1000px"
                 />
             </div>
@@ -63,7 +63,7 @@ export default function MisiAnggota({ categories }) {
                         <button
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModal2"
-                            className="w-72 text-xl bg-main-color text-white rounded-[30px] shadow-md py-1 px-3 font-semibold flex items-center justify-center">
+                            className="w-72 text-xl hover:bg-ungu1/90 bg-ungu1 text-white rounded-[30px] shadow-md py-1 px-3 font-semibold flex items-center justify-center">
                                 <span className="text-6xl me-3">+</span>
                                 <span style={{color:"c3b8da"}}>Tambah Aktivitas</span>
                         </button>)}

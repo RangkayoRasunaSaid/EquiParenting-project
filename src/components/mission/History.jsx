@@ -6,23 +6,25 @@ import 'owl.carousel/dist/assets/owl.theme.default.css'
 import TaskItem from "./TaskItem";
 import { titleCase } from "../Breadcrumbs";
 import { formatDate } from "./Aktivitas";
+import { useSelector } from "react-redux";
+import { ClipLoader } from "react-spinners";
+import { override } from "../../pages/Profile";
 
-export default function History({ activities, members, setUpdateMembers }) {
-    const options = {
-        stagePadding: 40, items: 3, margin:20, nav:true,
-        responsive:{ 0:{ items:1 }, 600:{ items:2 }, 1000:{ items:3 }
-        }
+const options = {
+    stagePadding: 40, items: 3, margin:20, nav:true,
+    responsive:{ 0:{ items:1 }, 600:{ items:2 }, 1000:{ items:3 }
     }
+}
+
+export default function History() {
+    const { history, loading } = useSelector(state => state.history)
+    const { members } = useSelector(state => state.member)
 
     function memberRole(id) {
         for (let i = 0; i < members.length; i++) {
             // Check if the current object's id matches the desired id
-            if (members[i].id == id) {
-                // Return the member_role if found
-                return members[i].member_role;
-            }
-        }
-        return '';
+            if (members[i].id == id) return members[i].member_role
+        } return '';
     }
 
     return (
@@ -36,24 +38,26 @@ export default function History({ activities, members, setUpdateMembers }) {
                     <BsArrowLeftShort className="invisible" />
                 </div>
                 <div className="bg-white py-5 rounded-[40px] text-center">
-                    {activities.map(reward =>
-                        reward.activities.length > 0 && (
-                            <div key={reward.id}>
-                                <h1 className="mt-5 font-semibold">{`${formatDate(new Date(reward.rewardPeriod.start_date).toLocaleDateString())} - ${formatDate(new Date(reward.rewardPeriod.end_date).toLocaleDateString())}`}</h1>
-                                <OwlCarousel className='owl-theme' {...options} key={`carousel_${Date.now()}`} >
-                                    {reward.activities.map(activity => (
-                                        <TaskItem
-                                            key={activity.id}
-                                            members={members}
-                                            activity={activity}
-                                            responsible={titleCase(memberRole(activity.id_member)) || activity.id_member.toString()}
-                                            setUpdateData={setUpdateMembers}
-                                        />
-                                    ))}
-                                </OwlCarousel>
-                            </div>
+                    { !members || !history || !Array.isArray(history) ? (
+                        <ClipLoader className='lg:w-2/3' color="silver" loading={loading} cssOverride={override} size={50} aria-label="Loading Spinner" data-testid="loader" />
+                    ) : history.map(reward =>
+                            reward.activities.length > 0 && (
+                                <div key={reward.id}>
+                                    <h1 className="mt-5 font-semibold">{`${formatDate(new Date(reward.rewardPeriod.start_date).toLocaleDateString())} - ${formatDate(new Date(reward.rewardPeriod.end_date).toLocaleDateString())}`}</h1>
+                                    <OwlCarousel className='owl-theme' {...options} key={`carousel_${Date.now()}`} >
+                                        {reward.activities.map(activity => (
+                                            <TaskItem
+                                                key={activity.id}
+                                                activity={activity}
+                                                history={true}
+                                                responsible={titleCase(memberRole(activity.id_member)) || activity.id_member.toString()}
+                                            />
+                                        ))}
+                                    </OwlCarousel>
+                                </div>
+                            )
                         )
-                    )}
+                    }
                 </div>
             </div>
         </div>

@@ -6,9 +6,11 @@ import PropTypes from 'prop-types';
 import ModalPeriode from './modals/ModalPeriode';
 import ModalButton from './modals/ModalButton';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
 import { override } from '../../pages/Profile';
+import { fetchHistory } from '../../redux/slices/historySlice';
+import { useEffect } from 'react';
 
 const months = [
     "Januari", "Februari", "Maret", "April", "Mei", "Juni",
@@ -29,37 +31,50 @@ export function formatDate(inputDate) {
     return day + ' ' + months[monthIndex] + ' ' + year;
 }
 
-export default function Aktivitas({ activities }) {
-    const { members } = useSelector(state => state.member)
-    const { loading } = useSelector(state => state.reward)
-    const endDate = new Date(members[members.length - 1].Rewards[0]?.end_date)
-    endDate.setTime(endDate.getTime() - (7 * 60 * 60 * 1000))
+export default function Aktivitas() {
+    const dispatch = useDispatch();
+    const { members } = useSelector(({ member }) => member);
+    const { loading, history } = useSelector(({ reward, history }) => ({ loading: reward.loading, history: history.history }));
+    const endDate = new Date(members[members.length - 1].Rewards[0]?.end_date);
+    endDate.setTime(endDate.getTime() - (7 * 60 * 60 * 1000));
     const currentDate = new Date();
+    let histBtn = true
     let hasActivities
-    if (activities) hasActivities = activities.some(item => item.activities.length > 0);
-
+    if (history && Array.isArray(history)) {
+        hasActivities = history.some(item => item.activities && item.activities.length > 0);
+        histBtn = false
+    }
     const formattedPeriod = members[0].Rewards[0]?.start_date && members[0].Rewards[0]?.end_date ?
         `${formatDate(currentDate)} - ${formatDate(endDate)}`
-        : '';  
+        : '';
     const allRolesUnique = new Set(members.map(member => member.member_role)).size === members.length;
+
+    useEffect(() => {
+      dispatch(fetchHistory())
+    }, [members]);
 
     return (
         <div className='text-center'>
             <div className="flex justify-between items-center my-5">
                 <div className='px-2 invisible text-sm md:block hidden'>Lihat Riwayat</div>
                 <h1 className="text-3xl font-bold">Aktivitas</h1>
-                <Link to='/history'>
-                    <button className={`border-2 text-sm rounded-3xl p-2 bg-ungu1 text-white hover:bg-dark-main-color focus:bg-ungu3 focus:outline-none ${!hasActivities ? 'invisible' : '' }`} onClick={() => window.scrollTo(0, 0)}>
-                        Lihat Riwayat
-                    </button>
-                </Link>                
+                {!hasActivities || histBtn ? (
+                    <div className="bg-gray-100 text-gray-100 text-sm p-2 rounded-3xl">Lihat Riwayat</div>
+                ) : (
+                    <Link to='/history'>
+                        <button className={`border-2 text-sm rounded-3xl p-2 bg-ungu1/70 text-white hover:bg-ungu1/50 focus:bg-ungu3 focus:outline-none ${!hasActivities ? 'invisible' : '' }`}>
+                            Lihat Riwayat
+                        </button>
+                    </Link>
+                )}
+          
             </div>
             <div className="flex justify-center">
                 <ModalButton
                     btnContent={(
                         <button
                             disabled={currentDate < endDate || loading}
-                            className="disabled:bg-slate-400 flex text-2xl gap-4 justify-center items-center px-5 text-white bg-main-color rounded-2xl font-bold md:text-xl shadow-md"
+                            className="hover:bg-ungu1/90 disabled:bg-ungu1/60 bg-ungu1 flex text-2xl gap-4 justify-center items-center px-5 text-white rounded-2xl font-bold md:text-xl shadow-md"
                         >
                             <span>Atur Periode Mission</span>
                             <span className='text-5xl'>+</span>
@@ -87,7 +102,7 @@ export default function Aktivitas({ activities }) {
                             </OwlCarousel>
                         ) : (
                             <div className="md:flex justify-center sm:gap-10 gap-5 p-2">
-                                {members.map(m =>(
+                                {members.map(m => (
                                     <MisiPeriode key={m.id} members={members} member={m} />
                                 ))}
                             </div>
