@@ -22,6 +22,7 @@ const options = {
 }
 
 export default function PusatReward() {
+    const token = sessionStorage.getItem('token')
     const dispatch = useDispatch();
     const { stats, loading } = useSelector(state => state.stats)
     const { members } = useSelector(state => state.member)
@@ -46,7 +47,7 @@ export default function PusatReward() {
             dispatch(fetchStats(data))
         };
 
-        if (!sessionStorage.getItem('token') || !members || members.length === 0 || members[0].Rewards.length === 0) return
+        if (!token || !members || members.length === 0 || members[0].Rewards.length === 0) return
         fetchMemberActivityStats()
     }, [members]);
 
@@ -71,7 +72,7 @@ export default function PusatReward() {
                 <>
                     <div className="bg-white m-4 rounded-[60px] shadow-md flex-none lg:flex">
                         <div className="lg:w-1/3 sm:w-full flex justify-center">
-                            {sessionStorage.getItem("token") && members ? (
+                            {token && members ? (
                                 members.length === 0 || endDate > currentDate || spinMembers.length === 0 ? (
                                     <div onClick={() => {
                                         if (endDate > currentDate) toast.warning('Belum Bisa Putar Spin karena Periode Masih Berjalan')
@@ -87,7 +88,7 @@ export default function PusatReward() {
                         </div>
                         {!members || members.length === 0 ? (
                             <div className='flex flex-col justify-center items-center lg:mx-auto'>
-                                <Link to={sessionStorage.getItem("token") ? "/mission/daily-mission" : '/login'}>
+                                <Link to={token ? "/mission/daily-mission" : '/login'}>
                                     <button onClick={() => window.scrollTo(0, 0)} className='flex items-center justify-center px-5 py-3 rounded-3xl shadow-lg text-xl font-semibold'>
                                         Buat Tim <span className='ms-5 text-4xl'>+</span>
                                     </button>
@@ -115,11 +116,15 @@ export default function PusatReward() {
                         <button className="p-sm-3 p-md-4 mb-4 p-4 mt-8 text-white hover:bg-ungu1/90 bg-ungu1 rounded-[60px] font-bold text-[16px] md:text-xl shadow-md w-full" onClick={() => window.scrollTo(0, 0)}>Lihat Aktivitas Daily Mission</button>
                     </Link>
 
-                    <h1 className='mt-5 text-center text-3xl font-bold'>Ringkasan</h1>
-                    {!stats || !members ? (
-                        <ClipLoader color="silver" loading={loading} cssOverride={override} size={50} aria-label="Loading Spinner" data-testid="loader" />
-                    ) : members.filter(member => member.Rewards[0]).length > 0 &&(
-                        <StatSummary members={members} stats={stats} />
+                    {token && (
+                        <>
+                            <h1 className='mt-5 text-center text-3xl font-bold'>Ringkasan</h1>
+                            { !stats || !members ? (
+                                <ClipLoader color="silver" loading={loading} cssOverride={override} size={50} aria-label="Loading Spinner" data-testid="loader" />
+                            ) : members.filter(member => member.Rewards[0]).length > 0 && (
+                                <StatSummary members={members} stats={stats} />
+                            )}
+                        </>
                     )}
                 </>
 
