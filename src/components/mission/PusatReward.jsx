@@ -116,7 +116,7 @@ export default function PusatReward() {
                         <button className="p-sm-3 p-md-4 mb-4 p-4 mt-8 text-white hover:bg-ungu1/90 bg-ungu1 rounded-[60px] font-bold text-[16px] md:text-xl shadow-md w-full" onClick={() => window.scrollTo(0, 0)}>Lihat Aktivitas Daily Mission</button>
                     </Link>
 
-                    {token && (
+                    {token &&  members &&  members.length > 0 && (
                         <>
                             <h1 className='mt-5 text-center text-3xl font-bold'>Ringkasan</h1>
                             { !stats || !members ? (

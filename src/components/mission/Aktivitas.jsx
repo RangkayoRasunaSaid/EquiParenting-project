@@ -55,17 +55,19 @@ export default function Aktivitas() {
 
     return (
         <div className='text-center'>
-            <div className="flex justify-between items-center my-5">
+            <div className={`flex items-center my-5 ${!histBtn && !hasActivities ? 'justify-center' : 'justify-between'}`}>
                 <div className='px-2 invisible text-sm md:block hidden'>Lihat Riwayat</div>
                 <h1 className="text-3xl font-bold">Aktivitas</h1>
-                {!hasActivities || histBtn ? (
-                    <div className="bg-gray-100 text-gray-100 text-sm p-2 rounded-3xl">Lihat Riwayat</div>
-                ) : (
+                {hasActivities ? (
                     <Link to='/history'>
-                        <button className={`border-2 text-sm rounded-3xl p-2 bg-ungu1/70 text-white hover:bg-ungu1/50 focus:bg-ungu3 focus:outline-none ${!hasActivities ? 'invisible' : '' }`}>
+                        <button className='border-2 text-sm rounded-3xl p-2 bg-ungu1/70 text-white hover:bg-ungu1/50 focus:bg-ungu3 focus:outline-none'>
                             Lihat Riwayat
                         </button>
                     </Link>
+                ) : histBtn ? (
+                    <div className="bg-gray-100 text-gray-100 text-sm p-2 rounded-3xl">Lihat Riwayat</div>
+                ) : (
+                    <div className='px-2 invisible text-sm md:block hidden'>Lihat Riwayat</div>
                 )}
           
             </div>

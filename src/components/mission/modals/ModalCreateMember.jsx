@@ -78,7 +78,7 @@ export default function ModalCreateMember() {
               ref={buttonRef}
               className='hover:bg-ungu1/50 disabled:bg-ungu1/50 bg-ungu1 text-white font-bold py-2 px-4 rounded inline-flex items-center w-32'
               type="submit"
-              disabled={loading || Object.values(data).some(value => value === "")}>Tambahkan</button>
+              disabled={loading || !data.name || !data.member_role}>Tambahkan</button>
           </form>
       </div>
   )
