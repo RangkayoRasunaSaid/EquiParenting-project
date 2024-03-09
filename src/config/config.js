@@ -1,6 +1,6 @@
 // src/config/config.js
 const config = {
-    apiUrl: 'http://localhost:3000'
+    apiUrl: 'https://equiparenting-server.onrender.com'
   };
   
 export default config;  
