@@ -4,13 +4,11 @@ import axios from 'axios';
 import config from '../../config/config';
 import { toast } from 'react-toastify';
 
-const token = sessionStorage.getItem('token')
-
 export const fetchMembers = createAsyncThunk(
   'member/fetchMembers',
   async () => {
     const response = await axios.get(config.apiUrl + '/members', {
-      headers: { Authorization: token }
+      headers: { Authorization: sessionStorage.getItem('token') }
     });
     return response.data.members
   }
@@ -22,7 +20,7 @@ export const deleteMembers = createAsyncThunk(
     const loadingToastId = toast.loading(`Deleting a Member ...`)
     try {
       const response = await axios.delete(config.apiUrl + `/members/${id}`, {
-        headers: { Authorization: token }
+        headers: { Authorization: sessionStorage.getItem('token') }
       });
       toast.update(loadingToastId, { render: response.data.message, type:'info', isLoading: false, autoClose: 5000, closeOnClick: true })
       dispatch(fetchMembers())
@@ -44,7 +42,7 @@ export const createMember = createAsyncThunk(
         avatar: data.avatar,
       }, {
         headers: {
-          Authorization: token,
+          Authorization: sessionStorage.getItem('token'),
         },
       });
   
@@ -59,7 +57,7 @@ export const createMember = createAsyncThunk(
           end_date: endDate,
           id_member: id
         }, {
-          headers: { Authorization: token }
+          headers: { Authorization: sessionStorage.getItem('token') }
         });
         console.log("Reward created successfully for member with ID:", id);
       }

@@ -14,8 +14,8 @@ const calculateDifferenceInDays = (startDate, endDate) => {
     return Math.round(differenceInMilliseconds / (1000 * 3600 * 24));
 }
 
-const renderSummaryCard = (m, allRolesUnique, stats, daysDifference) => (
-    <div key={m.id} className='item'>
+const renderSummaryCard = (m, allRolesUnique, stats, daysDifference, len=2) => (
+    <div key={m.id} className={`item ${len === 1 ? 'md:flex justify-center md:grid-cols-4 grid-cols-2 gap-10' : ''}`}>
         <SummaryCard title={`${m.member_role === 'others' ? 'Member' : titleCase(m.member_role)} Idaman`} fontSz='text-7xl'
             description={`selesaikan banyak misi untuk menaikkan score menjadi "${m.member_role === 'others' ? 'Member' : titleCase(m.member_role)} Idaman”`}
             firstRow={stats[m.id]?.percentage} memberName={!allRolesUnique ? m.name : ''}
@@ -45,6 +45,7 @@ const renderSummaryCard = (m, allRolesUnique, stats, daysDifference) => (
 export default function StatSummary({ members, stats }) {
     const allRolesUnique = new Set(members.map(member => member.member_role)).size === members.length;
     const daysDifference = calculateDifferenceInDays(members[0].Rewards[0].start_date, members[0].Rewards[0].end_date);
+    const len = members.length
 
     return (
         <>
@@ -53,10 +54,10 @@ export default function StatSummary({ members, stats }) {
                     {members.map(m => renderSummaryCard(m, allRolesUnique, stats, daysDifference))}
                 </OwlCarousel>
             ) : (
-                <div className={`${members.length === 2 ? 'flex justify-center sm:gap-10 gap-5 p-2' : ''}`}>
+                <div className={`${members.length === 2 ? 'flex justify-center sm:gap-10 gap-5' : ''} p-2`}>
                     {members.map(m => (
-                        <div className={`${members.length === 1 ? 'md:flex justify-center md:grid-cols-4 grid-cols-2 gap-10' : ''}`} key={m.id}>
-                            {renderSummaryCard(m, allRolesUnique, stats, daysDifference)}
+                        <div key={m.id}>
+                            {renderSummaryCard(m, allRolesUnique, stats, daysDifference, len)}
                         </div>
                     ))}
                 </div>

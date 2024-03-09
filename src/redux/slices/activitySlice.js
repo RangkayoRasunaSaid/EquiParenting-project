@@ -6,8 +6,6 @@ import { toast } from 'react-toastify';
 import { fetchStats } from './statsSlice';
 import { fetchHistory } from './historySlice';
 
-const token = sessionStorage.getItem("token");
-
 export const fetchActivity = createAsyncThunk(
   'activity/fetchActivity',
   async (data) => {
@@ -22,7 +20,7 @@ export const approveActivity = createAsyncThunk(
     const loadingToastId = toast.loading('Menyetujui Aktifitas ...');
     try {
       const response = await axios.put(config.apiUrl + `/activities/approve/${activity.id}`, { approval_by: approvedBy }, {
-        headers: { Authorization: token },
+        headers: { Authorization: sessionStorage.getItem('token') },
       });
       toast.update(loadingToastId, { render: response.data.message, isLoading: false, autoClose: 5000, closeOnClick: true })
       dispatch(fetchActivity(member))
@@ -56,7 +54,7 @@ export const createActivity = createAsyncThunk(
         date_stop_act: end_date,
         description: data.description,
         point: data.point,
-      }, { headers: { Authorization: token } });
+      }, { headers: { Authorization: sessionStorage.getItem('token') } });
 
       toast.update(loadingToastId, { render: 'Berhasil menambahkan misi', isLoading: false, autoClose: 5000, closeOnClick: true });
       dispatch(fetchActivity(member))

@@ -37,6 +37,7 @@ export default function PusatReward() {
     let keysWith100Percentage
     let spinMembers = []
     let allRolesUnique = true
+    let loaded = false
    
     useEffect(() => {
         const fetchMemberActivityStats = async () => {
@@ -49,6 +50,7 @@ export default function PusatReward() {
 
         if (!token || !members || members.length === 0 || members[0].Rewards.length === 0) return
         fetchMemberActivityStats()
+        loaded = true
     }, [members]);
 
     if (stats && members) {
@@ -77,6 +79,7 @@ export default function PusatReward() {
                                     <div onClick={() => {
                                         if (endDate > currentDate) toast.warning('Belum Bisa Putar Spin karena Periode Masih Berjalan')
                                         else if (members.length === 0) toast.warning('Silahkan Buat Tim Terlebih Dahulu')
+                                        else if (members[0].Rewards.length === 0) toast.warning('Silahkan Atur Periode')
                                         else toast.warning('Silahkan Coba Lagi di Periode Berikutnya')
                                     }}>{btnCtn}</div>
                                 ) : (
@@ -94,7 +97,15 @@ export default function PusatReward() {
                                     </button>
                                 </Link>
                             </div>
-                        ) : !stats || !members ? (
+                        ) : members[0].Rewards.length === 0 ? (
+                            <div className='flex flex-col justify-center items-center lg:mx-auto'>
+                                <Link to="/mission/daily-mission">
+                                    <button className='flex items-center justify-center px-5 py-3 rounded-3xl shadow-lg text-xl font-semibold'>
+                                    Silahkan Atur Periode
+                                    </button>
+                                </Link>
+                            </div>
+                        ) : !loaded && !stats || !members ? (
                             <ClipLoader color="silver" loading={loading} cssOverride={override} size={50} aria-label="Loading Spinner" data-testid="loader" />
                         ) : (
                             <OwlCarousel className='owl-theme lg:w-2/3 my-10' {...options} >
@@ -107,8 +118,7 @@ export default function PusatReward() {
                                     />
                                 ))}
                             </OwlCarousel>
-                        )
-                        }
+                        )}
                     </div>
             
                     {/* link to daily mission */}
@@ -116,7 +126,7 @@ export default function PusatReward() {
                         <button className="p-sm-3 p-md-4 mb-4 p-4 mt-8 text-white hover:bg-ungu1/90 bg-ungu1 rounded-[60px] font-bold text-[16px] md:text-xl shadow-md w-full" onClick={() => window.scrollTo(0, 0)}>Lihat Aktivitas Daily Mission</button>
                     </Link>
 
-                    {token &&  members &&  members.length > 0 && (
+                    {stats && members && members.length > 0 ? (
                         <>
                             <h1 className='mt-5 text-center text-3xl font-bold'>Ringkasan</h1>
                             { !stats || !members ? (
@@ -125,7 +135,7 @@ export default function PusatReward() {
                                 <StatSummary members={members} stats={stats} />
                             )}
                         </>
-                    )}
+                    ) : ('')}
                 </>
 
         </div>
