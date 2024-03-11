@@ -60,7 +60,7 @@ export default function Aktivitas() {
                 <h1 className="text-3xl font-bold">Aktivitas</h1>
                 {hasActivities ? (
                     <Link to='/history'>
-                        <button className='border-2 text-sm rounded-3xl p-2 bg-ungu1/70 text-white hover:bg-ungu1/50 focus:bg-ungu3 focus:outline-none'>
+                        <button onClick={() => window.scrollTo(0, 0)} className='border-2 text-sm rounded-3xl p-2 bg-ungu1/70 text-white hover:bg-ungu1/50 focus:bg-ungu3 focus:outline-none'>
                             Lihat Riwayat
                         </button>
                     </Link>

@@ -21,6 +21,8 @@ EquiParenting is a web application aimed at empowering parents or any other prov
 
 - **Frontend:**
   - React.js: JavaScript library for building user interfaces.
+  - Redux Toolkit: Library for managing application state in React applications, providing tools like Redux Thunk, a middleware to write action creators that return a function to perform asynchronous logic, such as making API requests, and dispatch actions based on the results.
+  - React Toastify: Notification library for displaying toast notifications in React applications.
   - Owl Carousel: jQuery plugin for creating responsive carousel sliders.
   - Axios: Promise-based HTTP client for making AJAX requests.
   - Moment.js: Library for parsing, validating, manipulating, and formatting dates.
